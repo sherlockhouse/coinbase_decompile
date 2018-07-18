@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:tag="layout-large-land/controller_acceptable_documents_0" android:background="@color/app_background_light_grey" android:layout_width="match_parent" android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" android:id="@+id/cvCoinbaseToolbar" android:background="?attr/colorPrimary" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x7f010088" />
+    <FrameLayout android:background="@color/grey_bg" android:layout_width="match_parent" android:layout_height="match_parent"
+        <FrameLayout android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:tag="binding_1" android:background="@color/white" android:layout_width="UNKNOWN_DATA_0x25801" android:layout_height="match_parent" android:layout_marginTop="16dp" android:layout_marginBottom="16dp">
+            <include android:id="@+id/acceptableDocumentsContent" layout="@layout/controller_acceptable_documents_content" />
+            <ProgressBar android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/progress" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        </FrameLayout>
+    </FrameLayout>
+</LinearLayout>

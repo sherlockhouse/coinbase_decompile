@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/rlParent" android:tag="layout/list_item_create_price_alert_0" android:layout_width="UNKNOWN_DATA_0x7f0b009c" android:layout_height="UNKNOWN_DATA_0x7f0b009b">
+    <TextView android:textSize="14dp" android:textColor="@color/white" android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvPriceLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" android:layout_centerInParent="true" />
+    <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x1c01" android:weightSum="5.0" android:layout_alignParentTop="true">
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1.0">
+            <FrameLayout android:id="@+id/flTopFirst" android:background="@color/white" android:layout_width="UNKNOWN_DATA_0x101" android:layout_height="UNKNOWN_DATA_0xe01" android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1.0">
+            <FrameLayout android:id="@+id/flTopSecond" android:background="@color/white" android:layout_width="UNKNOWN_DATA_0x101" android:layout_height="UNKNOWN_DATA_0xe01" android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1.0">
+            <FrameLayout android:background="@color/white" android:layout_width="UNKNOWN_DATA_0x101" android:layout_height="UNKNOWN_DATA_0x1401" android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1.0">
+            <FrameLayout android:id="@+id/flTopThird" android:background="@color/white" android:layout_width="UNKNOWN_DATA_0x101" android:layout_height="UNKNOWN_DATA_0xe01" android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1.0">
+            <FrameLayout android:id="@+id/flTopFourth" android:background="@color/white" android:layout_width="UNKNOWN_DATA_0x101" android:layout_height="UNKNOWN_DATA_0xe01" android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout android:layout_gravity="top|bottom|center_vertical|fill_vertical|center|fill" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x1c01" android:weightSum="5.0" android:layout_alignParentBottom="true">
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1.0">
+            <FrameLayout android:id="@+id/flBottomFirst" android:background="@color/white" android:layout_width="UNKNOWN_DATA_0x101" android:layout_height="UNKNOWN_DATA_0xe01" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1.0">
+            <FrameLayout android:id="@+id/flBottomSecond" android:background="@color/white" android:layout_width="UNKNOWN_DATA_0x101" android:layout_height="UNKNOWN_DATA_0xe01" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1.0">
+            <FrameLayout android:background="@color/white" android:layout_width="UNKNOWN_DATA_0x101" android:layout_height="UNKNOWN_DATA_0x1401" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1.0">
+            <FrameLayout android:id="@+id/flBottomThird" android:background="@color/white" android:layout_width="UNKNOWN_DATA_0x101" android:layout_height="UNKNOWN_DATA_0xe01" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1.0">
+            <FrameLayout android:id="@+id/flBottomFourth" android:background="@color/white" android:layout_width="UNKNOWN_DATA_0x101" android:layout_height="UNKNOWN_DATA_0xe01" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

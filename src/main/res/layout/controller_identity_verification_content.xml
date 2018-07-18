@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:tag="layout/controller_identity_verification_content_0" android:layout_width="match_parent" android:layout_height="match_parent">
+    <ListView android:id="@+id/lvList" android:background="@color/white" android:layout_width="match_parent" android:layout_height="wrap_content" android:listSelector="0x106000d" android:cacheColorHint="0x106000d" android:divider="0x106000d" />
+    <TextView android:textColor="@color/primary_mystique_text_color" android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvEmpty" android:padding="@dimen/margin_default" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="@dimen/margin_default" android:text="@string/jumio_profiles_empty" />
+    <ProgressBar android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/progress" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+</FrameLayout>

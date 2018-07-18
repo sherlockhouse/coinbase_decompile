@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:tag="layout-large-land/add_plaid_account_controller_0" android:background="@color/grey_bg" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+        <android.support.design.widget.AppBarLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <android.support.v7.widget.Toolbar android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" android:id="@+id/cvCoinbaseToolbar" android:background="?attr/colorPrimary" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x7f010088" android:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        </android.support.design.widget.AppBarLayout>
+        <FrameLayout android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:tag="binding_1" android:background="@color/white" android:layout_width="UNKNOWN_DATA_0x25801" android:layout_height="match_parent" android:layout_marginTop="16dp" android:layout_marginBottom="16dp">
+            <include android:id="@+id/addPlaidToAccountContent" layout="@layout/add_plaid_account_controller_content" />
+        </FrameLayout>
+    </LinearLayout>
+</FrameLayout>

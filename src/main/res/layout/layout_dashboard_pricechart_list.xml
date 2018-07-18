@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/vPriceChartsRefreshLayout" android:tag="layout/layout_dashboard_pricechart_list_0" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <android.support.v7.widget.RecyclerView android:id="@+id/rvPriceCharts" android:layout_width="match_parent" android:layout_height="match_parent" />
+</android.support.v4.widget.SwipeRefreshLayout>

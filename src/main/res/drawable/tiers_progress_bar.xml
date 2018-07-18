@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="0x1020000">
+        <shape>
+            <solid android:color="@color/mystique_horizontal_divider_color" />
+            <corners android:radius="@dimen/margin_extra_small" />
+            <padding android:left="@dimen/margin_extra_tiny" android:top="@dimen/margin_extra_tiny" android:right="@dimen/margin_extra_tiny" android:bottom="@dimen/margin_extra_tiny" />
+        </shape>
+    </item>
+    <item android:id="0x102000d">
+        <scale android:scaleWidth="100%">
+            <shape>
+                <solid android:color="@color/tiers_limit_progress" />
+                <corners android:radius="@dimen/margin_extra_tiny" />
+            </shape>
+        </scale>
+    </item>
+</layer-list>

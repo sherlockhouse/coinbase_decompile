@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:orientation="vertical" app:tag="layout/controller_transfer_send_0" app:background="@color/app_background_light_grey" app:layout_width="match_parent" app:layout_height="match_parent">
+    <android.support.design.widget.AppBarLayout app:background="@color/white" app:layout_width="match_parent" app:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" app:id="@+id/cvCoinbaseToolbar" app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0x7f010088" app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    </android.support.design.widget.AppBarLayout>
+    <com.coinbase.android.transfers.TransferSendLayout app:id="@+id/vTransferSendLayout" app:background="@color/white" app:layout_width="match_parent" app:layout_height="match_parent" />
+</LinearLayout>

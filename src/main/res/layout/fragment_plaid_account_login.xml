@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:tag="layout/fragment_plaid_account_login_0" android:layout_width="match_parent" android:layout_height="match_parent">
+    <include android:id="@+id/plaidAccountLoginContent" layout="@layout/fragment_plaid_account_login_content" />
+</FrameLayout>

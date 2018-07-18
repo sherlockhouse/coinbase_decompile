@@ -1,0 +1,17 @@
+package com.coinbase.android;
+
+import com.coinbase.android.billing.AddBillingAddressFragmentSubcomponent;
+import com.coinbase.android.billing.AddBillingAddressPresenterModule;
+import com.coinbase.android.deposits.SepaDepositFragmentSubcomponent;
+import com.coinbase.android.deposits.SepaDepositPresenterModule;
+import com.coinbase.android.paymentmethods.IAVLoginFragmentSubcomponent;
+import com.coinbase.android.paymentmethods.IAVLoginPresenterModule;
+
+@ActivityScope
+public interface CoinbaseActivityMystiqueSubcomponent {
+    AddBillingAddressFragmentSubcomponent addBillingAddressFragmentSubcomponent(AddBillingAddressPresenterModule addBillingAddressPresenterModule);
+
+    IAVLoginFragmentSubcomponent iavLoginFragmentSubcomponent(IAVLoginPresenterModule iAVLoginPresenterModule);
+
+    SepaDepositFragmentSubcomponent sepaDepositFragmentSubcomponent(SepaDepositPresenterModule sepaDepositPresenterModule);
+}

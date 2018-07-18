@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:id="@+id/flContainer" app:tag="layout/controller_gdpr_privacy_policy_0" app:background="@drawable/signin_background" app:layout_width="match_parent" app:layout_height="match_parent">
+    <android.support.constraint.ConstraintLayout app:id="@+id/llWhiteBoxContainer" app:background="@drawable/white_box" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_marginLeft="@dimen/signup_form_horizontal_margin" app:layout_marginTop="@dimen/margin_4x" app:layout_marginRight="@dimen/signup_form_horizontal_margin" app:layout_marginBottom="@dimen/margin_4x">
+        <ScrollView app:scrollbarAlwaysDrawVerticalTrack="true" app:id="@+id/svPrivacyPolicyText" app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0x1" app:layout_constraintBottom_toTopOf="@+id/dividerAboveAcknowledge" app:layout_constraintHeight_default="1" app:layout_constraintTop_toTopOf="@+id/llWhiteBoxContainer">
+            <LinearLayout app:orientation="vertical" app:layout_width="match_parent" app:layout_height="wrap_content">
+                <ImageView app:layout_gravity="left|right|center_horizontal|fill_horizontal|center|fill|start|end" app:id="@+id/ivGdprIcon" app:layout_width="UNKNOWN_DATA_0x7f0b0130" app:layout_height="UNKNOWN_DATA_0x7f0b0130" app:layout_marginTop="@dimen/margin_4x" app:src="@drawable/gdpr_stars" />
+                <TextView app:layout_width="match_parent" app:layout_height="wrap_content" app:text="@string/gdpr_privacy_notice" style="@style/OnboardingTitle" />
+                <TextView app:id="@+id/tvNoticeParagraph" app:layout_width="match_parent" app:layout_height="wrap_content" app:text="@string/gdpr_privacy_notice_paragraph" style="@style/OnboardingParagraph" />
+                <TextView app:layout_width="match_parent" app:layout_height="wrap_content" app:text="@string/gdpr_privacy_notice_subtitle_1" style="@style/OnboardingSubtitle" />
+                <TextView app:layout_width="match_parent" app:layout_height="wrap_content" app:text="@string/gdpr_privacy_notice_paragraph_1" style="@style/OnboardingParagraph" />
+                <TextView app:layout_width="match_parent" app:layout_height="wrap_content" app:text="@string/gdpr_privacy_notice_subtitle_2" style="@style/OnboardingSubtitle" />
+                <TextView app:layout_width="match_parent" app:layout_height="wrap_content" app:text="@string/gdpr_privacy_notice_paragraph_2" style="@style/OnboardingParagraph" />
+                <TextView app:layout_width="match_parent" app:layout_height="wrap_content" app:text="@string/gdpr_privacy_notice_subtitle_3" style="@style/OnboardingSubtitle" />
+                <TextView app:layout_width="match_parent" app:layout_height="wrap_content" app:text="@string/gdpr_privacy_notice_paragraph_3" style="@style/OnboardingParagraph" />
+                <TextView app:layout_width="match_parent" app:layout_height="wrap_content" app:text="@string/gdpr_privacy_notice_subtitle_4" style="@style/OnboardingSubtitle" />
+                <TextView app:layout_width="match_parent" app:layout_height="wrap_content" app:text="@string/gdpr_privacy_notice_paragraph_4" style="@style/OnboardingParagraph" />
+            </LinearLayout>
+        </ScrollView>
+        <View app:id="@+id/dividerAboveScrollAcknowledge" app:background="@color/cloud_grey" app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0x101" app:layout_constraintBottom_toTopOf="@+id/tvScrollToAcknowledge" />
+        <TextView app:textSize="14sp" app:textStyle="bold" app:textColor="@color/carbon_100" app:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" app:id="@+id/tvScrollToAcknowledge" app:background="@color/white" app:padding="@dimen/margin_1x" app:layout_width="match_parent" app:layout_height="wrap_content" app:text="@string/gdpr_privacy_notice_scroll_to_acknowledge" app:layout_constraintBottom_toBottomOf="@+id/dividerAboveAcknowledge" />
+        <View app:id="@+id/dividerAboveAcknowledge" app:background="@color/cloud_grey" app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0x101" app:layout_constraintBottom_toTopOf="@+id/btnAcknowledge" />
+        <TextView app:enabled="false" app:id="@+id/btnAcknowledge" app:background="@drawable/white_box" app:padding="@dimen/margin_2x" app:layout_width="match_parent" app:layout_height="wrap_content" app:text="@string/acknowledge" app:layout_constraintBottom_toBottomOf="0" style="@style/SignInButtonPrimary" />
+        <ProgressBar app:id="@id/progressBar" app:visibility="gone" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_constraintBottom_toBottomOf="0" app:layout_constraintLeft_toLeftOf="0" app:layout_constraintRight_toRightOf="0" app:layout_constraintTop_toTopOf="0" />
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>

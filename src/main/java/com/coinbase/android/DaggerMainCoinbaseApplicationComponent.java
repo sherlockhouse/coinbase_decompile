@@ -1,0 +1,6323 @@
+package com.coinbase.android;
+
+import android.app.Application;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Pair;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.RelativeLayout;
+import com.coinbase.android.accounts.AccountCryptoAddressButtonConnector;
+import com.coinbase.android.accounts.AccountCryptoAddressLayout;
+import com.coinbase.android.accounts.AccountCryptoAddressLayoutSubcomponent;
+import com.coinbase.android.accounts.AccountCryptoAddressLayout_MembersInjector;
+import com.coinbase.android.accounts.AccountCryptoAddressPresenter;
+import com.coinbase.android.accounts.AccountCryptoAddressPresenterModule;
+import com.coinbase.android.accounts.AccountCryptoAddressPresenterModule_ProvidesAccountAddressLayoutScreenFactory;
+import com.coinbase.android.accounts.AccountCryptoAddressPresenter_Factory;
+import com.coinbase.android.accounts.AccountCryptoAddressScreen;
+import com.coinbase.android.accounts.AccountCryptoAddressUpdatedConnector;
+import com.coinbase.android.accounts.AccountFilteredListLayout;
+import com.coinbase.android.accounts.AccountFilteredListLayoutSubcomponent;
+import com.coinbase.android.accounts.AccountFilteredListLayout_MembersInjector;
+import com.coinbase.android.accounts.AccountFilteredListPresenter;
+import com.coinbase.android.accounts.AccountFilteredListPresenterModule;
+import com.coinbase.android.accounts.AccountFilteredListPresenterModule_ProvideSyncAccountTaskFactory;
+import com.coinbase.android.accounts.AccountFilteredListPresenterModule_ProvidesAccountListScreenFactory;
+import com.coinbase.android.accounts.AccountFilteredListPresenter_Factory;
+import com.coinbase.android.accounts.AccountItemClickedConnector;
+import com.coinbase.android.accounts.AccountListConnector;
+import com.coinbase.android.accounts.AccountListPresenter;
+import com.coinbase.android.accounts.AccountListPresenter_Factory;
+import com.coinbase.android.accounts.AccountListScreen;
+import com.coinbase.android.accounts.AccountMainController;
+import com.coinbase.android.accounts.AccountMainControllerSubcomponent;
+import com.coinbase.android.accounts.AccountMainController_MembersInjector;
+import com.coinbase.android.accounts.AccountMainPresenter;
+import com.coinbase.android.accounts.AccountMainPresenterModule;
+import com.coinbase.android.accounts.AccountMainPresenterModule_ProvidesAccountMainScreenFactory;
+import com.coinbase.android.accounts.AccountMainPresenter_Factory;
+import com.coinbase.android.accounts.AccountMainScreen;
+import com.coinbase.android.accounts.AccountRefreshListLayout;
+import com.coinbase.android.accounts.AccountRefreshListLayoutSubcomponent;
+import com.coinbase.android.accounts.AccountRefreshListLayout_MembersInjector;
+import com.coinbase.android.accounts.AccountRefreshListPresenterModule;
+import com.coinbase.android.accounts.AccountRefreshListPresenterModule_ProvideSyncAccountTaskFactory;
+import com.coinbase.android.accounts.AccountRefreshListPresenterModule_ProvidesAccountListScreenFactory;
+import com.coinbase.android.accounts.AccountTransactionsController;
+import com.coinbase.android.accounts.AccountTransactionsControllerSubcomponent;
+import com.coinbase.android.accounts.AccountTransactionsController_MembersInjector;
+import com.coinbase.android.accounts.AccountTransactionsPresenter;
+import com.coinbase.android.accounts.AccountTransactionsPresenterModule;
+import com.coinbase.android.accounts.AccountTransactionsPresenterModule_ProvideAccountDetailsScreenFactory;
+import com.coinbase.android.accounts.AccountTransactionsPresenterModule_ProvideFetchAccountTaskFactory;
+import com.coinbase.android.accounts.AccountTransactionsPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.accounts.AccountTransactionsPresenter_Factory;
+import com.coinbase.android.accounts.AccountTransactionsRouter;
+import com.coinbase.android.accounts.AccountTransactionsRouter_Factory;
+import com.coinbase.android.accounts.AccountTransactionsScreen;
+import com.coinbase.android.accounts.AccountUpdatedConnector;
+import com.coinbase.android.accounts.AccountsFragment;
+import com.coinbase.android.accounts.AccountsFragment_MembersInjector;
+import com.coinbase.android.accounts.CreateAccountTask;
+import com.coinbase.android.accounts.CreateAccountTask_MembersInjector;
+import com.coinbase.android.accounts.RenameAccountFragment;
+import com.coinbase.android.accounts.RenameAccountFragment_MembersInjector;
+import com.coinbase.android.alerts.AlertsContainerScreen;
+import com.coinbase.android.alerts.AlertsListLayout;
+import com.coinbase.android.alerts.AlertsListLayoutSubcomponent;
+import com.coinbase.android.alerts.AlertsListLayout_MembersInjector;
+import com.coinbase.android.alerts.AlertsListPresenter;
+import com.coinbase.android.alerts.AlertsListPresenterModule;
+import com.coinbase.android.alerts.AlertsListPresenterModule_ProvidesAlertsDataFactory;
+import com.coinbase.android.alerts.AlertsListPresenterModule_ProvidesParentScreenFactory;
+import com.coinbase.android.alerts.AlertsListPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.alerts.AlertsListPresenter_Factory;
+import com.coinbase.android.alerts.AlertsListRouter;
+import com.coinbase.android.alerts.AlertsListRouter_Factory;
+import com.coinbase.android.alerts.AlertsListScreen;
+import com.coinbase.android.alerts.AlertsSignOutListener;
+import com.coinbase.android.alerts.AlertsSignOutListener_Factory;
+import com.coinbase.android.alerts.AlertsUtils;
+import com.coinbase.android.alerts.AlertsUtils_Factory;
+import com.coinbase.android.billing.AddBillingAddressFragment;
+import com.coinbase.android.billing.AddBillingAddressFragmentSubcomponent;
+import com.coinbase.android.billing.AddBillingAddressFragment_MembersInjector;
+import com.coinbase.android.billing.AddBillingAddressPresenter;
+import com.coinbase.android.billing.AddBillingAddressPresenterModule;
+import com.coinbase.android.billing.AddBillingAddressPresenterModule_ProvidesAddBillingAddressScreenFactory;
+import com.coinbase.android.billing.AddBillingAddressPresenter_Factory;
+import com.coinbase.android.billing.AddBillingAddressScreen;
+import com.coinbase.android.billing.AddBillingAddressViewModule;
+import com.coinbase.android.billing.AddBillingAddressViewModule_ProvidesCheckFieldsErrorResFactory;
+import com.coinbase.android.billing.BillingAddressDeletedConnector;
+import com.coinbase.android.billing.BillingAddressListAdapter;
+import com.coinbase.android.billing.BillingAddressListAdapter_MembersInjector;
+import com.coinbase.android.buysell.AbstractBuySellConfirmationController_MembersInjector;
+import com.coinbase.android.buysell.AbstractBuySellConfirmationScreen;
+import com.coinbase.android.buysell.Buy3dsVerificationConnector;
+import com.coinbase.android.buysell.BuyConfirmationController;
+import com.coinbase.android.buysell.BuyConfirmationControllerSubcomponent;
+import com.coinbase.android.buysell.BuyConfirmationController_MembersInjector;
+import com.coinbase.android.buysell.BuyConfirmationPresenter;
+import com.coinbase.android.buysell.BuyConfirmationPresenterModule;
+import com.coinbase.android.buysell.BuyConfirmationPresenterModule_ProvideActionBarControllerFactory;
+import com.coinbase.android.buysell.BuyConfirmationPresenterModule_ProvideBuyConfirmationScreenFactory;
+import com.coinbase.android.buysell.BuyConfirmationPresenterModule_ProvideBuySellConfirmationScreenFactory;
+import com.coinbase.android.buysell.BuyConfirmationPresenterModule_ProvidesBuySellConfirmationPresenterFactory;
+import com.coinbase.android.buysell.BuyConfirmationPresenter_Factory;
+import com.coinbase.android.buysell.BuyController;
+import com.coinbase.android.buysell.BuyControllerSubcomponent;
+import com.coinbase.android.buysell.BuyController_MembersInjector;
+import com.coinbase.android.buysell.BuyPresenter;
+import com.coinbase.android.buysell.BuyPresenterModule;
+import com.coinbase.android.buysell.BuyPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.buysell.BuyPresenterModule_ProvidesBuyScreenFactory;
+import com.coinbase.android.buysell.BuyPresenter_Factory;
+import com.coinbase.android.buysell.BuyRouter;
+import com.coinbase.android.buysell.BuyRouter_Factory;
+import com.coinbase.android.buysell.BuySellMadeConnector;
+import com.coinbase.android.buysell.BuySellSuccessController;
+import com.coinbase.android.buysell.BuySellSuccessControllerSubcomponent;
+import com.coinbase.android.buysell.BuySellSuccessController_MembersInjector;
+import com.coinbase.android.buysell.BuySellSuccessPresenter;
+import com.coinbase.android.buysell.BuySellSuccessPresenterModule;
+import com.coinbase.android.buysell.BuySellSuccessPresenterModule_ProvidesBuySellSuccessScreenFactory;
+import com.coinbase.android.buysell.BuySellSuccessPresenter_Factory;
+import com.coinbase.android.buysell.BuySellSuccessScreen;
+import com.coinbase.android.buysell.QuickBuyConnector;
+import com.coinbase.android.buysell.QuickBuyListLayout;
+import com.coinbase.android.buysell.QuickBuyListLayout_MembersInjector;
+import com.coinbase.android.buysell.SellConfirmationController;
+import com.coinbase.android.buysell.SellConfirmationControllerSubcomponent;
+import com.coinbase.android.buysell.SellConfirmationController_MembersInjector;
+import com.coinbase.android.buysell.SellConfirmationPresenter;
+import com.coinbase.android.buysell.SellConfirmationPresenterModule;
+import com.coinbase.android.buysell.SellConfirmationPresenterModule_ProvideActionBarControllerFactory;
+import com.coinbase.android.buysell.SellConfirmationPresenterModule_ProvideBuySellConfirmationScreenFactory;
+import com.coinbase.android.buysell.SellConfirmationPresenterModule_ProvideSellConfirmationScreenFactory;
+import com.coinbase.android.buysell.SellConfirmationPresenterModule_ProvidesBuySellConfirmationPresenterFactory;
+import com.coinbase.android.buysell.SellConfirmationPresenter_Factory;
+import com.coinbase.android.buysell.SellController;
+import com.coinbase.android.buysell.SellControllerSubcomponent;
+import com.coinbase.android.buysell.SellController_MembersInjector;
+import com.coinbase.android.buysell.SellPresenterModule;
+import com.coinbase.android.buysell.SellPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.buysell.SellPresenterModule_ProvidesAvailableBalanceAppBarScreenFactory;
+import com.coinbase.android.buysell.SellPresenterModule_ProvidesSellScreenFactory;
+import com.coinbase.android.buysell.SellPresenterModule_ProvidesSendExceededTrackingContextFactory;
+import com.coinbase.android.buysell.SellPresenterModule_ProvidesSyncAccountsTaskFactory;
+import com.coinbase.android.buysell.SellPresenterModule_ProvidesWithdrawalBasedLimitsErrorRouterFactory;
+import com.coinbase.android.buysell.SellPresenter_Factory;
+import com.coinbase.android.buysell.SellRouter;
+import com.coinbase.android.buysell.SellRouter_Factory;
+import com.coinbase.android.dashboard.DashboardAlertsConnector;
+import com.coinbase.android.dashboard.DashboardBalanceUpdatedConnector;
+import com.coinbase.android.dashboard.DashboardCurrencyController;
+import com.coinbase.android.dashboard.DashboardCurrencyControllerSubcomponent;
+import com.coinbase.android.dashboard.DashboardCurrencyController_MembersInjector;
+import com.coinbase.android.dashboard.DashboardCurrencyPresenter;
+import com.coinbase.android.dashboard.DashboardCurrencyPresenterModule;
+import com.coinbase.android.dashboard.DashboardCurrencyPresenterModule_ProvideDashboardCurrencyPriceScreenFactory;
+import com.coinbase.android.dashboard.DashboardCurrencyPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.dashboard.DashboardCurrencyPresenter_Factory;
+import com.coinbase.android.dashboard.DashboardCurrencyScreen;
+import com.coinbase.android.dashboard.DashboardMainController;
+import com.coinbase.android.dashboard.DashboardMainControllerSubcomponent;
+import com.coinbase.android.dashboard.DashboardMainController_MembersInjector;
+import com.coinbase.android.dashboard.DashboardMainPresenter;
+import com.coinbase.android.dashboard.DashboardMainPresenterModule;
+import com.coinbase.android.dashboard.DashboardMainPresenterModule_ProvideDashboardPresenterModuleFactory;
+import com.coinbase.android.dashboard.DashboardMainPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.dashboard.DashboardMainPresenterModule_ProvidesModalRoutersFactory;
+import com.coinbase.android.dashboard.DashboardMainPresenter_Factory;
+import com.coinbase.android.dashboard.DashboardMainScreen;
+import com.coinbase.android.dashboard.DashboardPriceChartItemClickedConnector;
+import com.coinbase.android.dashboard.DashboardPriceChartListLayout;
+import com.coinbase.android.dashboard.DashboardPriceChartListLayoutSubcomponent;
+import com.coinbase.android.dashboard.DashboardPriceChartListLayout_MembersInjector;
+import com.coinbase.android.dashboard.DashboardPriceChartListPresenter;
+import com.coinbase.android.dashboard.DashboardPriceChartListPresenterModule;
+import com.coinbase.android.dashboard.DashboardPriceChartListPresenterModule_ProvidesDashboardPriceChartListScreenFactory;
+import com.coinbase.android.dashboard.DashboardPriceChartListPresenter_Factory;
+import com.coinbase.android.dashboard.DashboardPriceChartListScreen;
+import com.coinbase.android.dashboard.DashboardRefreshConnector;
+import com.coinbase.android.dashboard.DashboardTabPeriodLayout;
+import com.coinbase.android.dashboard.DashboardTabPeriodLayoutSubcomponent;
+import com.coinbase.android.dashboard.DashboardTabPeriodLayout_MembersInjector;
+import com.coinbase.android.dashboard.DashboardTabPeriodPresenter;
+import com.coinbase.android.dashboard.DashboardTabPeriodPresenterModule;
+import com.coinbase.android.dashboard.DashboardTabPeriodPresenterModule_ProvidesDashboardTabPeriodScreenFactory;
+import com.coinbase.android.dashboard.DashboardTabPeriodPresenter_Factory;
+import com.coinbase.android.dashboard.DashboardTabPeriodScreen;
+import com.coinbase.android.dashboard.DashboardTabPeriodSelectionConnector;
+import com.coinbase.android.dashboard.DashboardVerificationConnector;
+import com.coinbase.android.dashboard.SpotPriceUpdatedConnector;
+import com.coinbase.android.dashboard.SpotPriceUpdatedConnector_Factory;
+import com.coinbase.android.db.AccountORM;
+import com.coinbase.android.db.DatabaseManager;
+import com.coinbase.android.deposits.DepositWithdrawConfirmationDialogFragment;
+import com.coinbase.android.deposits.DepositWithdrawConfirmationDialogFragment_MembersInjector;
+import com.coinbase.android.deposits.FiatTransactionsConnector;
+import com.coinbase.android.deposits.FiatTransactionsConnector_Factory;
+import com.coinbase.android.deposits.FiatTransactionsController;
+import com.coinbase.android.deposits.FiatTransactionsControllerModule;
+import com.coinbase.android.deposits.FiatTransactionsControllerModule_ProvidesControllerFactory;
+import com.coinbase.android.deposits.FiatTransactionsControllerModule_ProvidesSendExceededTrackingContextFactory;
+import com.coinbase.android.deposits.FiatTransactionsControllerModule_ProvidesWithdrawalBasedLimitsErrorRouterFactory;
+import com.coinbase.android.deposits.FiatTransactionsControllerSubcomponent;
+import com.coinbase.android.deposits.FiatTransactionsController_MembersInjector;
+import com.coinbase.android.deposits.SepaDepositFragment;
+import com.coinbase.android.deposits.SepaDepositFragmentSubcomponent;
+import com.coinbase.android.deposits.SepaDepositFragment_MembersInjector;
+import com.coinbase.android.deposits.SepaDepositPresenter;
+import com.coinbase.android.deposits.SepaDepositPresenterModule;
+import com.coinbase.android.deposits.SepaDepositPresenterModule_ProvidesSepaDepositScreenFactory;
+import com.coinbase.android.deposits.SepaDepositPresenter_Factory;
+import com.coinbase.android.deposits.SepaDepositScreen;
+import com.coinbase.android.deposits.SepaDepositViewModule;
+import com.coinbase.android.deposits.SepaDepositViewModule_ProvidesCopyAddressResFactory;
+import com.coinbase.android.deposits.fiat.DepositConfirmationPresenter;
+import com.coinbase.android.deposits.fiat.DepositConfirmationPresenter_Factory;
+import com.coinbase.android.deposits.fiat.DepositFiatConfirmationController;
+import com.coinbase.android.deposits.fiat.DepositFiatConfirmationControllerSubcomponent;
+import com.coinbase.android.deposits.fiat.DepositFiatConfirmationController_MembersInjector;
+import com.coinbase.android.deposits.fiat.DepositFiatConfirmationPresenterModule;
+import com.coinbase.android.deposits.fiat.DepositFiatConfirmationPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.deposits.fiat.DepositFiatConfirmationPresenterModule_ProvidesDepositFiatConfirmationScreenFactory;
+import com.coinbase.android.deposits.fiat.DepositFiatConfirmationRouter;
+import com.coinbase.android.deposits.fiat.DepositFiatConfirmationRouter_Factory;
+import com.coinbase.android.deposits.fiat.DepositFiatController;
+import com.coinbase.android.deposits.fiat.DepositFiatControllerSubcomponent;
+import com.coinbase.android.deposits.fiat.DepositFiatController_MembersInjector;
+import com.coinbase.android.deposits.fiat.DepositFiatPresenter;
+import com.coinbase.android.deposits.fiat.DepositFiatPresenterModule;
+import com.coinbase.android.deposits.fiat.DepositFiatPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.deposits.fiat.DepositFiatPresenterModule_ProvidesDepositFiatScreenFactory;
+import com.coinbase.android.deposits.fiat.DepositFiatPresenter_Factory;
+import com.coinbase.android.deposits.fiat.DepositFiatRouter;
+import com.coinbase.android.deposits.fiat.DepositFiatRouter_Factory;
+import com.coinbase.android.deposits.fiat.DepositFiatScreen;
+import com.coinbase.android.deposits.fiat.WithdrawConfirmationPresenter;
+import com.coinbase.android.deposits.fiat.WithdrawConfirmationPresenter_Factory;
+import com.coinbase.android.deposits.fiat.WithdrawDepositSuccessController;
+import com.coinbase.android.deposits.fiat.WithdrawDepositSuccessControllerSubcomponent;
+import com.coinbase.android.deposits.fiat.WithdrawDepositSuccessController_MembersInjector;
+import com.coinbase.android.deposits.fiat.WithdrawDepositSuccessPresenter;
+import com.coinbase.android.deposits.fiat.WithdrawDepositSuccessPresenterModule;
+import com.coinbase.android.deposits.fiat.WithdrawDepositSuccessPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.deposits.fiat.WithdrawDepositSuccessPresenterModule_ProvidesWithdrawDepositSuccessScreenFactory;
+import com.coinbase.android.deposits.fiat.WithdrawDepositSuccessPresenter_Factory;
+import com.coinbase.android.deposits.fiat.WithdrawDepositSuccessRouter;
+import com.coinbase.android.deposits.fiat.WithdrawDepositSuccessRouter_Factory;
+import com.coinbase.android.deposits.fiat.WithdrawFiatConfirmationController;
+import com.coinbase.android.deposits.fiat.WithdrawFiatConfirmationControllerSubcomponent;
+import com.coinbase.android.deposits.fiat.WithdrawFiatConfirmationController_MembersInjector;
+import com.coinbase.android.deposits.fiat.WithdrawFiatConfirmationPresenterModule;
+import com.coinbase.android.deposits.fiat.WithdrawFiatConfirmationPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.deposits.fiat.WithdrawFiatConfirmationPresenterModule_ProvidesWithdrawFiatConfirmationScreenFactory;
+import com.coinbase.android.deposits.fiat.WithdrawFiatConfirmationRouter;
+import com.coinbase.android.deposits.fiat.WithdrawFiatConfirmationRouter_Factory;
+import com.coinbase.android.deposits.fiat.WithdrawFiatController;
+import com.coinbase.android.deposits.fiat.WithdrawFiatControllerSubcomponent;
+import com.coinbase.android.deposits.fiat.WithdrawFiatController_MembersInjector;
+import com.coinbase.android.deposits.fiat.WithdrawFiatPresenter;
+import com.coinbase.android.deposits.fiat.WithdrawFiatPresenterModule;
+import com.coinbase.android.deposits.fiat.WithdrawFiatPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.deposits.fiat.WithdrawFiatPresenterModule_ProvidesAvailableBalanceAppBarScreenFactory;
+import com.coinbase.android.deposits.fiat.WithdrawFiatPresenterModule_ProvidesSendExceededTrackingContextFactory;
+import com.coinbase.android.deposits.fiat.WithdrawFiatPresenterModule_ProvidesSyncAccountsTaskFactory;
+import com.coinbase.android.deposits.fiat.WithdrawFiatPresenterModule_ProvidesWithdrawFiatScreenFactory;
+import com.coinbase.android.deposits.fiat.WithdrawFiatPresenterModule_ProvidesWithdrawalBasedLimitsErrorRouterFactory;
+import com.coinbase.android.deposits.fiat.WithdrawFiatPresenter_Factory;
+import com.coinbase.android.deposits.fiat.WithdrawFiatRouter;
+import com.coinbase.android.deposits.fiat.WithdrawFiatRouter_Factory;
+import com.coinbase.android.deposits.fiat.WithdrawFiatScreen;
+import com.coinbase.android.dialog.AlertDialogController;
+import com.coinbase.android.dialog.ConfirmationDialogController;
+import com.coinbase.android.event.CoinbaseEventsModule;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesAccountAddressButtonConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesAccountCryptoAddressUpdatedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesAccountItemClickedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesAccountListConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesAccountUpdatedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesAccountsUpdatedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesAddPaymentMethodConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesBackNavigationConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesBankAccountsUpdatedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesBillingAddressDeletedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesBottomNavigationConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesBuy3dsVerificationConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesBuySellMadeConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesBuySellSettingsConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesCurrenciesUpdatedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesCurrencySelectorConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesCurrencyTabSelectorConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesDashboardAlertsConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesDashboardBalanceUpdatedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesDashboardDataConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesDashboardPriceChartItemClickedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesDashboardRefreshConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesDashboardTabPeriodSelectionConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesDatePickerButtonConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesDeviceVerifyConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesEmailVerifiedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesIdentityVerificationBitmapConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesIdologyAnswerListValidConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesIdologyAnswerSelectedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesIdologyAutoCompleteShownConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesIdologyFormValidConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesIdologyOptionSelectedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesIdologyRetryConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesIdologyVerificationConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesLinkedAccountConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesMystiqueListButtonConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesMystiqueListSelectorConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesNumericKeypadConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesOnboardingUpdatedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesPaymentMethodsRefreshedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesPaymentMethodsUpdatedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesPhoneNumbersUpdatedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesPhotoTakenConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesPlaidOnExitConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesPriceAlertsConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesPriceChartDataUpdatedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesPriceChartPeriodUpdatedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesPrivacyRightsSettingsClickedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesProgressConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesQuickBuyConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesRefreshRequestedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesRetakeAndContinueConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesSignOutConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesStateDisclosureFinishedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesStateListSelectorConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesTransactionDetailButtonConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesTransferMadeConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesUserDataUpdatedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesUserUpdatedConnectorFactory;
+import com.coinbase.android.event.CoinbaseEventsModule_ProvidesVerifyPaymentMethodConnectorFactory;
+import com.coinbase.android.featureflag.FeatureFlags;
+import com.coinbase.android.featureflag.FeatureFlags_Factory;
+import com.coinbase.android.gdpr.GdprInitializer;
+import com.coinbase.android.gdpr.GdprInitializer_Factory;
+import com.coinbase.android.gdpr.GdprIntroController;
+import com.coinbase.android.gdpr.GdprIntroControllerSubcomponent;
+import com.coinbase.android.gdpr.GdprIntroController_MembersInjector;
+import com.coinbase.android.gdpr.GdprIntroPresenter;
+import com.coinbase.android.gdpr.GdprIntroPresenterModule;
+import com.coinbase.android.gdpr.GdprIntroPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.gdpr.GdprIntroPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.gdpr.GdprIntroPresenter_Factory;
+import com.coinbase.android.gdpr.GdprIntroRouter;
+import com.coinbase.android.gdpr.GdprIntroRouter_Factory;
+import com.coinbase.android.gdpr.GdprIntroScreen;
+import com.coinbase.android.gdpr.GdprMarketingEmailController;
+import com.coinbase.android.gdpr.GdprMarketingEmailControllerSubcomponent;
+import com.coinbase.android.gdpr.GdprMarketingEmailController_MembersInjector;
+import com.coinbase.android.gdpr.GdprMarketingEmailPresenter;
+import com.coinbase.android.gdpr.GdprMarketingEmailPresenterModule;
+import com.coinbase.android.gdpr.GdprMarketingEmailPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.gdpr.GdprMarketingEmailPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.gdpr.GdprMarketingEmailPresenter_Factory;
+import com.coinbase.android.gdpr.GdprMarketingEmailScreen;
+import com.coinbase.android.gdpr.GdprModalRouter;
+import com.coinbase.android.gdpr.GdprModalRouter_Factory;
+import com.coinbase.android.gdpr.GdprPrivacyPolicyController;
+import com.coinbase.android.gdpr.GdprPrivacyPolicyControllerSubcomponent;
+import com.coinbase.android.gdpr.GdprPrivacyPolicyController_MembersInjector;
+import com.coinbase.android.gdpr.GdprPrivacyPolicyPresenter;
+import com.coinbase.android.gdpr.GdprPrivacyPolicyPresenterModule;
+import com.coinbase.android.gdpr.GdprPrivacyPolicyPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.gdpr.GdprPrivacyPolicyPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.gdpr.GdprPrivacyPolicyPresenter_Factory;
+import com.coinbase.android.gdpr.GdprPrivacyPolicyScreen;
+import com.coinbase.android.gdpr.OnboardingRouter;
+import com.coinbase.android.gdpr.OnboardingRouter_Factory;
+import com.coinbase.android.gdpr.OnboardingUpdatedConnector;
+import com.coinbase.android.identityverification.IdentityAcceptableDocumentsScreen;
+import com.coinbase.android.identityverification.IdentityVerificationActivity;
+import com.coinbase.android.identityverification.IdentityVerificationActivity_MembersInjector;
+import com.coinbase.android.identityverification.IdentityVerificationBitmapConnector;
+import com.coinbase.android.identityverification.IdentityVerificationController;
+import com.coinbase.android.identityverification.IdentityVerificationController_MembersInjector;
+import com.coinbase.android.identityverification.InAppIdentityAcceptableDocumentsController;
+import com.coinbase.android.identityverification.InAppIdentityAcceptableDocumentsControllerSubcomponent;
+import com.coinbase.android.identityverification.InAppIdentityAcceptableDocumentsController_MembersInjector;
+import com.coinbase.android.identityverification.InAppIdentityAcceptableDocumentsPresenter;
+import com.coinbase.android.identityverification.InAppIdentityAcceptableDocumentsPresenterModule;
+import com.coinbase.android.identityverification.InAppIdentityAcceptableDocumentsPresenterModule_ProvidesControllerFactory;
+import com.coinbase.android.identityverification.InAppIdentityAcceptableDocumentsPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.identityverification.InAppIdentityAcceptableDocumentsPresenter_Factory;
+import com.coinbase.android.identityverification.InAppIdentityAcceptableDocumentsRouter;
+import com.coinbase.android.identityverification.InAppIdentityAcceptableDocumentsRouter_Factory;
+import com.coinbase.android.identityverification.InAppIdentityDocumentScanController;
+import com.coinbase.android.identityverification.InAppIdentityDocumentScanController.RetakePhotoDialogController;
+import com.coinbase.android.identityverification.InAppIdentityDocumentScanController_MembersInjector;
+import com.coinbase.android.identityverification.InAppIdentityDocumentScanController_RetakePhotoDialogController_MembersInjector;
+import com.coinbase.android.identityverification.InAppIdentityDocumentScanPresenterModule;
+import com.coinbase.android.identityverification.InAppIdentityDocumentScanPresenterModule_ProvidesControllerFactory;
+import com.coinbase.android.identityverification.InAppIdentityDocumentScanPresenterModule_ProvidesJumioDocumentScanScreenFactory;
+import com.coinbase.android.identityverification.InAppIdentityDocumentScanRouter;
+import com.coinbase.android.identityverification.InAppIdentityDocumentScanRouter_Factory;
+import com.coinbase.android.identityverification.JumioDocumentScanControllerSubcomponent;
+import com.coinbase.android.identityverification.JumioDocumentScanPresenter;
+import com.coinbase.android.identityverification.JumioDocumentScanPresenter_Factory;
+import com.coinbase.android.identityverification.JumioDocumentScanScreen;
+import com.coinbase.android.identityverification.PhotoTakenConnector;
+import com.coinbase.android.identityverification.RetakeAndContinueConnector;
+import com.coinbase.android.identityverification.TakeDocumentPhotoController;
+import com.coinbase.android.identityverification.TakeDocumentPhotoControllerSubcomponent;
+import com.coinbase.android.identityverification.TakeDocumentPhotoController_MembersInjector;
+import com.coinbase.android.identityverification.TakeDocumentPhotoPresenter;
+import com.coinbase.android.identityverification.TakeDocumentPhotoPresenterModule;
+import com.coinbase.android.identityverification.TakeDocumentPhotoPresenterModule_ProvidesTakeDocumentPhotoScreenFactory;
+import com.coinbase.android.identityverification.TakeDocumentPhotoPresenter_Factory;
+import com.coinbase.android.identityverification.TakeDocumentPhotoScreen;
+import com.coinbase.android.idology.IdologyAddressFormLayout;
+import com.coinbase.android.idology.IdologyAddressFormLayoutSubcomponent;
+import com.coinbase.android.idology.IdologyAddressFormLayout_MembersInjector;
+import com.coinbase.android.idology.IdologyAddressFormPresenter;
+import com.coinbase.android.idology.IdologyAddressFormPresenterModule;
+import com.coinbase.android.idology.IdologyAddressFormPresenterModule_ProvidesIdologyHandledFieldsFactory;
+import com.coinbase.android.idology.IdologyAddressFormPresenterModule_ProvidesIdologyScreenFactory;
+import com.coinbase.android.idology.IdologyAddressFormPresenterModule_ProvidesIdologyTrackingContextFactory;
+import com.coinbase.android.idology.IdologyAddressFormPresenter_Factory;
+import com.coinbase.android.idology.IdologyAddressFormScreen;
+import com.coinbase.android.idology.IdologyAnswerListValidConnector;
+import com.coinbase.android.idology.IdologyAnswerSelectedConnector;
+import com.coinbase.android.idology.IdologyAutoCompleteShownConnector;
+import com.coinbase.android.idology.IdologyFailureRouter;
+import com.coinbase.android.idology.IdologyForm;
+import com.coinbase.android.idology.IdologyFormErrorMatcher;
+import com.coinbase.android.idology.IdologyFormErrorMatcher_Factory;
+import com.coinbase.android.idology.IdologyFormLayout;
+import com.coinbase.android.idology.IdologyFormLayoutSubcomponent;
+import com.coinbase.android.idology.IdologyFormLayout_MembersInjector;
+import com.coinbase.android.idology.IdologyFormPresenter;
+import com.coinbase.android.idology.IdologyFormPresenterModule;
+import com.coinbase.android.idology.IdologyFormPresenterModule_ProvidesIdologyScreenFactory;
+import com.coinbase.android.idology.IdologyFormPresenterModule_ProvidesIdologyTrackingContextFactory;
+import com.coinbase.android.idology.IdologyFormPresenter_Factory;
+import com.coinbase.android.idology.IdologyFormScreen;
+import com.coinbase.android.idology.IdologyFormValidConnector;
+import com.coinbase.android.idology.IdologyForm_Factory;
+import com.coinbase.android.idology.IdologyNameFormLayout;
+import com.coinbase.android.idology.IdologyNameFormLayoutSubcomponent;
+import com.coinbase.android.idology.IdologyNameFormLayout_MembersInjector;
+import com.coinbase.android.idology.IdologyNameFormPresenter;
+import com.coinbase.android.idology.IdologyNameFormPresenterModule;
+import com.coinbase.android.idology.IdologyNameFormPresenterModule_ProvidesIdologyHandledFieldsFactory;
+import com.coinbase.android.idology.IdologyNameFormPresenterModule_ProvidesIdologyScreenFactory;
+import com.coinbase.android.idology.IdologyNameFormPresenterModule_ProvidesIdologyTrackingContextFactory;
+import com.coinbase.android.idology.IdologyNameFormPresenter_Factory;
+import com.coinbase.android.idology.IdologyNameFormScreen;
+import com.coinbase.android.idology.IdologyQuestionDialogFragment;
+import com.coinbase.android.idology.IdologyQuestionDialogFragment_MembersInjector;
+import com.coinbase.android.idology.IdologyQuestionsLayout;
+import com.coinbase.android.idology.IdologyQuestionsLayoutSubcomponent;
+import com.coinbase.android.idology.IdologyQuestionsLayout_MembersInjector;
+import com.coinbase.android.idology.IdologyQuestionsListAdapter;
+import com.coinbase.android.idology.IdologyQuestionsListAdapter_MembersInjector;
+import com.coinbase.android.idology.IdologyQuestionsPresenter;
+import com.coinbase.android.idology.IdologyQuestionsPresenterModule;
+import com.coinbase.android.idology.IdologyQuestionsPresenterModule_ProvidesIdologyQuestionsScreenFactory;
+import com.coinbase.android.idology.IdologyQuestionsPresenterModule_ProvidesIdologyTrackingContextFactory;
+import com.coinbase.android.idology.IdologyQuestionsPresenter_Factory;
+import com.coinbase.android.idology.IdologyQuestionsScreen;
+import com.coinbase.android.idology.IdologyRetryConnector;
+import com.coinbase.android.idology.IdologySignOutListener;
+import com.coinbase.android.idology.IdologySignOutListener_Factory;
+import com.coinbase.android.idology.IdologySourceOfFundsFormLayout;
+import com.coinbase.android.idology.IdologySourceOfFundsFormLayoutSubcomponent;
+import com.coinbase.android.idology.IdologySourceOfFundsFormLayout_MembersInjector;
+import com.coinbase.android.idology.IdologySourceOfFundsFormPresenter;
+import com.coinbase.android.idology.IdologySourceOfFundsFormPresenterModule;
+import com.coinbase.android.idology.IdologySourceOfFundsFormPresenterModule_ProvidesIdologyHandledFieldsFactory;
+import com.coinbase.android.idology.IdologySourceOfFundsFormPresenterModule_ProvidesIdologyScreenFactory;
+import com.coinbase.android.idology.IdologySourceOfFundsFormPresenterModule_ProvidesIdologyTrackingContextFactory;
+import com.coinbase.android.idology.IdologySourceOfFundsFormPresenter_Factory;
+import com.coinbase.android.idology.IdologySourceOfFundsFormScreen;
+import com.coinbase.android.idology.IdologyTrackingContextProvider;
+import com.coinbase.android.idology.IdologyTrackingContextProvider_Factory;
+import com.coinbase.android.idology.IdologyUtils;
+import com.coinbase.android.idology.IdologyUtils_Factory;
+import com.coinbase.android.idology.IdologyVerificationConnector;
+import com.coinbase.android.idology.ProgressConnector;
+import com.coinbase.android.modalAlerts.ModalRouter;
+import com.coinbase.android.modalAlerts.ModalRouterAggregator;
+import com.coinbase.android.modalAlerts.ModalRouterAggregator_Factory;
+import com.coinbase.android.notifications.fcm.InstanceIDService;
+import com.coinbase.android.notifications.fcm.InstanceIDService_MembersInjector;
+import com.coinbase.android.notifications.priceAlerts.PriceAlertsConnector;
+import com.coinbase.android.notifications.priceAlerts.PriceAlertsController;
+import com.coinbase.android.notifications.priceAlerts.PriceAlertsControllerSubcomponent;
+import com.coinbase.android.notifications.priceAlerts.PriceAlertsController_MembersInjector;
+import com.coinbase.android.notifications.priceAlerts.PriceAlertsPresenter;
+import com.coinbase.android.notifications.priceAlerts.PriceAlertsPresenterModule;
+import com.coinbase.android.notifications.priceAlerts.PriceAlertsPresenterModule_ProvidesPriceAlertsScreenFactory;
+import com.coinbase.android.notifications.priceAlerts.PriceAlertsPresenter_Factory;
+import com.coinbase.android.notifications.priceAlerts.PriceAlertsRouter;
+import com.coinbase.android.notifications.priceAlerts.PriceAlertsRouter_Factory;
+import com.coinbase.android.notifications.priceAlerts.create.CreatePriceAlertActivity;
+import com.coinbase.android.notifications.priceAlerts.create.CreatePriceAlertActivity_MembersInjector;
+import com.coinbase.android.paymentmethods.AddBankErrorController;
+import com.coinbase.android.paymentmethods.AddBankErrorControllerSubcomponent;
+import com.coinbase.android.paymentmethods.AddBankErrorController_MembersInjector;
+import com.coinbase.android.paymentmethods.AddBankErrorPresenter;
+import com.coinbase.android.paymentmethods.AddBankErrorPresenterModule;
+import com.coinbase.android.paymentmethods.AddBankErrorPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.paymentmethods.AddBankErrorPresenterModule_ProvidesAddBankErrorScreenFactory;
+import com.coinbase.android.paymentmethods.AddBankErrorPresenter_Factory;
+import com.coinbase.android.paymentmethods.AddBankErrorScreen;
+import com.coinbase.android.paymentmethods.AddBankPickerController;
+import com.coinbase.android.paymentmethods.AddBankPickerControllerSubcomponent;
+import com.coinbase.android.paymentmethods.AddBankPickerController_MembersInjector;
+import com.coinbase.android.paymentmethods.AddBankPickerPresenter;
+import com.coinbase.android.paymentmethods.AddBankPickerPresenterModule;
+import com.coinbase.android.paymentmethods.AddBankPickerPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.paymentmethods.AddBankPickerPresenterModule_ProvidesAddBankPickerScreenFactory;
+import com.coinbase.android.paymentmethods.AddBankPickerPresenter_Factory;
+import com.coinbase.android.paymentmethods.AddBankPickerScreen;
+import com.coinbase.android.paymentmethods.AddBankRouter;
+import com.coinbase.android.paymentmethods.AddBankRouter_Factory;
+import com.coinbase.android.paymentmethods.AddPaymentMethodConnector;
+import com.coinbase.android.paymentmethods.AddPlaidAccountController;
+import com.coinbase.android.paymentmethods.AddPlaidAccountControllerSubcomponent;
+import com.coinbase.android.paymentmethods.AddPlaidAccountController_MembersInjector;
+import com.coinbase.android.paymentmethods.AddPlaidAccountPresenterModule;
+import com.coinbase.android.paymentmethods.AddPlaidAccountPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.paymentmethods.AddPlaidAccountPresenterModule_ProvidesAddPlaidAccountScreenFactory;
+import com.coinbase.android.paymentmethods.AddPlaidAccountPresenter_Factory;
+import com.coinbase.android.paymentmethods.AddPlaidAccountScreen;
+import com.coinbase.android.paymentmethods.BankAccountsUpdatedConnector;
+import com.coinbase.android.paymentmethods.ConnectedAccountsLayout;
+import com.coinbase.android.paymentmethods.ConnectedAccountsLayoutSubcomponent;
+import com.coinbase.android.paymentmethods.ConnectedAccountsLayout_MembersInjector;
+import com.coinbase.android.paymentmethods.ConnectedAccountsPresenter;
+import com.coinbase.android.paymentmethods.ConnectedAccountsPresenterModule;
+import com.coinbase.android.paymentmethods.ConnectedAccountsPresenterModule_ProvidesConnectedAccountsScreenFactory;
+import com.coinbase.android.paymentmethods.ConnectedAccountsPresenter_Factory;
+import com.coinbase.android.paymentmethods.DeletePaymentMethodTask;
+import com.coinbase.android.paymentmethods.DeletePaymentMethodTask_MembersInjector;
+import com.coinbase.android.paymentmethods.GetPaymentMethodsTaskRx;
+import com.coinbase.android.paymentmethods.IAVLoginFragment;
+import com.coinbase.android.paymentmethods.IAVLoginFragmentSubcomponent;
+import com.coinbase.android.paymentmethods.IAVLoginFragment_MembersInjector;
+import com.coinbase.android.paymentmethods.IAVLoginPresenter;
+import com.coinbase.android.paymentmethods.IAVLoginPresenterModule;
+import com.coinbase.android.paymentmethods.IAVLoginPresenterModule_ProvidesIAVLoginScreenFactory;
+import com.coinbase.android.paymentmethods.IAVLoginPresenter_Factory;
+import com.coinbase.android.paymentmethods.IAVLoginRouter;
+import com.coinbase.android.paymentmethods.IAVLoginRouter_Factory;
+import com.coinbase.android.paymentmethods.IAVLoginScreen;
+import com.coinbase.android.paymentmethods.PaymentMethodsController;
+import com.coinbase.android.paymentmethods.PaymentMethodsControllerSubcomponent;
+import com.coinbase.android.paymentmethods.PaymentMethodsController_MembersInjector;
+import com.coinbase.android.paymentmethods.PaymentMethodsFetchedConnector;
+import com.coinbase.android.paymentmethods.PaymentMethodsPresenter;
+import com.coinbase.android.paymentmethods.PaymentMethodsPresenterModule;
+import com.coinbase.android.paymentmethods.PaymentMethodsPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.paymentmethods.PaymentMethodsPresenterModule_ProvidesPaymentMethodsScreenFactory;
+import com.coinbase.android.paymentmethods.PaymentMethodsPresenter_Factory;
+import com.coinbase.android.paymentmethods.PaymentMethodsRouter;
+import com.coinbase.android.paymentmethods.PaymentMethodsRouter_Factory;
+import com.coinbase.android.paymentmethods.PaymentMethodsScreen;
+import com.coinbase.android.paymentmethods.PaymentMethodsUpdatedConnector;
+import com.coinbase.android.paymentmethods.PaymentMethodsViewModule;
+import com.coinbase.android.paymentmethods.PaymentMethodsViewModule_ProvidesPaymentMethodDeletedResFactory;
+import com.coinbase.android.paymentmethods.PlaidAccountLoginFragment;
+import com.coinbase.android.paymentmethods.PlaidAccountLoginFragment_MembersInjector;
+import com.coinbase.android.paymentmethods.PlaidController;
+import com.coinbase.android.paymentmethods.PlaidControllerSubcomponent;
+import com.coinbase.android.paymentmethods.PlaidController_MembersInjector;
+import com.coinbase.android.paymentmethods.PlaidOnExitConnector;
+import com.coinbase.android.paymentmethods.PlaidPresenter;
+import com.coinbase.android.paymentmethods.PlaidPresenterModule;
+import com.coinbase.android.paymentmethods.PlaidPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.paymentmethods.PlaidPresenterModule_ProvidesPlaidScreenFactory;
+import com.coinbase.android.paymentmethods.PlaidPresenter_Factory;
+import com.coinbase.android.paymentmethods.PlaidScreen;
+import com.coinbase.android.paymentmethods.VerifyPaymentMethodConnector;
+import com.coinbase.android.paymentmethods.card.CardFormController;
+import com.coinbase.android.paymentmethods.card.CardFormControllerSubcomponent;
+import com.coinbase.android.paymentmethods.card.CardFormController_MembersInjector;
+import com.coinbase.android.paymentmethods.card.CardFormPresenter;
+import com.coinbase.android.paymentmethods.card.CardFormPresenterModule;
+import com.coinbase.android.paymentmethods.card.CardFormPresenterModule_ProvidesCardFormScreenFactory;
+import com.coinbase.android.paymentmethods.card.CardFormPresenterModule_ProvidesCardValidatorFactory;
+import com.coinbase.android.paymentmethods.card.CardFormPresenterModule_ProvidesCurrentControllerFactory;
+import com.coinbase.android.paymentmethods.card.CardFormPresenter_Factory;
+import com.coinbase.android.paymentmethods.card.CardFormRouter;
+import com.coinbase.android.paymentmethods.card.CardFormRouter_Factory;
+import com.coinbase.android.paymentmethods.card.CardFormViewModule;
+import com.coinbase.android.paymentmethods.card.CardFormViewModule_ProvidesCheckFieldsErrorResFactory;
+import com.coinbase.android.paymentmethods.card.CardFormViewModule_ProvidesPaymentProcessingErrorResFactory;
+import com.coinbase.android.paymentmethods.card.PaymentMethodVerificationController;
+import com.coinbase.android.paymentmethods.card.PaymentMethodVerificationController_MembersInjector;
+import com.coinbase.android.paymentmethods.card.WorldPayPollingWrapper;
+import com.coinbase.android.paymentmethods.card.WorldPayValidator;
+import com.coinbase.android.paymentmethods.card.WorldPayValidator_Factory;
+import com.coinbase.android.paymentmethods.linkedaccounts.LinkedAccountConnector;
+import com.coinbase.android.paymentmethods.linkedaccounts.LinkedAccountItemLayout;
+import com.coinbase.android.paymentmethods.linkedaccounts.LinkedAccountItemLayout_MembersInjector;
+import com.coinbase.android.paymentmethods.linkedaccounts.LinkedAccountsPickerController;
+import com.coinbase.android.paymentmethods.linkedaccounts.LinkedAccountsPickerControllerSubcomponent;
+import com.coinbase.android.paymentmethods.linkedaccounts.LinkedAccountsPickerController_MembersInjector;
+import com.coinbase.android.paymentmethods.linkedaccounts.LinkedAccountsPickerPresenter;
+import com.coinbase.android.paymentmethods.linkedaccounts.LinkedAccountsPickerPresenterModule;
+import com.coinbase.android.paymentmethods.linkedaccounts.LinkedAccountsPickerPresenterModule_ProvidesLinkedAccountsPickerScreenFactory;
+import com.coinbase.android.paymentmethods.linkedaccounts.LinkedAccountsPickerPresenter_Factory;
+import com.coinbase.android.phone.AddPhoneDialogController;
+import com.coinbase.android.phone.AddPhoneDialogController_MembersInjector;
+import com.coinbase.android.phone.DeletePhoneTask;
+import com.coinbase.android.phone.DeletePhoneTask_MembersInjector;
+import com.coinbase.android.phone.PhoneNumberController;
+import com.coinbase.android.phone.PhoneNumberControllerSubcomponent;
+import com.coinbase.android.phone.PhoneNumberController_MembersInjector;
+import com.coinbase.android.phone.PhoneNumberPresenter;
+import com.coinbase.android.phone.PhoneNumberPresenterModule;
+import com.coinbase.android.phone.PhoneNumberPresenterModule_ProvidePhoneNumberPresenterModuleFactory;
+import com.coinbase.android.phone.PhoneNumberPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.phone.PhoneNumberPresenter_Factory;
+import com.coinbase.android.phone.PhoneNumberScreen;
+import com.coinbase.android.phone.PhoneNumbersUpdatedConnector;
+import com.coinbase.android.phone.VerifyPhoneDialogFragment;
+import com.coinbase.android.phone.VerifyPhoneDialogFragment_MembersInjector;
+import com.coinbase.android.phone.VerifyPhoneHandler;
+import com.coinbase.android.phone.VerifyPhoneHandler_MembersInjector;
+import com.coinbase.android.pin.PINManager;
+import com.coinbase.android.pin.PINPromptActivity;
+import com.coinbase.android.pin.PINPromptActivity_MembersInjector;
+import com.coinbase.android.pin.PINSettingDialogFragment;
+import com.coinbase.android.pin.PINSettingDialogFragment_MembersInjector;
+import com.coinbase.android.pricechart.PriceChartDataUpdatedConnector;
+import com.coinbase.android.pricechart.PriceChartLayout;
+import com.coinbase.android.pricechart.PriceChartLayoutSubcomponent;
+import com.coinbase.android.pricechart.PriceChartLayout_MembersInjector;
+import com.coinbase.android.pricechart.PriceChartPeriodUpdatedConnector;
+import com.coinbase.android.pricechart.PriceChartPresenter;
+import com.coinbase.android.pricechart.PriceChartPresenterModule;
+import com.coinbase.android.pricechart.PriceChartPresenterModule_ProvidesPriceChartLayoutScreenFactory;
+import com.coinbase.android.pricechart.PriceChartPresenter_Factory;
+import com.coinbase.android.pricechart.PriceChartScreen;
+import com.coinbase.android.quickstart.QuickstartManager;
+import com.coinbase.android.quickstart.QuickstartModule;
+import com.coinbase.android.quickstart.QuickstartModule_ProvidesQuickStartManagerFactory;
+import com.coinbase.android.settings.AccountSettingsController;
+import com.coinbase.android.settings.AccountSettingsControllerSubcomponent;
+import com.coinbase.android.settings.AccountSettingsController_MembersInjector;
+import com.coinbase.android.settings.AccountSettingsPreferenceItem;
+import com.coinbase.android.settings.AccountSettingsPresenter;
+import com.coinbase.android.settings.AccountSettingsPresenterModule;
+import com.coinbase.android.settings.AccountSettingsPresenterModule_ProvidesAccountSettingsScreenFactory;
+import com.coinbase.android.settings.AccountSettingsPresenter_Factory;
+import com.coinbase.android.settings.AccountSettingsScreen;
+import com.coinbase.android.settings.AccountsUpdatedConnector;
+import com.coinbase.android.settings.ChangeNativeCurrencyDialogFragment;
+import com.coinbase.android.settings.ChangeNativeCurrencyDialogFragment_MembersInjector;
+import com.coinbase.android.settings.GoToSettingsConnector;
+import com.coinbase.android.settings.GoToSettingsDialogController;
+import com.coinbase.android.settings.GoToSettingsDialogController_MembersInjector;
+import com.coinbase.android.settings.LocalUserDataUpdatedConnector;
+import com.coinbase.android.settings.SettingsPreferenceItem;
+import com.coinbase.android.settings.SettingsPreferenceItemClickedConnector;
+import com.coinbase.android.settings.UpdateUserTask;
+import com.coinbase.android.settings.UpdateUserTask_MembersInjector;
+import com.coinbase.android.settings.UserUpdatedConnector;
+import com.coinbase.android.settings.gdpr.EmailSettingsController;
+import com.coinbase.android.settings.gdpr.EmailSettingsControllerSubcomponent;
+import com.coinbase.android.settings.gdpr.EmailSettingsController_MembersInjector;
+import com.coinbase.android.settings.gdpr.EmailSettingsPresenter;
+import com.coinbase.android.settings.gdpr.EmailSettingsPresenterModule;
+import com.coinbase.android.settings.gdpr.EmailSettingsPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.settings.gdpr.EmailSettingsPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.settings.gdpr.EmailSettingsPresenter_Factory;
+import com.coinbase.android.settings.gdpr.GdprPrivacyRequestController;
+import com.coinbase.android.settings.gdpr.GdprPrivacyRequestControllerSubcomponent;
+import com.coinbase.android.settings.gdpr.GdprPrivacyRequestController_MembersInjector;
+import com.coinbase.android.settings.gdpr.GdprPrivacyRequestPresenter;
+import com.coinbase.android.settings.gdpr.GdprPrivacyRequestPresenterModule;
+import com.coinbase.android.settings.gdpr.GdprPrivacyRequestPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.settings.gdpr.GdprPrivacyRequestPresenterModule_ProvidesRequestCorrectionViewModelFactory;
+import com.coinbase.android.settings.gdpr.GdprPrivacyRequestPresenterModule_ProvidesRequestDataViewModelFactory;
+import com.coinbase.android.settings.gdpr.GdprPrivacyRequestPresenterModule_ProvidesRequestDeletionViewModelFactory;
+import com.coinbase.android.settings.gdpr.GdprPrivacyRequestPresenterModule_ProvidesRequestExportViewModelFactory;
+import com.coinbase.android.settings.gdpr.GdprPrivacyRequestPresenterModule_ProvidesRequestRestrictionProcessingViewModelFactory;
+import com.coinbase.android.settings.gdpr.GdprPrivacyRequestPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.settings.gdpr.GdprPrivacyRequestPresenter_Factory;
+import com.coinbase.android.settings.gdpr.GdprPrivacyRequestScreen;
+import com.coinbase.android.settings.gdpr.GdprRequestSentController;
+import com.coinbase.android.settings.gdpr.GdprRequestSentControllerSubcomponent;
+import com.coinbase.android.settings.gdpr.GdprRequestSentController_MembersInjector;
+import com.coinbase.android.settings.gdpr.GdprRequestSentPresenter;
+import com.coinbase.android.settings.gdpr.GdprRequestSentPresenterModule;
+import com.coinbase.android.settings.gdpr.GdprRequestSentPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.settings.gdpr.GdprRequestSentPresenter_Factory;
+import com.coinbase.android.settings.gdpr.GdprSettingsRouter;
+import com.coinbase.android.settings.gdpr.GdprSettingsRouter_Factory;
+import com.coinbase.android.settings.gdpr.PrivacyRightsController;
+import com.coinbase.android.settings.gdpr.PrivacyRightsControllerSubcomponent;
+import com.coinbase.android.settings.gdpr.PrivacyRightsController_MembersInjector;
+import com.coinbase.android.settings.gdpr.PrivacyRightsPresenter;
+import com.coinbase.android.settings.gdpr.PrivacyRightsPresenterModule;
+import com.coinbase.android.settings.gdpr.PrivacyRightsPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.settings.gdpr.PrivacyRightsPresenterModule_ProvidesPrefsItemListFactory;
+import com.coinbase.android.settings.gdpr.PrivacyRightsPresenterModule_ProvidesPrivacyRightsHeaderFactory;
+import com.coinbase.android.settings.gdpr.PrivacyRightsPresenterModule_ProvidesRequestCorrectionItemFactory;
+import com.coinbase.android.settings.gdpr.PrivacyRightsPresenterModule_ProvidesRequestDataItemFactory;
+import com.coinbase.android.settings.gdpr.PrivacyRightsPresenterModule_ProvidesRequestDeletionFactory;
+import com.coinbase.android.settings.gdpr.PrivacyRightsPresenterModule_ProvidesRequestExportFactory;
+import com.coinbase.android.settings.gdpr.PrivacyRightsPresenterModule_ProvidesRequestRestrictionItemFactory;
+import com.coinbase.android.settings.gdpr.PrivacyRightsPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.settings.gdpr.PrivacyRightsPresenter_Factory;
+import com.coinbase.android.settings.gdpr.PrivacyRightsSettingsPreferences.RequestCorrectionItem;
+import com.coinbase.android.settings.gdpr.PrivacyRightsSettingsPreferences.RequestDataItem;
+import com.coinbase.android.settings.gdpr.PrivacyRightsSettingsPreferences.RequestDeletion;
+import com.coinbase.android.settings.gdpr.PrivacyRightsSettingsPreferences.RequestExport;
+import com.coinbase.android.settings.gdpr.PrivacyRightsSettingsPreferences.RequestRestrictionItem;
+import com.coinbase.android.settings.idology.IdologyArgsBuilder;
+import com.coinbase.android.settings.idology.IdologyArgsBuilder_Factory;
+import com.coinbase.android.settings.idology.IdologyFailureController;
+import com.coinbase.android.settings.idology.IdologyFailureControllerSubcomponent;
+import com.coinbase.android.settings.idology.IdologyFailureController_MembersInjector;
+import com.coinbase.android.settings.idology.IdologyFailurePresenter;
+import com.coinbase.android.settings.idology.IdologyFailurePresenterModule;
+import com.coinbase.android.settings.idology.IdologyFailurePresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.settings.idology.IdologyFailurePresenter_Factory;
+import com.coinbase.android.settings.idology.IdologyRouter;
+import com.coinbase.android.settings.idology.IdologyRouter_Factory;
+import com.coinbase.android.settings.idology.IdologySettingsController;
+import com.coinbase.android.settings.idology.IdologySettingsControllerSubcomponent;
+import com.coinbase.android.settings.idology.IdologySettingsController_MembersInjector;
+import com.coinbase.android.settings.idology.IdologySettingsPresenter;
+import com.coinbase.android.settings.idology.IdologySettingsPresenterModule;
+import com.coinbase.android.settings.idology.IdologySettingsPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.settings.idology.IdologySettingsPresenterModule_ProvidesIdologyFailureRouterFactory;
+import com.coinbase.android.settings.idology.IdologySettingsPresenterModule_ProvidesIdologyLinkedAccountsScreenFactory;
+import com.coinbase.android.settings.idology.IdologySettingsPresenterModule_ProvidesIdologySuccessRouterFactory;
+import com.coinbase.android.settings.idology.IdologySettingsPresenter_Factory;
+import com.coinbase.android.settings.idology.IdologySettingsQuestionsController;
+import com.coinbase.android.settings.idology.IdologySettingsQuestionsControllerSubcomponent;
+import com.coinbase.android.settings.idology.IdologySettingsQuestionsController_MembersInjector;
+import com.coinbase.android.settings.idology.IdologySettingsQuestionsPresenter;
+import com.coinbase.android.settings.idology.IdologySettingsQuestionsPresenterModule;
+import com.coinbase.android.settings.idology.IdologySettingsQuestionsPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.settings.idology.IdologySettingsQuestionsPresenterModule_ProvidesIdologyFailureRouterFactory;
+import com.coinbase.android.settings.idology.IdologySettingsQuestionsPresenterModule_ProvidesIdologyQuestionsScreenFactory;
+import com.coinbase.android.settings.idology.IdologySettingsQuestionsPresenterModule_ProvidesIdologySuccessRouterFactory;
+import com.coinbase.android.settings.idology.IdologySettingsQuestionsPresenter_Factory;
+import com.coinbase.android.settings.idology.IdologySettingsQuestionsScreen;
+import com.coinbase.android.settings.idology.IdologySettingsScreen;
+import com.coinbase.android.settings.idology.IdologySuccessController;
+import com.coinbase.android.settings.idology.IdologySuccessControllerSubcomponent;
+import com.coinbase.android.settings.idology.IdologySuccessController_MembersInjector;
+import com.coinbase.android.settings.idology.IdologySuccessPresenter;
+import com.coinbase.android.settings.idology.IdologySuccessPresenterModule;
+import com.coinbase.android.settings.idology.IdologySuccessPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.settings.idology.IdologySuccessPresenterModule_ProvidesIdologySuccessScreenFactory;
+import com.coinbase.android.settings.idology.IdologySuccessPresenter_Factory;
+import com.coinbase.android.settings.idology.IdologySuccessRouter;
+import com.coinbase.android.settings.idology.IdologySuccessScreen;
+import com.coinbase.android.settings.idology.IdologySuccessSettingsRouter;
+import com.coinbase.android.settings.idology.IdologySuccessSettingsRouter_Factory;
+import com.coinbase.android.settings.idology.InAppIdologyFailureRouter;
+import com.coinbase.android.settings.idology.InAppIdologyFailureRouter_Factory;
+import com.coinbase.android.settings.tiers.InvestmentTiersRequirementsController;
+import com.coinbase.android.settings.tiers.InvestmentTiersRequirementsControllerSubcomponent;
+import com.coinbase.android.settings.tiers.InvestmentTiersRequirementsController_MembersInjector;
+import com.coinbase.android.settings.tiers.InvestmentTiersRequirementsPresenter;
+import com.coinbase.android.settings.tiers.InvestmentTiersRequirementsPresenterModule;
+import com.coinbase.android.settings.tiers.InvestmentTiersRequirementsPresenterModule_ProvidesControllerFactory;
+import com.coinbase.android.settings.tiers.InvestmentTiersRequirementsPresenterModule_ProvidesInvestmentTiersScreenFactory;
+import com.coinbase.android.settings.tiers.InvestmentTiersRequirementsPresenter_Factory;
+import com.coinbase.android.settings.tiers.InvestmentTiersRequirementsRouter;
+import com.coinbase.android.settings.tiers.InvestmentTiersRequirementsRouter_Factory;
+import com.coinbase.android.settings.tiers.InvestmentTiersRequirementsScreen;
+import com.coinbase.android.settings.tiers.InvestmentTiersSettingsController;
+import com.coinbase.android.settings.tiers.InvestmentTiersSettingsControllerSubcomponent;
+import com.coinbase.android.settings.tiers.InvestmentTiersSettingsController_MembersInjector;
+import com.coinbase.android.settings.tiers.InvestmentTiersSettingsPresenter;
+import com.coinbase.android.settings.tiers.InvestmentTiersSettingsPresenterModule;
+import com.coinbase.android.settings.tiers.InvestmentTiersSettingsPresenterModule_ProvidesAutoResizeTextViewAdjustorFactory;
+import com.coinbase.android.settings.tiers.InvestmentTiersSettingsPresenterModule_ProvidesControllerFactory;
+import com.coinbase.android.settings.tiers.InvestmentTiersSettingsPresenterModule_ProvidesInvestmentTiersScreenFactory;
+import com.coinbase.android.settings.tiers.InvestmentTiersSettingsPresenter_Factory;
+import com.coinbase.android.settings.tiers.InvestmentTiersSettingsRouter;
+import com.coinbase.android.settings.tiers.InvestmentTiersSettingsRouter_Factory;
+import com.coinbase.android.settings.tiers.InvestmentTiersSettingsScreen;
+import com.coinbase.android.signin.AcceptTermsController;
+import com.coinbase.android.signin.AcceptTermsControllerSubcomponent;
+import com.coinbase.android.signin.AcceptTermsController_MembersInjector;
+import com.coinbase.android.signin.AcceptTermsPresenter;
+import com.coinbase.android.signin.AcceptTermsPresenterModule;
+import com.coinbase.android.signin.AcceptTermsPresenterModule_ProvidesControllerFactory;
+import com.coinbase.android.signin.AcceptTermsPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.signin.AcceptTermsPresenter_Factory;
+import com.coinbase.android.signin.AcceptTermsScreen;
+import com.coinbase.android.signin.AuthCompletionFactory_Factory;
+import com.coinbase.android.signin.AuthIntentManager;
+import com.coinbase.android.signin.AuthIntentManager_Factory;
+import com.coinbase.android.signin.AuthManager;
+import com.coinbase.android.signin.AuthRouter;
+import com.coinbase.android.signin.AuthRouter_Factory;
+import com.coinbase.android.signin.CredentialsApiRxWrapper;
+import com.coinbase.android.signin.CredentialsApiRxWrapper_Factory;
+import com.coinbase.android.signin.DeviceVerifyConnector;
+import com.coinbase.android.signin.DeviceVerifyController;
+import com.coinbase.android.signin.DeviceVerifyControllerSubcomponent;
+import com.coinbase.android.signin.DeviceVerifyController_MembersInjector;
+import com.coinbase.android.signin.DeviceVerifyPresenter;
+import com.coinbase.android.signin.DeviceVerifyPresenterModule;
+import com.coinbase.android.signin.DeviceVerifyPresenterModule_ProvidesControllerFactory;
+import com.coinbase.android.signin.DeviceVerifyPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.signin.DeviceVerifyPresenter_Factory;
+import com.coinbase.android.signin.DeviceVerifyRouter;
+import com.coinbase.android.signin.DeviceVerifyRouter_Factory;
+import com.coinbase.android.signin.DeviceVerifyScreen;
+import com.coinbase.android.signin.EmailVerifiedConnector;
+import com.coinbase.android.signin.EmailVerifiedRouter;
+import com.coinbase.android.signin.EmailVerifiedRouter_Factory;
+import com.coinbase.android.signin.EmailVerifyController;
+import com.coinbase.android.signin.EmailVerifyControllerSubcomponent;
+import com.coinbase.android.signin.EmailVerifyController_MembersInjector;
+import com.coinbase.android.signin.EmailVerifyPresenter;
+import com.coinbase.android.signin.EmailVerifyPresenterModule;
+import com.coinbase.android.signin.EmailVerifyPresenterModule_ProvidesControllerFactory;
+import com.coinbase.android.signin.EmailVerifyPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.signin.EmailVerifyPresenter_Factory;
+import com.coinbase.android.signin.EmailVerifyScreen;
+import com.coinbase.android.signin.IdologyOptionDialogFragment;
+import com.coinbase.android.signin.IdologyOptionDialogFragment_MembersInjector;
+import com.coinbase.android.signin.IdologyOptionSelectedConnector;
+import com.coinbase.android.signin.IntroActivity;
+import com.coinbase.android.signin.IntroActivity_MembersInjector;
+import com.coinbase.android.signin.IntroPriceChartFragment;
+import com.coinbase.android.signin.IntroPriceChartFragmentSubcomponent;
+import com.coinbase.android.signin.IntroPriceChartFragment_MembersInjector;
+import com.coinbase.android.signin.IntroPriceChartPresenter;
+import com.coinbase.android.signin.IntroPriceChartPresenterModule;
+import com.coinbase.android.signin.IntroPriceChartPresenterModule_ProvidesPriceChartScreenFactory;
+import com.coinbase.android.signin.IntroPriceChartPresenter_Factory;
+import com.coinbase.android.signin.IntroPriceChartScreen;
+import com.coinbase.android.signin.LaunchMessageModalRouter;
+import com.coinbase.android.signin.LaunchMessageModalRouter_Factory;
+import com.coinbase.android.signin.LoginAuthManager;
+import com.coinbase.android.signin.LoginAuthManager_Factory;
+import com.coinbase.android.signin.LoginController;
+import com.coinbase.android.signin.LoginControllerSubcomponentModule;
+import com.coinbase.android.signin.LoginControllerSubcomponentModule_ProvidesControllerFactory;
+import com.coinbase.android.signin.LoginController_MembersInjector;
+import com.coinbase.android.signin.OAuthTask;
+import com.coinbase.android.signin.OAuthTask_MembersInjector;
+import com.coinbase.android.signin.RegistrationControllerActivity;
+import com.coinbase.android.signin.RegistrationControllerActivity_MembersInjector;
+import com.coinbase.android.signin.SignInPhoneNumberController;
+import com.coinbase.android.signin.SignInPhoneNumberControllerSubcomponent;
+import com.coinbase.android.signin.SignInPhoneNumberController_MembersInjector;
+import com.coinbase.android.signin.SignInPhoneNumberPresenter;
+import com.coinbase.android.signin.SignInPhoneNumberPresenterModule;
+import com.coinbase.android.signin.SignInPhoneNumberPresenterModule_ProvidePhoneNumberPresenterModuleFactory;
+import com.coinbase.android.signin.SignInPhoneNumberPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.signin.SignInPhoneNumberPresenter_Factory;
+import com.coinbase.android.signin.SignInPhoneNumberRouter;
+import com.coinbase.android.signin.SignInPhoneNumberRouter_Factory;
+import com.coinbase.android.signin.SignInPhoneNumberScreen;
+import com.coinbase.android.signin.SignInRouter;
+import com.coinbase.android.signin.SignInRouter_Factory;
+import com.coinbase.android.signin.SignInVerifyPhoneNumberController;
+import com.coinbase.android.signin.SignInVerifyPhoneNumberControllerSubcomponent;
+import com.coinbase.android.signin.SignInVerifyPhoneNumberController_MembersInjector;
+import com.coinbase.android.signin.SignInVerifyPhoneNumberPresenter;
+import com.coinbase.android.signin.SignInVerifyPhoneNumberPresenterModule;
+import com.coinbase.android.signin.SignInVerifyPhoneNumberPresenterModule_ProvidePhoneNumberPresenterModuleFactory;
+import com.coinbase.android.signin.SignInVerifyPhoneNumberPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.signin.SignInVerifyPhoneNumberPresenter_Factory;
+import com.coinbase.android.signin.SignInVerifyPhoneNumberScreen;
+import com.coinbase.android.signin.SignUpController;
+import com.coinbase.android.signin.SignUpControllerSubcomponentModule;
+import com.coinbase.android.signin.SignUpControllerSubcomponentModule_ProvidesControllerFactory;
+import com.coinbase.android.signin.SignUpController_MembersInjector;
+import com.coinbase.android.signin.StateDisclosureFinishedConnector;
+import com.coinbase.android.signin.StateListDialogFragment;
+import com.coinbase.android.signin.StateListDialogFragment_MembersInjector;
+import com.coinbase.android.signin.StateListSelectorConnector;
+import com.coinbase.android.signin.TwoFactorController;
+import com.coinbase.android.signin.TwoFactorControllerSubcomponent;
+import com.coinbase.android.signin.TwoFactorController_MembersInjector;
+import com.coinbase.android.signin.TwoFactorPresenter;
+import com.coinbase.android.signin.TwoFactorPresenterModule;
+import com.coinbase.android.signin.TwoFactorPresenterModule_ProvidesControllerFactory;
+import com.coinbase.android.signin.TwoFactorPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.signin.TwoFactorPresenter_Factory;
+import com.coinbase.android.signin.TwoFactorRouter;
+import com.coinbase.android.signin.TwoFactorRouter_Factory;
+import com.coinbase.android.signin.TwoFactorScreen;
+import com.coinbase.android.signin.state.IdologySuccessAuthRouter;
+import com.coinbase.android.signin.state.IdologySuccessAuthRouter_Factory;
+import com.coinbase.android.signin.state.StateIdologyAddressFormController;
+import com.coinbase.android.signin.state.StateIdologyAddressFormControllerSubcomponent;
+import com.coinbase.android.signin.state.StateIdologyAddressFormController_MembersInjector;
+import com.coinbase.android.signin.state.StateIdologyAddressFormPresenter;
+import com.coinbase.android.signin.state.StateIdologyAddressFormPresenterModule;
+import com.coinbase.android.signin.state.StateIdologyAddressFormPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.signin.state.StateIdologyAddressFormPresenterModule_ProvidesStateIdologyAddressFormScreenFactory;
+import com.coinbase.android.signin.state.StateIdologyAddressFormPresenter_Factory;
+import com.coinbase.android.signin.state.StateIdologyAddressFormScreen;
+import com.coinbase.android.signin.state.StateIdologyFailureController;
+import com.coinbase.android.signin.state.StateIdologyFailureControllerSubcomponent;
+import com.coinbase.android.signin.state.StateIdologyFailureController_MembersInjector;
+import com.coinbase.android.signin.state.StateIdologyFailurePresenter;
+import com.coinbase.android.signin.state.StateIdologyFailurePresenterModule;
+import com.coinbase.android.signin.state.StateIdologyFailurePresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.signin.state.StateIdologyFailurePresenter_Factory;
+import com.coinbase.android.signin.state.StateIdologyFormScreen;
+import com.coinbase.android.signin.state.StateIdologyNameFormController;
+import com.coinbase.android.signin.state.StateIdologyNameFormControllerSubcomponent;
+import com.coinbase.android.signin.state.StateIdologyNameFormController_MembersInjector;
+import com.coinbase.android.signin.state.StateIdologyNameFormPresenter;
+import com.coinbase.android.signin.state.StateIdologyNameFormPresenterModule;
+import com.coinbase.android.signin.state.StateIdologyNameFormPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.signin.state.StateIdologyNameFormPresenterModule_ProvidesStateIdologyNameFormScreenFactory;
+import com.coinbase.android.signin.state.StateIdologyNameFormPresenter_Factory;
+import com.coinbase.android.signin.state.StateIdologyQuestionsController;
+import com.coinbase.android.signin.state.StateIdologyQuestionsControllerSubcomponent;
+import com.coinbase.android.signin.state.StateIdologyQuestionsController_MembersInjector;
+import com.coinbase.android.signin.state.StateIdologyRetryFormController;
+import com.coinbase.android.signin.state.StateIdologyRetryFormControllerSubcomponent;
+import com.coinbase.android.signin.state.StateIdologyRetryFormController_MembersInjector;
+import com.coinbase.android.signin.state.StateIdologyRetryFormPresenter;
+import com.coinbase.android.signin.state.StateIdologyRetryFormPresenterModule;
+import com.coinbase.android.signin.state.StateIdologyRetryFormPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.signin.state.StateIdologyRetryFormPresenterModule_ProvidesIdologyFailureRouterFactory;
+import com.coinbase.android.signin.state.StateIdologyRetryFormPresenterModule_ProvidesStateIdologyRetryFormScreenFactory;
+import com.coinbase.android.signin.state.StateIdologyRetryFormPresenter_Factory;
+import com.coinbase.android.signin.state.StateIdologyRetryFormScreen;
+import com.coinbase.android.signin.state.StateIdologySettingsQuestionsPresenterModule;
+import com.coinbase.android.signin.state.StateIdologySettingsQuestionsPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.signin.state.StateIdologySettingsQuestionsPresenterModule_ProvidesIdologyFailureRouterFactory;
+import com.coinbase.android.signin.state.StateIdologySettingsQuestionsPresenterModule_ProvidesIdologyQuestionsScreenFactory;
+import com.coinbase.android.signin.state.StateIdologySettingsQuestionsPresenterModule_ProvidesIdologySuccessRouterFactory;
+import com.coinbase.android.signin.state.StateIdologySourceOfFundsFormController;
+import com.coinbase.android.signin.state.StateIdologySourceOfFundsFormControllerSubcomponent;
+import com.coinbase.android.signin.state.StateIdologySourceOfFundsFormController_MembersInjector;
+import com.coinbase.android.signin.state.StateIdologySourceOfFundsFormPresenter;
+import com.coinbase.android.signin.state.StateIdologySourceOfFundsFormPresenterModule;
+import com.coinbase.android.signin.state.StateIdologySourceOfFundsFormPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.signin.state.StateIdologySourceOfFundsFormPresenterModule_ProvidesIdologyFailureRouterFactory;
+import com.coinbase.android.signin.state.StateIdologySourceOfFundsFormPresenterModule_ProvidesStateIdologySourceOfFundsFormScreenFactory;
+import com.coinbase.android.signin.state.StateIdologySourceOfFundsFormPresenter_Factory;
+import com.coinbase.android.signin.state.StateIdologySourceOfFundsScreen;
+import com.coinbase.android.signin.state.StateLockedController;
+import com.coinbase.android.signin.state.StateLockedControllerSubcomponent;
+import com.coinbase.android.signin.state.StateLockedController_MembersInjector;
+import com.coinbase.android.signin.state.StateLockedPresenter;
+import com.coinbase.android.signin.state.StateLockedPresenterModule;
+import com.coinbase.android.signin.state.StateLockedPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.signin.state.StateLockedPresenterModule_ProvidesStateLockedScreenFactory;
+import com.coinbase.android.signin.state.StateLockedPresenter_Factory;
+import com.coinbase.android.signin.state.StateLockedScreen;
+import com.coinbase.android.signin.state.StateRegistrationRouter;
+import com.coinbase.android.signin.state.StateRegistrationRouter_Factory;
+import com.coinbase.android.signin.state.StateSelectorController;
+import com.coinbase.android.signin.state.StateSelectorControllerSubcomponent;
+import com.coinbase.android.signin.state.StateSelectorController_MembersInjector;
+import com.coinbase.android.signin.state.StateSelectorPresenter;
+import com.coinbase.android.signin.state.StateSelectorPresenterModule;
+import com.coinbase.android.signin.state.StateSelectorPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.signin.state.StateSelectorPresenterModule_ProvidesStateSelectorScreenFactory;
+import com.coinbase.android.signin.state.StateSelectorPresenter_Factory;
+import com.coinbase.android.signin.state.StateSelectorScreen;
+import com.coinbase.android.signin.state.StateSuspendedController;
+import com.coinbase.android.signin.state.StateSuspendedControllerSubcomponent;
+import com.coinbase.android.signin.state.StateSuspendedController_MembersInjector;
+import com.coinbase.android.signin.state.StateSuspendedPresenter;
+import com.coinbase.android.signin.state.StateSuspendedPresenterModule;
+import com.coinbase.android.signin.state.StateSuspendedPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.signin.state.StateSuspendedPresenterModule_ProvidesStateSuspendedScreenFactory;
+import com.coinbase.android.signin.state.StateSuspendedPresenter_Factory;
+import com.coinbase.android.signin.state.StateSuspendedScreen;
+import com.coinbase.android.signin.state.UpfrontKycIdentityAcceptableDocumentsController;
+import com.coinbase.android.signin.state.UpfrontKycIdentityAcceptableDocumentsControllerSubcomponent;
+import com.coinbase.android.signin.state.UpfrontKycIdentityAcceptableDocumentsController_MembersInjector;
+import com.coinbase.android.signin.state.UpfrontKycIdentityAcceptableDocumentsPresenter;
+import com.coinbase.android.signin.state.UpfrontKycIdentityAcceptableDocumentsPresenterModule;
+import com.coinbase.android.signin.state.UpfrontKycIdentityAcceptableDocumentsPresenterModule_ProvidesControllerFactory;
+import com.coinbase.android.signin.state.UpfrontKycIdentityAcceptableDocumentsPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.signin.state.UpfrontKycIdentityAcceptableDocumentsPresenter_Factory;
+import com.coinbase.android.signin.state.UpfrontKycIdentityAcceptableDocumentsRouter_Factory;
+import com.coinbase.android.signin.state.UpfrontKycIdentityAcceptableDocumentsScreen;
+import com.coinbase.android.signin.state.UpfrontKycIdentityDocumentScanController;
+import com.coinbase.android.signin.state.UpfrontKycIdentityDocumentScanControllerSubcomponent;
+import com.coinbase.android.signin.state.UpfrontKycIdentityDocumentScanController_MembersInjector;
+import com.coinbase.android.signin.state.UpfrontKycIdentityDocumentScanPresenter;
+import com.coinbase.android.signin.state.UpfrontKycIdentityDocumentScanPresenterModule;
+import com.coinbase.android.signin.state.UpfrontKycIdentityDocumentScanPresenterModule_ProvidesControllerFactory;
+import com.coinbase.android.signin.state.UpfrontKycIdentityDocumentScanPresenterModule_ProvidesJumioDocumentScanScreenFactory;
+import com.coinbase.android.signin.state.UpfrontKycIdentityDocumentScanPresenter_Factory;
+import com.coinbase.android.signin.state.UpfrontKycIdentityDocumentScanRouter;
+import com.coinbase.android.signin.state.UpfrontKycIdentityDocumentScanRouter_Factory;
+import com.coinbase.android.signin.state.UpfrontKycIdentityDocumentScanScreen;
+import com.coinbase.android.signin.state.UpfrontKycIdentityFailedController;
+import com.coinbase.android.signin.state.UpfrontKycIdentityFailedControllerSubcomponent;
+import com.coinbase.android.signin.state.UpfrontKycIdentityFailedController_MembersInjector;
+import com.coinbase.android.signin.state.UpfrontKycIdentityFailedPresenter;
+import com.coinbase.android.signin.state.UpfrontKycIdentityFailedPresenterModule;
+import com.coinbase.android.signin.state.UpfrontKycIdentityFailedPresenterModule_ProvidesControllerFactory;
+import com.coinbase.android.signin.state.UpfrontKycIdentityFailedPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.signin.state.UpfrontKycIdentityFailedPresenter_Factory;
+import com.coinbase.android.signin.state.UpfrontKycIdentityFailedRouter;
+import com.coinbase.android.signin.state.UpfrontKycIdentityFailedRouter_Factory;
+import com.coinbase.android.signin.state.UpfrontKycIdentityFailedScreen;
+import com.coinbase.android.signin.state.UpfrontKycIdentityProcessingController;
+import com.coinbase.android.signin.state.UpfrontKycIdentityProcessingControllerSubcomponent;
+import com.coinbase.android.signin.state.UpfrontKycIdentityProcessingController_MembersInjector;
+import com.coinbase.android.signin.state.UpfrontKycIdentityProcessingPresenter;
+import com.coinbase.android.signin.state.UpfrontKycIdentityProcessingPresenterModule;
+import com.coinbase.android.signin.state.UpfrontKycIdentityProcessingPresenterModule_ProvidesControllerFactory;
+import com.coinbase.android.signin.state.UpfrontKycIdentityProcessingPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.signin.state.UpfrontKycIdentityProcessingPresenter_Factory;
+import com.coinbase.android.signin.state.UpfrontKycIdentityProcessingRouter;
+import com.coinbase.android.signin.state.UpfrontKycIdentityProcessingRouter_Factory;
+import com.coinbase.android.signin.state.UpfrontKycIdentityProcessingScreen;
+import com.coinbase.android.signin.state.UpfrontKycIdologyFailureRouter;
+import com.coinbase.android.signin.state.UpfrontKycIdologyFailureRouter_Factory;
+import com.coinbase.android.signin.state.UpfrontKycTakeDocumentPhotoController;
+import com.coinbase.android.signin.state.UpfrontKycTakeDocumentPhotoControllerSubcomponent;
+import com.coinbase.android.signin.state.UpfrontKycTakeDocumentPhotoController_MembersInjector;
+import com.coinbase.android.signin.state.UpfrontKycTakeDocumentPhotoPresenter;
+import com.coinbase.android.signin.state.UpfrontKycTakeDocumentPhotoPresenterModule;
+import com.coinbase.android.signin.state.UpfrontKycTakeDocumentPhotoPresenterModule_ProvidesControllerFactory;
+import com.coinbase.android.signin.state.UpfrontKycTakeDocumentPhotoPresenterModule_ProvidesTakeDocumentPhotoScreenFactory;
+import com.coinbase.android.signin.state.UpfrontKycTakeDocumentPhotoPresenter_Factory;
+import com.coinbase.android.signin.state.UpfrontKycTakeDocumentPhotoRouter;
+import com.coinbase.android.signin.state.UpfrontKycTakeDocumentPhotoRouter_Factory;
+import com.coinbase.android.signin.state.UpfrontKycTakeDocumentPhotoScreen;
+import com.coinbase.android.splittesting.SplitTesting;
+import com.coinbase.android.splittesting.SplitTesting_Factory;
+import com.coinbase.android.task.FetchAccountTask;
+import com.coinbase.android.task.FetchAccountTask_MembersInjector;
+import com.coinbase.android.task.GetUserTask;
+import com.coinbase.android.task.GetUserTask_MembersInjector;
+import com.coinbase.android.task.SyncAccountsTask;
+import com.coinbase.android.task.SyncAccountsTask_MembersInjector;
+import com.coinbase.android.transactions.TransactionDetailButtonConnector;
+import com.coinbase.android.transactions.TransactionDetailLayout;
+import com.coinbase.android.transactions.TransactionDetailLayout_MembersInjector;
+import com.coinbase.android.transactions.TransactionDetailPresenter;
+import com.coinbase.android.transactions.TransactionDetailPresenter_Factory;
+import com.coinbase.android.transactions.TransactionListLayout;
+import com.coinbase.android.transactions.TransactionListLayoutSubcomponent;
+import com.coinbase.android.transactions.TransactionListLayout_MembersInjector;
+import com.coinbase.android.transactions.TransactionListPresenter;
+import com.coinbase.android.transactions.TransactionListPresenterModule;
+import com.coinbase.android.transactions.TransactionListPresenterModule_ProvidesTransactionListScreenFactory;
+import com.coinbase.android.transactions.TransactionListPresenter_Factory;
+import com.coinbase.android.transactions.TransactionListScreen;
+import com.coinbase.android.transfers.ConfirmSendTransferController;
+import com.coinbase.android.transfers.ConfirmSendTransferControllerSubcomponent;
+import com.coinbase.android.transfers.ConfirmSendTransferController_MembersInjector;
+import com.coinbase.android.transfers.ConfirmSendTransferPresenter;
+import com.coinbase.android.transfers.ConfirmSendTransferPresenterModule;
+import com.coinbase.android.transfers.ConfirmSendTransferPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.transfers.ConfirmSendTransferPresenter_Factory;
+import com.coinbase.android.transfers.ConfirmSendTransferScreen;
+import com.coinbase.android.transfers.ContactsAutoCompleteAdapter;
+import com.coinbase.android.transfers.ContactsAutoCompleteAdapter_MembersInjector;
+import com.coinbase.android.transfers.DelayedTransactionDialogController;
+import com.coinbase.android.transfers.DelayedTransactionDialogControllerSubcomponent;
+import com.coinbase.android.transfers.DelayedTransactionDialogController_MembersInjector;
+import com.coinbase.android.transfers.DelayedTransactionDialogPresenter;
+import com.coinbase.android.transfers.DelayedTransactionDialogPresenter_Factory;
+import com.coinbase.android.transfers.DelayedTransactionsControllerModule;
+import com.coinbase.android.transfers.DelayedTransactionsControllerModule_ProvidesControllerFactory;
+import com.coinbase.android.transfers.DelayedTxSenderService;
+import com.coinbase.android.transfers.DelayedTxSenderService_MembersInjector;
+import com.coinbase.android.transfers.RequestMoneyTask;
+import com.coinbase.android.transfers.RequestMoneyTask_MembersInjector;
+import com.coinbase.android.transfers.SendController;
+import com.coinbase.android.transfers.SendControllerSubcomponent;
+import com.coinbase.android.transfers.SendController_MembersInjector;
+import com.coinbase.android.transfers.SendPresenter;
+import com.coinbase.android.transfers.SendPresenterModule;
+import com.coinbase.android.transfers.SendPresenterModule_ProvidesActionBarControllerFactory;
+import com.coinbase.android.transfers.SendPresenterModule_ProvidesAvailableBalanceAppBarScreenFactory;
+import com.coinbase.android.transfers.SendPresenterModule_ProvidesSendExceededTrackingContextFactory;
+import com.coinbase.android.transfers.SendPresenterModule_ProvidesSendScreenFactory;
+import com.coinbase.android.transfers.SendPresenterModule_ProvidesSyncAccountsTaskFactory;
+import com.coinbase.android.transfers.SendPresenter_Factory;
+import com.coinbase.android.transfers.SendRouter;
+import com.coinbase.android.transfers.SendRouter_Factory;
+import com.coinbase.android.transfers.TransferMadeConnector;
+import com.coinbase.android.transfers.TransferSendController;
+import com.coinbase.android.transfers.TransferSendControllerModule;
+import com.coinbase.android.transfers.TransferSendControllerModule_ProvidesControllerFactory;
+import com.coinbase.android.transfers.TransferSendControllerModule_ProvidesSendExceededTrackingContextFactory;
+import com.coinbase.android.transfers.TransferSendControllerModule_ProvidesWithdrawalBasedLimitsErrorControllerRouterFactory;
+import com.coinbase.android.transfers.TransferSendControllerSubcomponent;
+import com.coinbase.android.transfers.TransferSendController_MembersInjector;
+import com.coinbase.android.transfers.TransferSendPresenter;
+import com.coinbase.android.transfers.TransferSendPresenterModule;
+import com.coinbase.android.transfers.TransferSendPresenterModule_ProvidesApiErrorHandlerFactory;
+import com.coinbase.android.transfers.TransferSendPresenterModule_ProvidesTransferSendScreenFactory;
+import com.coinbase.android.transfers.TransferSendPresenter_Factory;
+import com.coinbase.android.transfers.TransferSendScreen;
+import com.coinbase.android.ui.ActionBarController;
+import com.coinbase.android.ui.ActionBarController_MembersInjector;
+import com.coinbase.android.ui.AnimationModule;
+import com.coinbase.android.ui.AnimationModule_ProvidesAnimationUtilsWrapperFactory;
+import com.coinbase.android.ui.AnimationUtilsWrapper;
+import com.coinbase.android.ui.AutoResizeTextViewAdjustor;
+import com.coinbase.android.ui.BackNavigationConnector;
+import com.coinbase.android.ui.BackgroundDimmer;
+import com.coinbase.android.ui.BackgroundDimmer_Factory;
+import com.coinbase.android.ui.BaseViewModule;
+import com.coinbase.android.ui.BaseViewModule_ProvidesBlockingOverlayViewFactory;
+import com.coinbase.android.ui.BaseViewModule_ProvidesBlockingOverlayViewFuncFactory;
+import com.coinbase.android.ui.BaseViewModule_ProvidesGenericErrorResFactory;
+import com.coinbase.android.ui.BaseViewModule_ProvidesGenericErrorTryAgainResFactory;
+import com.coinbase.android.ui.BaseViewModule_ProvidesSnackBarRootViewFuncFactory;
+import com.coinbase.android.ui.BlueProgressBar;
+import com.coinbase.android.ui.BlueProgressBar_MembersInjector;
+import com.coinbase.android.ui.BottomNavigationConnector;
+import com.coinbase.android.ui.BottomNavigationItem;
+import com.coinbase.android.ui.CenteredAppBarLayout;
+import com.coinbase.android.ui.ControllerLifeCycleFactory;
+import com.coinbase.android.ui.ControllerLifeCycleFactory_Factory;
+import com.coinbase.android.ui.ControllerTransitionContainer;
+import com.coinbase.android.ui.CurrenciesUpdatedConnector;
+import com.coinbase.android.ui.CurrencySelectorConnector;
+import com.coinbase.android.ui.CurrencyTabLayout;
+import com.coinbase.android.ui.CurrencyTabLayoutSubcomponent;
+import com.coinbase.android.ui.CurrencyTabLayout_MembersInjector;
+import com.coinbase.android.ui.CurrencyTabPresenter;
+import com.coinbase.android.ui.CurrencyTabPresenterModule;
+import com.coinbase.android.ui.CurrencyTabPresenterModule_ProvidesCurrencyTabScreenFactory;
+import com.coinbase.android.ui.CurrencyTabPresenter_Factory;
+import com.coinbase.android.ui.CurrencyTabScreen;
+import com.coinbase.android.ui.CurrencyTabSelectorConnector;
+import com.coinbase.android.ui.DatePickerConnector;
+import com.coinbase.android.ui.DatePickerSpinnerLayout;
+import com.coinbase.android.ui.DatePickerSpinnerLayout_MembersInjector;
+import com.coinbase.android.ui.DialogController;
+import com.coinbase.android.ui.DialogController_MembersInjector;
+import com.coinbase.android.ui.KeyboardListener;
+import com.coinbase.android.ui.KeyboardListener_Factory;
+import com.coinbase.android.ui.KeypadAmountFormatter;
+import com.coinbase.android.ui.KeypadAmountFormatter_Factory;
+import com.coinbase.android.ui.KeypadAmountValidator;
+import com.coinbase.android.ui.KeypadAmountValidator_Factory;
+import com.coinbase.android.ui.MainController;
+import com.coinbase.android.ui.MainControllerPresenter;
+import com.coinbase.android.ui.MainControllerPresenterModule;
+import com.coinbase.android.ui.MainControllerPresenterModule_ProvidesMainScreenFactory;
+import com.coinbase.android.ui.MainControllerPresenter_Factory;
+import com.coinbase.android.ui.MainControllerSubcomponent;
+import com.coinbase.android.ui.MainController_MembersInjector;
+import com.coinbase.android.ui.MainScreen;
+import com.coinbase.android.ui.ModalBottomNavigationItem.Type;
+import com.coinbase.android.ui.ModalControllerLifeCycle;
+import com.coinbase.android.ui.ModalControllerLifeCycle_MembersInjector;
+import com.coinbase.android.ui.MystiqueBottomNavigationAdapter;
+import com.coinbase.android.ui.MystiqueBottomNavigationLayout;
+import com.coinbase.android.ui.MystiqueBottomNavigationLayoutSubcomponent;
+import com.coinbase.android.ui.MystiqueBottomNavigationLayout_MembersInjector;
+import com.coinbase.android.ui.MystiqueBottomNavigationPresenter;
+import com.coinbase.android.ui.MystiqueBottomNavigationPresenterModule;
+import com.coinbase.android.ui.MystiqueBottomNavigationPresenterModule_ProvidesBottomNavigationItemListFactory;
+import com.coinbase.android.ui.MystiqueBottomNavigationPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.ui.MystiqueBottomNavigationScreen;
+import com.coinbase.android.ui.MystiqueListButtonConnector;
+import com.coinbase.android.ui.MystiqueListSelectorConnector;
+import com.coinbase.android.ui.MystiqueListSelectorLayout;
+import com.coinbase.android.ui.MystiqueListSelectorLayout_MembersInjector;
+import com.coinbase.android.ui.NavigationItem;
+import com.coinbase.android.ui.NumericKeyboardLayout;
+import com.coinbase.android.ui.NumericKeyboardLayout_MembersInjector;
+import com.coinbase.android.ui.NumericKeypadConnector;
+import com.coinbase.android.ui.OptionalViewHider;
+import com.coinbase.android.ui.OptionalViewHider_Factory;
+import com.coinbase.android.ui.PageControllerLifeCycle;
+import com.coinbase.android.ui.PageControllerLifeCycle_MembersInjector;
+import com.coinbase.android.ui.RefreshRequestedConnector;
+import com.coinbase.android.ui.RootViewWrapper;
+import com.coinbase.android.ui.SignOutConnector;
+import com.coinbase.android.ui.SignOutFragment;
+import com.coinbase.android.ui.SignOutFragment_MembersInjector;
+import com.coinbase.android.ui.SnackBarWrapper;
+import com.coinbase.android.ui.StatusBarUpdater;
+import com.coinbase.android.ui.StatusBarUpdater_Factory;
+import com.coinbase.android.ui.SuccessRouter;
+import com.coinbase.android.ui.SuccessRouter_Factory;
+import com.coinbase.android.utils.ActivityPermissionCheckUtils;
+import com.coinbase.android.utils.ActivityPermissionCheckUtils_Factory;
+import com.coinbase.android.utils.ApiErrorHandler;
+import com.coinbase.android.utils.ConfigUtils;
+import com.coinbase.android.utils.CryptoUriParser;
+import com.coinbase.android.utils.CryptoUriParser_Factory;
+import com.coinbase.android.utils.CurrencyUtils;
+import com.coinbase.android.utils.CurrencyUtils_Factory;
+import com.coinbase.android.utils.FaceDetectionUtils;
+import com.coinbase.android.utils.FaceDetectionUtils_Factory;
+import com.coinbase.android.utils.GoogleApiClientWrapper;
+import com.coinbase.android.utils.MoneyFormatterUtil;
+import com.coinbase.android.utils.MoneyFormatterUtil_Factory;
+import com.coinbase.android.utils.PaymentMethodUtils;
+import com.coinbase.android.utils.PaymentMethodUtils_Factory;
+import com.coinbase.android.utils.RefWatcherWrapper;
+import com.coinbase.android.utils.TransferUtils;
+import com.coinbase.android.utils.TransferUtils_Factory;
+import com.coinbase.android.utils.analytics.MixpanelTracking;
+import com.coinbase.android.wbl.AvailableBalanceAppBarPresenter;
+import com.coinbase.android.wbl.AvailableBalanceAppBarPresenter_Factory;
+import com.coinbase.android.wbl.AvailableBalanceAppBarScreen;
+import com.coinbase.android.wbl.AvailableBalanceCalculator;
+import com.coinbase.android.wbl.AvailableBalanceCalculator_Factory;
+import com.coinbase.android.wbl.AvailableBalanceController;
+import com.coinbase.android.wbl.AvailableBalanceControllerSubcomponent;
+import com.coinbase.android.wbl.AvailableBalanceController_MembersInjector;
+import com.coinbase.android.wbl.AvailableBalancePresenter;
+import com.coinbase.android.wbl.AvailableBalancePresenterModule;
+import com.coinbase.android.wbl.AvailableBalancePresenterModule_ProvidesInvestmentTiersScreenFactory;
+import com.coinbase.android.wbl.AvailableBalancePresenterModule_ProvidesSyncAccountsTaskFactory;
+import com.coinbase.android.wbl.AvailableBalancePresenter_Factory;
+import com.coinbase.android.wbl.AvailableBalanceRouter;
+import com.coinbase.android.wbl.AvailableBalanceRouter_Factory;
+import com.coinbase.android.wbl.AvailableBalanceScreen;
+import com.coinbase.android.wbl.ExistingUserDialogController;
+import com.coinbase.android.wbl.ExistingUserDialogControllerSubcomponent;
+import com.coinbase.android.wbl.ExistingUserDialogController_MembersInjector;
+import com.coinbase.android.wbl.ExistingUserDialogPresenter;
+import com.coinbase.android.wbl.ExistingUserDialogPresenterModule;
+import com.coinbase.android.wbl.ExistingUserDialogPresenterModule_ProvidesControllerFactory;
+import com.coinbase.android.wbl.ExistingUserDialogPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.wbl.ExistingUserDialogPresenter_Factory;
+import com.coinbase.android.wbl.ExistingUserDialogRouter;
+import com.coinbase.android.wbl.ExistingUserDialogRouter_Factory;
+import com.coinbase.android.wbl.ExistingUserDialogScreen;
+import com.coinbase.android.wbl.LimitExceededTrackingContext;
+import com.coinbase.android.wbl.WithdrawalBasedLimitsApiErrorHandler;
+import com.coinbase.android.wbl.WithdrawalBasedLimitsApiErrorHandler_Factory;
+import com.coinbase.android.wbl.WithdrawalBasedLimitsDialogController;
+import com.coinbase.android.wbl.WithdrawalBasedLimitsDialogControllerSubcomponent;
+import com.coinbase.android.wbl.WithdrawalBasedLimitsDialogController_MembersInjector;
+import com.coinbase.android.wbl.WithdrawalBasedLimitsDialogPresenter;
+import com.coinbase.android.wbl.WithdrawalBasedLimitsDialogPresenterModule;
+import com.coinbase.android.wbl.WithdrawalBasedLimitsDialogPresenterModule_ProvidesScreenFactory;
+import com.coinbase.android.wbl.WithdrawalBasedLimitsDialogPresenter_Factory;
+import com.coinbase.android.wbl.WithdrawalBasedLimitsDialogScreen;
+import com.coinbase.android.wbl.WithdrawalBasedLimitsErrorControllerRouter;
+import com.coinbase.android.wbl.WithdrawalBasedLimitsErrorControllerRouter_Factory;
+import com.coinbase.android.wbl.WithdrawalBasedLimitsErrorRouter;
+import com.coinbase.android.wbl.WithdrawalBasedLimitsExistingUserModalRouter;
+import com.coinbase.android.wbl.WithdrawalBasedLimitsExistingUserModalRouter_Factory;
+import com.coinbase.android.widgets.UpdateWidgetBalanceService;
+import com.coinbase.android.widgets.UpdateWidgetBalanceService_MembersInjector;
+import com.coinbase.android.widgets.UpdateWidgetPriceService;
+import com.coinbase.android.widgets.UpdateWidgetPriceService_MembersInjector;
+import com.coinbase.android.widgets.WidgetChooseAccountActivity;
+import com.coinbase.android.widgets.WidgetChooseAccountActivity_MembersInjector;
+import com.coinbase.android.widgets.WidgetChooseCurrencyActivity;
+import com.coinbase.android.widgets.WidgetChooseCurrencyActivity_MembersInjector;
+import com.coinbase.api.LoginManager;
+import com.coinbase.api.internal.CacheFeatureFlagInitializer;
+import com.coinbase.api.internal.CacheFeatureFlagInitializer_Factory;
+import com.coinbase.api.internal.CoinbaseInternal;
+import com.coinbase.api.internal.models.alerts.Data;
+import com.coinbase.api.internal.models.wbl.PendingHold;
+import dagger.internal.DoubleCheck;
+import dagger.internal.MapFactory;
+import dagger.internal.Preconditions;
+import dagger.internal.SetFactory;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.inject.Provider;
+import org.apache.commons.validator.routines.CreditCardValidator;
+import rx.Scheduler;
+import rx.functions.Func0;
+import rx.functions.Func1;
+
+public final class DaggerMainCoinbaseApplicationComponent implements MainCoinbaseApplicationComponent {
+    private Provider<ActivityPermissionCheckUtils> activityPermissionCheckUtilsProvider;
+    private Provider<AlertsSignOutListener> alertsSignOutListenerProvider;
+    private Provider<AlertsUtils> alertsUtilsProvider;
+    private Provider<Analytics> analyticsProvider;
+    private Provider<AppRateOnCreateListener> appRateOnCreateListenerProvider;
+    private Provider<AuthIntentManager> authIntentManagerProvider;
+    private Provider<CacheFeatureFlagInitializer> cacheFeatureFlagInitializerProvider;
+    private Provider<ControllerLifeCycleFactory> controllerLifeCycleFactoryProvider;
+    private Provider<CryptoUriParser> cryptoUriParserProvider;
+    private Provider<CurrencyUtils> currencyUtilsProvider;
+    private Provider<FaceDetectionUtils> faceDetectionUtilsProvider;
+    private Provider<FeatureFlags> featureFlagsProvider;
+    private Provider<FetchAdvertisingIdOnCreateListener> fetchAdvertisingIdOnCreateListenerProvider;
+    private Provider<FiatTransactionsConnector> fiatTransactionsConnectorProvider;
+    private Provider<GdprInitializer> gdprInitializerProvider;
+    private Provider<IdologySignOutListener> idologySignOutListenerProvider;
+    private Provider<IdologyUtils> idologyUtilsProvider;
+    private Provider<MoneyFormatterUtil> moneyFormatterUtilProvider;
+    private Provider<PaymentMethodUtils> paymentMethodUtilsProvider;
+    private Provider<AccountCryptoAddressButtonConnector> providesAccountAddressButtonConnectorProvider;
+    private Provider<AccountCryptoAddressUpdatedConnector> providesAccountCryptoAddressUpdatedConnectorProvider;
+    private Provider<AccountItemClickedConnector> providesAccountItemClickedConnectorProvider;
+    private Provider<AccountListConnector> providesAccountListConnectorProvider;
+    private Provider<AccountORM> providesAccountORMProvider;
+    private Provider<List<Func1<AccountSettingsPresenter, AccountSettingsPreferenceItem>>> providesAccountSettingsPreferenceItemListProvider;
+    private Provider<AccountUpdatedConnector> providesAccountUpdatedConnectorProvider;
+    private Provider<AccountsUpdatedConnector> providesAccountsUpdatedConnectorProvider;
+    private Provider<AddPaymentMethodConnector> providesAddPaymentMethodConnectorProvider;
+    private Provider<Func0<List<PendingHold>>> providesAdditionalPendingHoldsProvider;
+    private Provider<AnimationUtilsWrapper> providesAnimationUtilsWrapperProvider;
+    private Provider<Set<ApplicationOnCreateListener>> providesApplicationOnCreateListenersProvider;
+    private Provider<Application> providesApplicationProvider;
+    private Provider<Set<ApplicationSignOutListener>> providesApplicationSignOutListenersProvider;
+    private Provider<AuthManager> providesAuthManagerProvider;
+    private Provider<BackNavigationConnector> providesBackNavigationConnectorProvider;
+    private Provider<Scheduler> providesBackgroundSchedulerProvider;
+    private Provider<BankAccountsUpdatedConnector> providesBankAccountsUpdatedConnectorProvider;
+    private Provider<BillingAddressDeletedConnector> providesBillingAddressDeletedConnectorProvider;
+    private Provider<BottomNavigationConnector> providesBottomNavigationConnectorProvider;
+    private Provider<Buy3dsVerificationConnector> providesBuy3dsVerificationConnectorProvider;
+    private Provider<BuySellMadeConnector> providesBuySellMadeConnectorProvider;
+    private Provider<GoToSettingsConnector> providesBuySellSettingsConnectorProvider;
+    private Provider<CoinbaseInternal> providesCoinbaseInternalProvider;
+    private Provider<ConfigUtils> providesConfigUtilsProvider;
+    private Provider<CurrenciesUpdatedConnector> providesCurrenciesUpdatedConnectorProvider;
+    private Provider<CurrencySelectorConnector> providesCurrencySelectorConnectorProvider;
+    private Provider<CurrencyTabSelectorConnector> providesCurrencyTabSelectorConnectorProvider;
+    private Provider<DashboardAlertsConnector> providesDashboardAlertsConnectorProvider;
+    private Provider<DashboardBalanceUpdatedConnector> providesDashboardBalanceUpdatedConnectorProvider;
+    private Provider<DashboardVerificationConnector> providesDashboardDataConnectorProvider;
+    private Provider<DashboardPriceChartItemClickedConnector> providesDashboardPriceChartItemClickedConnectorProvider;
+    private Provider<DashboardRefreshConnector> providesDashboardRefreshConnectorProvider;
+    private Provider<DashboardTabPeriodSelectionConnector> providesDashboardTabPeriodSelectionConnectorProvider;
+    private Provider<DatabaseManager> providesDatabaseManagerProvider;
+    private Provider<DatePickerConnector> providesDatePickerButtonConnectorProvider;
+    private Provider<SharedPreferences> providesDefaultSharedPreferencesProvider;
+    private Provider<DeviceVerifyConnector> providesDeviceVerifyConnectorProvider;
+    private Provider<EmailVerifiedConnector> providesEmailVerifiedConnectorProvider;
+    private Provider<GetPaymentMethodsTaskRx> providesGetPaymentMethodsRxProvider;
+    private Provider<Func0<GoogleApiClientWrapper>> providesGoogleApiClientProvider;
+    private Provider<IdentityVerificationBitmapConnector> providesIdentityVerificationBitmapConnectorProvider;
+    private Provider<IdologyAnswerListValidConnector> providesIdologyAnswerListValidConnectorProvider;
+    private Provider<IdologyAnswerSelectedConnector> providesIdologyAnswerSelectedConnectorProvider;
+    private Provider<IdologyAutoCompleteShownConnector> providesIdologyAutoCompleteShownConnectorProvider;
+    private Provider<IdologyFormValidConnector> providesIdologyFormValidConnectorProvider;
+    private Provider<IdologyOptionSelectedConnector> providesIdologyOptionSelectedConnectorProvider;
+    private Provider<IdologyRetryConnector> providesIdologyRetryConnectorProvider;
+    private Provider<IdologyVerificationConnector> providesIdologyVerificationConnectorProvider;
+    private Provider<LinkedAccountConnector> providesLinkedAccountConnectorProvider;
+    private Provider<LoginManager> providesLoginManagerProvider;
+    private Provider<Scheduler> providesMainSchedulerProvider;
+    private Provider<MixpanelTracking> providesMixpanelTrackingProvider;
+    private Provider<MystiqueListButtonConnector> providesMystiqueListButtonConnectorProvider;
+    private Provider<MystiqueListSelectorConnector> providesMystiqueListSelectorConnectorProvider;
+    private Provider<NumericKeypadConnector> providesNumericKeypadConnectorProvider;
+    private Provider<OnboardingUpdatedConnector> providesOnboardingUpdatedConnectorProvider;
+    private Provider<PINManager> providesPINManagerProvider;
+    private Provider<PaymentMethodsFetchedConnector> providesPaymentMethodsRefreshedConnectorProvider;
+    private Provider<PaymentMethodsUpdatedConnector> providesPaymentMethodsUpdatedConnectorProvider;
+    private Provider<PhoneNumbersUpdatedConnector> providesPhoneNumbersUpdatedConnectorProvider;
+    private Provider<PhotoTakenConnector> providesPhotoTakenConnectorProvider;
+    private Provider<PlaidOnExitConnector> providesPlaidOnExitConnectorProvider;
+    private Provider<PriceAlertsConnector> providesPriceAlertsConnectorProvider;
+    private Provider<PriceChartDataUpdatedConnector> providesPriceChartDataUpdatedConnectorProvider;
+    private Provider<PriceChartPeriodUpdatedConnector> providesPriceChartPeriodUpdatedConnectorProvider;
+    private Provider<SettingsPreferenceItemClickedConnector> providesPrivacyRightsSettingsClickedConnectorProvider;
+    private Provider<ProgressConnector> providesProgressConnectorProvider;
+    private Provider<QuickBuyConnector> providesQuickBuyConnectorProvider;
+    private Provider<RefWatcherWrapper> providesRefWatcherWrapperProvider;
+    private Provider<RefreshRequestedConnector> providesRefreshRequestedConnectorProvider;
+    private Provider<RetakeAndContinueConnector> providesRetakeAndContinueConnectorProvider;
+    private Provider<SignOutConnector> providesSignOutConnectorProvider;
+    private Provider<StateDisclosureFinishedConnector> providesStateDisclosureFinishedConnectorProvider;
+    private Provider<StateListSelectorConnector> providesStateListSelectorConnectorProvider;
+    private Provider<TransactionDetailButtonConnector> providesTransactionDetailButtonConnectorProvider;
+    private Provider<TransferMadeConnector> providesTransferMadeConnectorProvider;
+    private Provider<LocalUserDataUpdatedConnector> providesUserDataUpdatedConnectorProvider;
+    private Provider<UserUpdatedConnector> providesUserUpdatedConnectorProvider;
+    private Provider<VerifyPaymentMethodConnector> providesVerifyPaymentMethodConnectorProvider;
+    private Provider<WorldPayPollingWrapper> providesWorldPayPollingWrapperProvider;
+    private Provider<Set<ApplicationSignOutListener>> setOfApplicationSignOutListenerProvider;
+    private Provider<SplitTesting> splitTestingProvider;
+    private Provider<SpotPriceUpdatedConnector> spotPriceUpdatedConnectorProvider;
+    private Provider<TransferUtils> transferUtilsProvider;
+    private Provider<WorldPayValidator> worldPayValidatorProvider;
+
+    private final class AdapterSubcomponentImpl implements AdapterSubcomponent {
+        private AdapterSubcomponentImpl() {
+        }
+
+        public void inject(BillingAddressListAdapter adapter) {
+            injectBillingAddressListAdapter(adapter);
+        }
+
+        public void inject(ContactsAutoCompleteAdapter adapter) {
+            injectContactsAutoCompleteAdapter(adapter);
+        }
+
+        public void inject(MystiqueBottomNavigationAdapter adapter) {
+        }
+
+        public void inject(IdologyQuestionsListAdapter adapter) {
+            injectIdologyQuestionsListAdapter(adapter);
+        }
+
+        private BillingAddressListAdapter injectBillingAddressListAdapter(BillingAddressListAdapter instance) {
+            BillingAddressListAdapter_MembersInjector.injectLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            BillingAddressListAdapter_MembersInjector.injectMBillingAddressDeletedConnector(instance, (BillingAddressDeletedConnector) DaggerMainCoinbaseApplicationComponent.this.providesBillingAddressDeletedConnectorProvider.get());
+            return instance;
+        }
+
+        private ContactsAutoCompleteAdapter injectContactsAutoCompleteAdapter(ContactsAutoCompleteAdapter instance) {
+            ContactsAutoCompleteAdapter_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            return instance;
+        }
+
+        private IdologyQuestionsListAdapter injectIdologyQuestionsListAdapter(IdologyQuestionsListAdapter instance) {
+            IdologyQuestionsListAdapter_MembersInjector.injectMIdologyAnswerSelectedConnector(instance, (IdologyAnswerSelectedConnector) DaggerMainCoinbaseApplicationComponent.this.providesIdologyAnswerSelectedConnectorProvider.get());
+            return instance;
+        }
+    }
+
+    public static final class Builder {
+        private AnimationModule animationModule;
+        private CoinbaseApplicationModule coinbaseApplicationModule;
+        private CoinbaseEventsModule coinbaseEventsModule;
+        private CoinbaseNetworkModule coinbaseNetworkModule;
+        private GoogleClientApiModule googleClientApiModule;
+        private NoOpDebugModule noOpDebugModule;
+
+        private Builder() {
+        }
+
+        public MainCoinbaseApplicationComponent build() {
+            if (this.coinbaseEventsModule == null) {
+                this.coinbaseEventsModule = new CoinbaseEventsModule();
+            }
+            if (this.coinbaseApplicationModule == null) {
+                throw new IllegalStateException(CoinbaseApplicationModule.class.getCanonicalName() + " must be set");
+            }
+            if (this.coinbaseNetworkModule == null) {
+                this.coinbaseNetworkModule = new CoinbaseNetworkModule();
+            }
+            if (this.animationModule == null) {
+                this.animationModule = new AnimationModule();
+            }
+            if (this.noOpDebugModule == null) {
+                this.noOpDebugModule = new NoOpDebugModule();
+            }
+            if (this.googleClientApiModule == null) {
+                this.googleClientApiModule = new GoogleClientApiModule();
+            }
+            return new DaggerMainCoinbaseApplicationComponent();
+        }
+
+        public Builder coinbaseApplicationModule(CoinbaseApplicationModule coinbaseApplicationModule) {
+            this.coinbaseApplicationModule = (CoinbaseApplicationModule) Preconditions.checkNotNull(coinbaseApplicationModule);
+            return this;
+        }
+
+        public Builder coinbaseEventsModule(CoinbaseEventsModule coinbaseEventsModule) {
+            this.coinbaseEventsModule = (CoinbaseEventsModule) Preconditions.checkNotNull(coinbaseEventsModule);
+            return this;
+        }
+
+        public Builder coinbaseNetworkModule(CoinbaseNetworkModule coinbaseNetworkModule) {
+            this.coinbaseNetworkModule = (CoinbaseNetworkModule) Preconditions.checkNotNull(coinbaseNetworkModule);
+            return this;
+        }
+
+        public Builder noOpDebugModule(NoOpDebugModule noOpDebugModule) {
+            this.noOpDebugModule = (NoOpDebugModule) Preconditions.checkNotNull(noOpDebugModule);
+            return this;
+        }
+
+        public Builder googleClientApiModule(GoogleClientApiModule googleClientApiModule) {
+            this.googleClientApiModule = (GoogleClientApiModule) Preconditions.checkNotNull(googleClientApiModule);
+            return this;
+        }
+
+        public Builder animationModule(AnimationModule animationModule) {
+            this.animationModule = (AnimationModule) Preconditions.checkNotNull(animationModule);
+            return this;
+        }
+    }
+
+    private final class CoinbaseActivityMystiqueSubcomponentImpl implements CoinbaseActivityMystiqueSubcomponent {
+        private Provider<BackgroundDimmer> backgroundDimmerProvider;
+        private BaseActivityModule baseActivityModule;
+        private BaseViewModule baseViewModule;
+        private NonBottomNavActivityModule nonBottomNavActivityModule;
+        private Provider<Func0<RelativeLayout>> providesBlockingOverlayViewFuncProvider;
+        private Provider<RelativeLayout> providesBlockingOverlayViewProvider;
+        private Provider<Integer> providesGenericErrorResProvider;
+        private Provider<Integer> providesGenericErrorTryAgainResProvider;
+        private Provider<RootViewWrapper> providesRootViewWrapperProvider;
+        private Provider<Func0<View>> providesSnackBarRootViewFuncProvider;
+        private Provider<SnackBarWrapper> providesSnackBarWrapperProvider;
+        private Provider<Window> providesWindowProvider;
+        private Provider<StatusBarUpdater> statusBarUpdaterProvider;
+
+        private final class AddBillingAddressFragmentSubcomponentImpl implements AddBillingAddressFragmentSubcomponent {
+            private AddBillingAddressPresenterModule addBillingAddressPresenterModule;
+            private Provider<AddBillingAddressPresenter> addBillingAddressPresenterProvider;
+            private AddBillingAddressViewModule addBillingAddressViewModule;
+            private Provider<AddBillingAddressScreen> providesAddBillingAddressScreenProvider;
+            private Provider<Integer> providesCheckFieldsErrorResProvider;
+
+            private AddBillingAddressFragmentSubcomponentImpl(AddBillingAddressPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(AddBillingAddressPresenterModule module) {
+                this.addBillingAddressPresenterModule = (AddBillingAddressPresenterModule) Preconditions.checkNotNull(module);
+                this.providesAddBillingAddressScreenProvider = DoubleCheck.provider(AddBillingAddressPresenterModule_ProvidesAddBillingAddressScreenFactory.create(this.addBillingAddressPresenterModule));
+                this.addBillingAddressViewModule = new AddBillingAddressViewModule();
+                this.providesCheckFieldsErrorResProvider = DoubleCheck.provider(AddBillingAddressViewModule_ProvidesCheckFieldsErrorResFactory.create(this.addBillingAddressViewModule));
+                this.addBillingAddressPresenterProvider = DoubleCheck.provider(AddBillingAddressPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesAddBillingAddressScreenProvider, CoinbaseActivityMystiqueSubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesStateListSelectorConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, this.providesCheckFieldsErrorResProvider));
+            }
+
+            public void inject(AddBillingAddressFragment fragment) {
+                injectAddBillingAddressFragment(fragment);
+            }
+
+            private AddBillingAddressFragment injectAddBillingAddressFragment(AddBillingAddressFragment instance) {
+                AddBillingAddressFragment_MembersInjector.injectLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+                AddBillingAddressFragment_MembersInjector.injectMPresenter(instance, (AddBillingAddressPresenter) this.addBillingAddressPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class IAVLoginFragmentSubcomponentImpl implements IAVLoginFragmentSubcomponent {
+            private IAVLoginPresenterModule iAVLoginPresenterModule;
+            private Provider<IAVLoginPresenter> iAVLoginPresenterProvider;
+            private Provider<IAVLoginRouter> iAVLoginRouterProvider;
+            private Provider<IAVLoginScreen> providesIAVLoginScreenProvider;
+
+            private IAVLoginFragmentSubcomponentImpl(IAVLoginPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(IAVLoginPresenterModule module) {
+                this.iAVLoginPresenterModule = (IAVLoginPresenterModule) Preconditions.checkNotNull(module);
+                this.providesIAVLoginScreenProvider = DoubleCheck.provider(IAVLoginPresenterModule_ProvidesIAVLoginScreenFactory.create(this.iAVLoginPresenterModule));
+                this.iAVLoginRouterProvider = DoubleCheck.provider(IAVLoginRouter_Factory.create(this.providesIAVLoginScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider));
+                this.iAVLoginPresenterProvider = DoubleCheck.provider(IAVLoginPresenter_Factory.create(this.providesIAVLoginScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.iAVLoginRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, CoinbaseActivityMystiqueSubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, DaggerMainCoinbaseApplicationComponent.this.providesBankAccountsUpdatedConnectorProvider));
+            }
+
+            public void inject(IAVLoginFragment fragment) {
+                injectIAVLoginFragment(fragment);
+            }
+
+            private IAVLoginFragment injectIAVLoginFragment(IAVLoginFragment instance) {
+                IAVLoginFragment_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+                IAVLoginFragment_MembersInjector.injectMDimmer(instance, (BackgroundDimmer) CoinbaseActivityMystiqueSubcomponentImpl.this.backgroundDimmerProvider.get());
+                IAVLoginFragment_MembersInjector.injectMPresenter(instance, (IAVLoginPresenter) this.iAVLoginPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class SepaDepositFragmentSubcomponentImpl implements SepaDepositFragmentSubcomponent {
+            private Provider<Integer> providesCopyAddressResProvider;
+            private Provider<SepaDepositScreen> providesSepaDepositScreenProvider;
+            private SepaDepositPresenterModule sepaDepositPresenterModule;
+            private Provider<SepaDepositPresenter> sepaDepositPresenterProvider;
+            private SepaDepositViewModule sepaDepositViewModule;
+
+            private SepaDepositFragmentSubcomponentImpl(SepaDepositPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(SepaDepositPresenterModule module) {
+                this.sepaDepositPresenterModule = (SepaDepositPresenterModule) Preconditions.checkNotNull(module);
+                this.providesSepaDepositScreenProvider = DoubleCheck.provider(SepaDepositPresenterModule_ProvidesSepaDepositScreenFactory.create(this.sepaDepositPresenterModule));
+                this.sepaDepositViewModule = new SepaDepositViewModule();
+                this.providesCopyAddressResProvider = DoubleCheck.provider(SepaDepositViewModule_ProvidesCopyAddressResFactory.create(this.sepaDepositViewModule));
+                this.sepaDepositPresenterProvider = DoubleCheck.provider(SepaDepositPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesSepaDepositScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, CoinbaseActivityMystiqueSubcomponentImpl.this.providesSnackBarWrapperProvider, this.providesCopyAddressResProvider));
+            }
+
+            public void inject(SepaDepositFragment fragment) {
+                injectSepaDepositFragment(fragment);
+            }
+
+            private SepaDepositFragment injectSepaDepositFragment(SepaDepositFragment instance) {
+                SepaDepositFragment_MembersInjector.injectMPresenter(instance, (SepaDepositPresenter) this.sepaDepositPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private CoinbaseActivityMystiqueSubcomponentImpl(BaseActivityModule baseModule, BaseViewModule viewModule, ActionBarModule actionBarModule, NonBottomNavActivityModule module) {
+            initialize(baseModule, viewModule, actionBarModule, module);
+        }
+
+        private void initialize(BaseActivityModule baseModule, BaseViewModule viewModule, ActionBarModule actionBarModule, NonBottomNavActivityModule module) {
+            this.nonBottomNavActivityModule = (NonBottomNavActivityModule) Preconditions.checkNotNull(module);
+            this.baseViewModule = (BaseViewModule) Preconditions.checkNotNull(viewModule);
+            this.providesGenericErrorResProvider = DoubleCheck.provider(BaseViewModule_ProvidesGenericErrorResFactory.create(this.baseViewModule));
+            this.providesGenericErrorTryAgainResProvider = DoubleCheck.provider(BaseViewModule_ProvidesGenericErrorTryAgainResFactory.create(this.baseViewModule));
+            this.providesSnackBarRootViewFuncProvider = DoubleCheck.provider(BaseViewModule_ProvidesSnackBarRootViewFuncFactory.create(this.baseViewModule));
+            this.providesBlockingOverlayViewFuncProvider = DoubleCheck.provider(BaseViewModule_ProvidesBlockingOverlayViewFuncFactory.create(this.baseViewModule));
+            this.providesRootViewWrapperProvider = DoubleCheck.provider(NonBottomNavActivityModule_ProvidesRootViewWrapperFactory.create(this.nonBottomNavActivityModule, this.providesSnackBarRootViewFuncProvider, this.providesBlockingOverlayViewFuncProvider));
+            this.providesSnackBarWrapperProvider = DoubleCheck.provider(NonBottomNavActivityModule_ProvidesSnackBarWrapperFactory.create(this.nonBottomNavActivityModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesGenericErrorResProvider, this.providesGenericErrorTryAgainResProvider, this.providesRootViewWrapperProvider));
+            this.providesBlockingOverlayViewProvider = DoubleCheck.provider(BaseViewModule_ProvidesBlockingOverlayViewFactory.create(this.baseViewModule, this.providesBlockingOverlayViewFuncProvider));
+            this.baseActivityModule = (BaseActivityModule) Preconditions.checkNotNull(baseModule);
+            this.providesWindowProvider = DoubleCheck.provider(BaseActivityModule_ProvidesWindowFactory.create(this.baseActivityModule));
+            this.statusBarUpdaterProvider = DoubleCheck.provider(StatusBarUpdater_Factory.create(this.providesWindowProvider));
+            this.backgroundDimmerProvider = DoubleCheck.provider(BackgroundDimmer_Factory.create(this.providesBlockingOverlayViewProvider, this.providesWindowProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider, this.statusBarUpdaterProvider));
+        }
+
+        public SepaDepositFragmentSubcomponent sepaDepositFragmentSubcomponent(SepaDepositPresenterModule module) {
+            return new SepaDepositFragmentSubcomponentImpl(module);
+        }
+
+        public AddBillingAddressFragmentSubcomponent addBillingAddressFragmentSubcomponent(AddBillingAddressPresenterModule module) {
+            return new AddBillingAddressFragmentSubcomponentImpl(module);
+        }
+
+        public IAVLoginFragmentSubcomponent iavLoginFragmentSubcomponent(IAVLoginPresenterModule module) {
+            return new IAVLoginFragmentSubcomponentImpl(module);
+        }
+    }
+
+    private final class CoinbaseActivitySubcomponentImpl implements CoinbaseActivitySubcomponent {
+        private BaseActivityModule baseActivityModule;
+        private Provider<Window> providesWindowProvider;
+        private Provider<ScreenProtector> screenProtectorProvider;
+
+        private final class IntroPriceChartFragmentSubcomponentImpl implements IntroPriceChartFragmentSubcomponent {
+            private IntroPriceChartPresenterModule introPriceChartPresenterModule;
+            private Provider<IntroPriceChartPresenter> introPriceChartPresenterProvider;
+            private Provider<IntroPriceChartScreen> providesPriceChartScreenProvider;
+
+            private IntroPriceChartFragmentSubcomponentImpl(IntroPriceChartPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(IntroPriceChartPresenterModule module) {
+                this.introPriceChartPresenterModule = (IntroPriceChartPresenterModule) Preconditions.checkNotNull(module);
+                this.providesPriceChartScreenProvider = DoubleCheck.provider(IntroPriceChartPresenterModule_ProvidesPriceChartScreenFactory.create(this.introPriceChartPresenterModule));
+                this.introPriceChartPresenterProvider = DoubleCheck.provider(IntroPriceChartPresenter_Factory.create(this.providesPriceChartScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesPriceChartPeriodUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider));
+            }
+
+            public void inject(IntroPriceChartFragment fragment) {
+                injectIntroPriceChartFragment(fragment);
+            }
+
+            private IntroPriceChartFragment injectIntroPriceChartFragment(IntroPriceChartFragment instance) {
+                IntroPriceChartFragment_MembersInjector.injectMPresenter(instance, (IntroPriceChartPresenter) this.introPriceChartPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private CoinbaseActivitySubcomponentImpl(BaseActivityModule module) {
+            initialize(module);
+        }
+
+        private void initialize(BaseActivityModule module) {
+            this.baseActivityModule = (BaseActivityModule) Preconditions.checkNotNull(module);
+            this.providesWindowProvider = DoubleCheck.provider(BaseActivityModule_ProvidesWindowFactory.create(this.baseActivityModule));
+            this.screenProtectorProvider = DoubleCheck.provider(ScreenProtector_Factory.create(this.providesWindowProvider));
+        }
+
+        public void inject(PINPromptActivity activity) {
+            injectPINPromptActivity(activity);
+        }
+
+        public void inject(CoinbaseActivity activity) {
+            injectCoinbaseActivity(activity);
+        }
+
+        public IntroPriceChartFragmentSubcomponent priceChartFragmentSubcomponent(IntroPriceChartPresenterModule module) {
+            return new IntroPriceChartFragmentSubcomponentImpl(module);
+        }
+
+        private PINPromptActivity injectPINPromptActivity(PINPromptActivity instance) {
+            CoinbaseActivity_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            CoinbaseActivity_MembersInjector.injectMPinManager(instance, (PINManager) DaggerMainCoinbaseApplicationComponent.this.providesPINManagerProvider.get());
+            CoinbaseActivity_MembersInjector.injectMScreenProtector(instance, (ScreenProtector) this.screenProtectorProvider.get());
+            PINPromptActivity_MembersInjector.injectMPINManager(instance, (PINManager) DaggerMainCoinbaseApplicationComponent.this.providesPINManagerProvider.get());
+            PINPromptActivity_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            return instance;
+        }
+
+        private CoinbaseActivity injectCoinbaseActivity(CoinbaseActivity instance) {
+            CoinbaseActivity_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            CoinbaseActivity_MembersInjector.injectMPinManager(instance, (PINManager) DaggerMainCoinbaseApplicationComponent.this.providesPINManagerProvider.get());
+            CoinbaseActivity_MembersInjector.injectMScreenProtector(instance, (ScreenProtector) this.screenProtectorProvider.get());
+            return instance;
+        }
+    }
+
+    private final class CoinbaseServiceSubcomponentImpl implements CoinbaseServiceSubcomponent {
+        private CoinbaseServiceSubcomponentImpl() {
+        }
+
+        public void inject(InstanceIDService service) {
+            injectInstanceIDService(service);
+        }
+
+        public void inject(DelayedTxSenderService service) {
+            injectDelayedTxSenderService(service);
+        }
+
+        public void inject(UpdateWidgetBalanceService service) {
+            injectUpdateWidgetBalanceService(service);
+        }
+
+        public void inject(BalanceAppWidgetProvider appWidgetProvider) {
+            injectBalanceAppWidgetProvider(appWidgetProvider);
+        }
+
+        public void inject(UpdateWidgetPriceService service) {
+            injectUpdateWidgetPriceService(service);
+        }
+
+        public void inject(PriceAppWidgetProvider appWidgetProvider) {
+            injectPriceAppWidgetProvider(appWidgetProvider);
+        }
+
+        private InstanceIDService injectInstanceIDService(InstanceIDService instance) {
+            InstanceIDService_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            return instance;
+        }
+
+        private DelayedTxSenderService injectDelayedTxSenderService(DelayedTxSenderService instance) {
+            DelayedTxSenderService_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            DelayedTxSenderService_MembersInjector.injectMDbManager(instance, (DatabaseManager) DaggerMainCoinbaseApplicationComponent.this.providesDatabaseManagerProvider.get());
+            DelayedTxSenderService_MembersInjector.injectMMoneyFormatterUtil(instance, (MoneyFormatterUtil) DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider.get());
+            return instance;
+        }
+
+        private UpdateWidgetBalanceService injectUpdateWidgetBalanceService(UpdateWidgetBalanceService instance) {
+            UpdateWidgetBalanceService_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            UpdateWidgetBalanceService_MembersInjector.injectMMoneyFormatterUtil(instance, (MoneyFormatterUtil) DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider.get());
+            UpdateWidgetBalanceService_MembersInjector.injectMMixpanelTracking(instance, (MixpanelTracking) DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider.get());
+            return instance;
+        }
+
+        private BalanceAppWidgetProvider injectBalanceAppWidgetProvider(BalanceAppWidgetProvider instance) {
+            BalanceAppWidgetProvider_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            BalanceAppWidgetProvider_MembersInjector.injectMMoneyFormatterUtil(instance, (MoneyFormatterUtil) DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider.get());
+            BalanceAppWidgetProvider_MembersInjector.injectMMixpanelTracking(instance, (MixpanelTracking) DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider.get());
+            return instance;
+        }
+
+        private UpdateWidgetPriceService injectUpdateWidgetPriceService(UpdateWidgetPriceService instance) {
+            UpdateWidgetPriceService_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            UpdateWidgetPriceService_MembersInjector.injectMMixpanelTracking(instance, (MixpanelTracking) DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider.get());
+            return instance;
+        }
+
+        private PriceAppWidgetProvider injectPriceAppWidgetProvider(PriceAppWidgetProvider instance) {
+            PriceAppWidgetProvider_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            PriceAppWidgetProvider_MembersInjector.injectMMixpanelTracking(instance, (MixpanelTracking) DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider.get());
+            return instance;
+        }
+    }
+
+    private final class FragmentSubcomponentImpl implements FragmentSubcomponent {
+        private FragmentSubcomponentImpl() {
+        }
+
+        public void inject(VerifyPhoneHandler handler) {
+            injectVerifyPhoneHandler(handler);
+        }
+
+        public void inject(StateListDialogFragment fragment) {
+            injectStateListDialogFragment(fragment);
+        }
+
+        public void inject(IdologyOptionDialogFragment fragment) {
+            injectIdologyOptionDialogFragment(fragment);
+        }
+
+        public void inject(PINSettingDialogFragment fragment) {
+            injectPINSettingDialogFragment(fragment);
+        }
+
+        public void inject(VerifyPhoneDialogFragment fragment) {
+            injectVerifyPhoneDialogFragment(fragment);
+        }
+
+        public void inject(PlaidAccountLoginFragment fragment) {
+            injectPlaidAccountLoginFragment(fragment);
+        }
+
+        public void inject(ChangeNativeCurrencyDialogFragment fragment) {
+            injectChangeNativeCurrencyDialogFragment(fragment);
+        }
+
+        public void inject(RenameAccountFragment fragment) {
+            injectRenameAccountFragment(fragment);
+        }
+
+        public void inject(AccountsFragment fragment) {
+            injectAccountsFragment(fragment);
+        }
+
+        public void inject(MystiqueListSelectorLayout layout) {
+            injectMystiqueListSelectorLayout(layout);
+        }
+
+        public void inject(SignOutFragment fragment) {
+            injectSignOutFragment(fragment);
+        }
+
+        public void inject(DepositWithdrawConfirmationDialogFragment fragment) {
+            injectDepositWithdrawConfirmationDialogFragment(fragment);
+        }
+
+        public void inject(IdologyQuestionDialogFragment fragment) {
+            injectIdologyQuestionDialogFragment(fragment);
+        }
+
+        public void inject(BlueProgressBar progressBar) {
+            injectBlueProgressBar(progressBar);
+        }
+
+        private VerifyPhoneHandler injectVerifyPhoneHandler(VerifyPhoneHandler instance) {
+            VerifyPhoneHandler_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            return instance;
+        }
+
+        private StateListDialogFragment injectStateListDialogFragment(StateListDialogFragment instance) {
+            StateListDialogFragment_MembersInjector.injectMConnector(instance, (StateListSelectorConnector) DaggerMainCoinbaseApplicationComponent.this.providesStateListSelectorConnectorProvider.get());
+            return instance;
+        }
+
+        private IdologyOptionDialogFragment injectIdologyOptionDialogFragment(IdologyOptionDialogFragment instance) {
+            IdologyOptionDialogFragment_MembersInjector.injectMIdologyOptionSelectedConnector(instance, (IdologyOptionSelectedConnector) DaggerMainCoinbaseApplicationComponent.this.providesIdologyOptionSelectedConnectorProvider.get());
+            return instance;
+        }
+
+        private PINSettingDialogFragment injectPINSettingDialogFragment(PINSettingDialogFragment instance) {
+            PINSettingDialogFragment_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            PINSettingDialogFragment_MembersInjector.injectMLocalUserDataUpdatedConnector(instance, (LocalUserDataUpdatedConnector) DaggerMainCoinbaseApplicationComponent.this.providesUserDataUpdatedConnectorProvider.get());
+            PINSettingDialogFragment_MembersInjector.injectMPINManager(instance, (PINManager) DaggerMainCoinbaseApplicationComponent.this.providesPINManagerProvider.get());
+            return instance;
+        }
+
+        private VerifyPhoneDialogFragment injectVerifyPhoneDialogFragment(VerifyPhoneDialogFragment instance) {
+            VerifyPhoneDialogFragment_MembersInjector.injectMPhoneNumbersUpdatedConnector(instance, (PhoneNumbersUpdatedConnector) DaggerMainCoinbaseApplicationComponent.this.providesPhoneNumbersUpdatedConnectorProvider.get());
+            VerifyPhoneDialogFragment_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            return instance;
+        }
+
+        private PlaidAccountLoginFragment injectPlaidAccountLoginFragment(PlaidAccountLoginFragment instance) {
+            PlaidAccountLoginFragment_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            PlaidAccountLoginFragment_MembersInjector.injectMPaymentMethodsUpdatedConnector(instance, (PaymentMethodsUpdatedConnector) DaggerMainCoinbaseApplicationComponent.this.providesPaymentMethodsUpdatedConnectorProvider.get());
+            PlaidAccountLoginFragment_MembersInjector.injectMBankAccountsUpdatedConnector(instance, (BankAccountsUpdatedConnector) DaggerMainCoinbaseApplicationComponent.this.providesBankAccountsUpdatedConnectorProvider.get());
+            PlaidAccountLoginFragment_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            return instance;
+        }
+
+        private ChangeNativeCurrencyDialogFragment injectChangeNativeCurrencyDialogFragment(ChangeNativeCurrencyDialogFragment instance) {
+            ChangeNativeCurrencyDialogFragment_MembersInjector.injectMCurrencySelectorConnector(instance, (CurrencySelectorConnector) DaggerMainCoinbaseApplicationComponent.this.providesCurrencySelectorConnectorProvider.get());
+            return instance;
+        }
+
+        private RenameAccountFragment injectRenameAccountFragment(RenameAccountFragment instance) {
+            RenameAccountFragment_MembersInjector.injectLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            RenameAccountFragment_MembersInjector.injectMRefreshRequestedConnector(instance, (RefreshRequestedConnector) DaggerMainCoinbaseApplicationComponent.this.providesRefreshRequestedConnectorProvider.get());
+            return instance;
+        }
+
+        private AccountsFragment injectAccountsFragment(AccountsFragment instance) {
+            AccountsFragment_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            return instance;
+        }
+
+        private MystiqueListSelectorLayout injectMystiqueListSelectorLayout(MystiqueListSelectorLayout instance) {
+            MystiqueListSelectorLayout_MembersInjector.injectMListSelectorConnector(instance, (MystiqueListSelectorConnector) DaggerMainCoinbaseApplicationComponent.this.providesMystiqueListSelectorConnectorProvider.get());
+            MystiqueListSelectorLayout_MembersInjector.injectMListButtonConnector(instance, (MystiqueListButtonConnector) DaggerMainCoinbaseApplicationComponent.this.providesMystiqueListButtonConnectorProvider.get());
+            return instance;
+        }
+
+        private SignOutFragment injectSignOutFragment(SignOutFragment instance) {
+            SignOutFragment_MembersInjector.injectMSignOutConnector(instance, (SignOutConnector) DaggerMainCoinbaseApplicationComponent.this.providesSignOutConnectorProvider.get());
+            return instance;
+        }
+
+        private DepositWithdrawConfirmationDialogFragment injectDepositWithdrawConfirmationDialogFragment(DepositWithdrawConfirmationDialogFragment instance) {
+            DepositWithdrawConfirmationDialogFragment_MembersInjector.injectMFiatTransactionsConnector(instance, (FiatTransactionsConnector) DaggerMainCoinbaseApplicationComponent.this.fiatTransactionsConnectorProvider.get());
+            DepositWithdrawConfirmationDialogFragment_MembersInjector.injectMMoneyFormatterUtil(instance, (MoneyFormatterUtil) DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider.get());
+            return instance;
+        }
+
+        private IdologyQuestionDialogFragment injectIdologyQuestionDialogFragment(IdologyQuestionDialogFragment instance) {
+            IdologyQuestionDialogFragment_MembersInjector.injectMIdologyAnswerSelectedConnector(instance, (IdologyAnswerSelectedConnector) DaggerMainCoinbaseApplicationComponent.this.providesIdologyAnswerSelectedConnectorProvider.get());
+            return instance;
+        }
+
+        private BlueProgressBar injectBlueProgressBar(BlueProgressBar instance) {
+            BlueProgressBar_MembersInjector.injectMAnimationUtilsWrapper(instance, (AnimationUtilsWrapper) DaggerMainCoinbaseApplicationComponent.this.providesAnimationUtilsWrapperProvider.get());
+            return instance;
+        }
+    }
+
+    private final class GenericActivitySubcomponentImpl implements GenericActivitySubcomponent {
+        private GenericActivitySubcomponentImpl() {
+        }
+
+        public void inject(WidgetChooseAccountActivity activity) {
+            injectWidgetChooseAccountActivity(activity);
+        }
+
+        public void inject(WidgetChooseCurrencyActivity activity) {
+            injectWidgetChooseCurrencyActivity(activity);
+        }
+
+        public void inject(CreatePriceAlertActivity activity) {
+            injectCreatePriceAlertActivity(activity);
+        }
+
+        private WidgetChooseAccountActivity injectWidgetChooseAccountActivity(WidgetChooseAccountActivity instance) {
+            WidgetChooseAccountActivity_MembersInjector.injectLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            return instance;
+        }
+
+        private WidgetChooseCurrencyActivity injectWidgetChooseCurrencyActivity(WidgetChooseCurrencyActivity instance) {
+            WidgetChooseCurrencyActivity_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            return instance;
+        }
+
+        private CreatePriceAlertActivity injectCreatePriceAlertActivity(CreatePriceAlertActivity instance) {
+            CreatePriceAlertActivity_MembersInjector.injectMPriceAlertsConnector(instance, (PriceAlertsConnector) DaggerMainCoinbaseApplicationComponent.this.providesPriceAlertsConnectorProvider.get());
+            CreatePriceAlertActivity_MembersInjector.injectLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            CreatePriceAlertActivity_MembersInjector.injectMMoneyFormatterUtil(instance, (MoneyFormatterUtil) DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider.get());
+            return instance;
+        }
+    }
+
+    private final class MainActivityPresenterSubcomponentImpl implements MainActivityPresenterSubcomponent {
+        private BaseActivityModule baseActivityModule;
+        private MainPresenterModule mainPresenterModule;
+        private Provider<MainPresenter> mainPresenterProvider;
+        private Provider<MainRouter> mainRouterProvider;
+        private Provider<MainActivity> providesMainActivityProvider;
+        private Provider<Window> providesWindowProvider;
+        private Provider<ScreenProtector> screenProtectorProvider;
+
+        private MainActivityPresenterSubcomponentImpl(MainPresenterModule module, BaseActivityModule baseModule) {
+            initialize(module, baseModule);
+        }
+
+        private void initialize(MainPresenterModule module, BaseActivityModule baseModule) {
+            this.baseActivityModule = (BaseActivityModule) Preconditions.checkNotNull(baseModule);
+            this.providesWindowProvider = DoubleCheck.provider(BaseActivityModule_ProvidesWindowFactory.create(this.baseActivityModule));
+            this.screenProtectorProvider = DoubleCheck.provider(ScreenProtector_Factory.create(this.providesWindowProvider));
+            this.mainPresenterModule = (MainPresenterModule) Preconditions.checkNotNull(module);
+            this.providesMainActivityProvider = DoubleCheck.provider(MainPresenterModule_ProvidesMainActivityFactory.create(this.mainPresenterModule));
+            this.mainRouterProvider = DoubleCheck.provider(MainRouter_Factory.create(this.providesMainActivityProvider));
+            this.mainPresenterProvider = DoubleCheck.provider(MainPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.mainRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesCurrenciesUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+        }
+
+        public void inject(MainActivity activity) {
+            injectMainActivity(activity);
+        }
+
+        private MainActivity injectMainActivity(MainActivity instance) {
+            CoinbaseActivity_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            CoinbaseActivity_MembersInjector.injectMPinManager(instance, (PINManager) DaggerMainCoinbaseApplicationComponent.this.providesPINManagerProvider.get());
+            CoinbaseActivity_MembersInjector.injectMScreenProtector(instance, (ScreenProtector) this.screenProtectorProvider.get());
+            MainActivity_MembersInjector.injectMPresenter(instance, (MainPresenter) this.mainPresenterProvider.get());
+            MainActivity_MembersInjector.injectMRefreshRequestedConnector(instance, (RefreshRequestedConnector) DaggerMainCoinbaseApplicationComponent.this.providesRefreshRequestedConnectorProvider.get());
+            MainActivity_MembersInjector.injectMStateDisclosureFinishedConnector(instance, (StateDisclosureFinishedConnector) DaggerMainCoinbaseApplicationComponent.this.providesStateDisclosureFinishedConnectorProvider.get());
+            MainActivity_MembersInjector.injectMBottomNavigationConnector(instance, (BottomNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBottomNavigationConnectorProvider.get());
+            MainActivity_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+            MainActivity_MembersInjector.injectMDbManager(instance, (DatabaseManager) DaggerMainCoinbaseApplicationComponent.this.providesDatabaseManagerProvider.get());
+            MainActivity_MembersInjector.injectMSplitTesting(instance, (SplitTesting) DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider.get());
+            MainActivity_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            MainActivity_MembersInjector.injectMBackgroundScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider.get());
+            return instance;
+        }
+    }
+
+    private final class MainActivitySubcomponentImpl implements MainActivitySubcomponent {
+        private Provider<BackgroundDimmer> backgroundDimmerProvider;
+        private BaseActivityModule baseActivityModule;
+        private BaseViewModule baseViewModule;
+        private BottomNavActivityModule bottomNavActivityModule;
+        private Provider<KeyboardListener> keyboardListenerProvider;
+        private Provider<LaunchMessageModalRouter> launchMessageModalRouterProvider;
+        private Provider<OptionalViewHider> optionalViewHiderProvider;
+        private Provider<AppCompatActivity> providesActivityProvider;
+        private Provider<Func0<RelativeLayout>> providesBlockingOverlayViewFuncProvider;
+        private Provider<RelativeLayout> providesBlockingOverlayViewProvider;
+        private Provider<Func0<View>> providesBottomNavigationViewFuncProvider;
+        private Provider<ControllerTransitionContainer> providesDefaultControllerTransitionContainerProvider;
+        private Provider<Integer> providesGenericErrorResProvider;
+        private Provider<Integer> providesGenericErrorTryAgainResProvider;
+        private Provider<LayoutInflater> providesLayoutInflaterProvider;
+        private Provider<List<Pair<Type, Func1<Bundle, ActionBarController>>>> providesModalControllerFuncsProvider;
+        private Provider<Map<Type, Func1<Bundle, ActionBarController>>> providesModalControllerMapProvider;
+        private Provider<Func0<ViewGroup>> providesModalViewProvider;
+        private Provider<Map<BottomNavigationItem.Type, Integer>> providesPageControllerMapProvider;
+        private Provider<List<Pair<BottomNavigationItem.Type, Func0<ActionBarController>>>> providesPageControllerPairsProvider;
+        private Provider<List<Func0<ActionBarController>>> providesPageControllersProvider;
+        private Provider<RootViewWrapper> providesRootViewWrapperProvider;
+        private Provider<Func0<View>> providesSnackBarRootViewFuncProvider;
+        private Provider<SnackBarWrapper> providesSnackBarWrapperProvider;
+        private Provider<Window> providesWindowProvider;
+        private Provider<ScreenProtector> screenProtectorProvider;
+        private Provider<StatusBarUpdater> statusBarUpdaterProvider;
+        private Provider<TransactionDetailPresenter> transactionDetailPresenterProvider;
+
+        private final class AcceptTermsControllerSubcomponentImpl implements AcceptTermsControllerSubcomponent {
+            private AcceptTermsPresenterModule acceptTermsPresenterModule;
+            private Provider<AcceptTermsPresenter> acceptTermsPresenterProvider;
+            private AuthCompletionFactory_Factory authCompletionFactoryProvider;
+            private Provider<AuthRouter> authRouterProvider;
+            private Provider<CredentialsApiRxWrapper> credentialsApiRxWrapperProvider;
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<AcceptTermsScreen> providesScreenProvider;
+            private Provider<SignInRouter> signInRouterProvider;
+
+            private AcceptTermsControllerSubcomponentImpl(AcceptTermsPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(AcceptTermsPresenterModule module) {
+                this.acceptTermsPresenterModule = (AcceptTermsPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(AcceptTermsPresenterModule_ProvidesScreenFactory.create(this.acceptTermsPresenterModule));
+                this.providesControllerProvider = DoubleCheck.provider(AcceptTermsPresenterModule_ProvidesControllerFactory.create(this.acceptTermsPresenterModule));
+                this.credentialsApiRxWrapperProvider = DoubleCheck.provider(CredentialsApiRxWrapper_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.authCompletionFactoryProvider = AuthCompletionFactory_Factory.create(this.providesControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.credentialsApiRxWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider);
+                this.authRouterProvider = DoubleCheck.provider(AuthRouter_Factory.create(this.providesControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider, DaggerMainCoinbaseApplicationComponent.this.activityPermissionCheckUtilsProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.authCompletionFactoryProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.signInRouterProvider = DoubleCheck.provider(SignInRouter_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesControllerProvider));
+                this.acceptTermsPresenterProvider = DoubleCheck.provider(AcceptTermsPresenter_Factory.create(this.providesScreenProvider, this.authRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, this.signInRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(AcceptTermsController controller) {
+                injectAcceptTermsController(controller);
+            }
+
+            private AcceptTermsController injectAcceptTermsController(AcceptTermsController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                AcceptTermsController_MembersInjector.injectMAcceptTermsPresenter(instance, (AcceptTermsPresenter) this.acceptTermsPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class AccountCryptoAddressLayoutSubcomponentImpl implements AccountCryptoAddressLayoutSubcomponent {
+            private AccountCryptoAddressPresenterModule accountCryptoAddressPresenterModule;
+            private Provider<AccountCryptoAddressPresenter> accountCryptoAddressPresenterProvider;
+            private Provider<AccountCryptoAddressScreen> providesAccountAddressLayoutScreenProvider;
+
+            private AccountCryptoAddressLayoutSubcomponentImpl(AccountCryptoAddressPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(AccountCryptoAddressPresenterModule module) {
+                this.accountCryptoAddressPresenterModule = (AccountCryptoAddressPresenterModule) Preconditions.checkNotNull(module);
+                this.providesAccountAddressLayoutScreenProvider = DoubleCheck.provider(AccountCryptoAddressPresenterModule_ProvidesAccountAddressLayoutScreenFactory.create(this.accountCryptoAddressPresenterModule));
+                this.accountCryptoAddressPresenterProvider = DoubleCheck.provider(AccountCryptoAddressPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesDatabaseManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAccountORMProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesAccountAddressLayoutScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesAccountCryptoAddressUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesAccountAddressButtonConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+            }
+
+            public void inject(AccountCryptoAddressLayout layout) {
+                injectAccountCryptoAddressLayout(layout);
+            }
+
+            private AccountCryptoAddressLayout injectAccountCryptoAddressLayout(AccountCryptoAddressLayout instance) {
+                AccountCryptoAddressLayout_MembersInjector.injectMAccountCryptoAddressButtonConnector(instance, (AccountCryptoAddressButtonConnector) DaggerMainCoinbaseApplicationComponent.this.providesAccountAddressButtonConnectorProvider.get());
+                AccountCryptoAddressLayout_MembersInjector.injectMPresenter(instance, (AccountCryptoAddressPresenter) this.accountCryptoAddressPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class AccountFilteredListLayoutSubcomponentImpl implements AccountFilteredListLayoutSubcomponent {
+            private AccountFilteredListPresenterModule accountFilteredListPresenterModule;
+            private Provider<AccountFilteredListPresenter> accountFilteredListPresenterProvider;
+            private Provider<SyncAccountsTask> provideSyncAccountTaskProvider;
+            private Provider<AccountListScreen> providesAccountListScreenProvider;
+
+            private AccountFilteredListLayoutSubcomponentImpl(AccountFilteredListPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(AccountFilteredListPresenterModule module) {
+                this.accountFilteredListPresenterModule = (AccountFilteredListPresenterModule) Preconditions.checkNotNull(module);
+                this.providesAccountListScreenProvider = DoubleCheck.provider(AccountFilteredListPresenterModule_ProvidesAccountListScreenFactory.create(this.accountFilteredListPresenterModule));
+                this.provideSyncAccountTaskProvider = DoubleCheck.provider(AccountFilteredListPresenterModule_ProvideSyncAccountTaskFactory.create(this.accountFilteredListPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.accountFilteredListPresenterProvider = DoubleCheck.provider(AccountFilteredListPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesAccountListScreenProvider, this.provideSyncAccountTaskProvider, DaggerMainCoinbaseApplicationComponent.this.providesAccountItemClickedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesRefreshRequestedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesAccountsUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+            }
+
+            public void inject(AccountFilteredListLayout layout) {
+                injectAccountFilteredListLayout(layout);
+            }
+
+            private AccountFilteredListLayout injectAccountFilteredListLayout(AccountFilteredListLayout instance) {
+                AccountFilteredListLayout_MembersInjector.injectMPresenter(instance, (AccountFilteredListPresenter) this.accountFilteredListPresenterProvider.get());
+                AccountFilteredListLayout_MembersInjector.injectMMoneyFormatterUtil(instance, (MoneyFormatterUtil) DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider.get());
+                return instance;
+            }
+        }
+
+        private final class AccountMainControllerSubcomponentImpl implements AccountMainControllerSubcomponent {
+            private AccountMainPresenterModule accountMainPresenterModule;
+            private Provider<AccountMainPresenter> accountMainPresenterProvider;
+            private Provider<AccountMainScreen> providesAccountMainScreenProvider;
+
+            private AccountMainControllerSubcomponentImpl(AccountMainPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(AccountMainPresenterModule module) {
+                this.accountMainPresenterModule = (AccountMainPresenterModule) Preconditions.checkNotNull(module);
+                this.providesAccountMainScreenProvider = DoubleCheck.provider(AccountMainPresenterModule_ProvidesAccountMainScreenFactory.create(this.accountMainPresenterModule));
+                this.accountMainPresenterProvider = DoubleCheck.provider(AccountMainPresenter_Factory.create(this.providesAccountMainScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesAccountItemClickedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesCurrenciesUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(AccountMainController fragment) {
+                injectAccountMainController(fragment);
+            }
+
+            private AccountMainController injectAccountMainController(AccountMainController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                AccountMainController_MembersInjector.injectMPresenter(instance, (AccountMainPresenter) this.accountMainPresenterProvider.get());
+                AccountMainController_MembersInjector.injectMBottomNavigationConnector(instance, (BottomNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBottomNavigationConnectorProvider.get());
+                return instance;
+            }
+        }
+
+        private final class AccountRefreshListLayoutSubcomponentImpl implements AccountRefreshListLayoutSubcomponent {
+            private Provider<AccountListPresenter> accountListPresenterProvider;
+            private AccountRefreshListPresenterModule accountRefreshListPresenterModule;
+            private Provider<SyncAccountsTask> provideSyncAccountTaskProvider;
+            private Provider<AccountListScreen> providesAccountListScreenProvider;
+
+            private AccountRefreshListLayoutSubcomponentImpl(AccountRefreshListPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(AccountRefreshListPresenterModule module) {
+                this.accountRefreshListPresenterModule = (AccountRefreshListPresenterModule) Preconditions.checkNotNull(module);
+                this.providesAccountListScreenProvider = DoubleCheck.provider(AccountRefreshListPresenterModule_ProvidesAccountListScreenFactory.create(this.accountRefreshListPresenterModule));
+                this.provideSyncAccountTaskProvider = DoubleCheck.provider(AccountRefreshListPresenterModule_ProvideSyncAccountTaskFactory.create(this.accountRefreshListPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.accountListPresenterProvider = DoubleCheck.provider(AccountListPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesAccountListScreenProvider, this.provideSyncAccountTaskProvider, DaggerMainCoinbaseApplicationComponent.this.providesAccountItemClickedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesRefreshRequestedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesAccountsUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesAccountListConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+            }
+
+            public void inject(AccountRefreshListLayout layout) {
+                injectAccountRefreshListLayout(layout);
+            }
+
+            private AccountRefreshListLayout injectAccountRefreshListLayout(AccountRefreshListLayout instance) {
+                AccountRefreshListLayout_MembersInjector.injectMPresenter(instance, (AccountListPresenter) this.accountListPresenterProvider.get());
+                AccountRefreshListLayout_MembersInjector.injectMMoneyFormatterUtil(instance, (MoneyFormatterUtil) DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider.get());
+                return instance;
+            }
+        }
+
+        private final class AccountSettingsControllerSubcomponentImpl implements AccountSettingsControllerSubcomponent {
+            private AccountSettingsPresenterModule accountSettingsPresenterModule;
+            private Provider<AccountSettingsPresenter> accountSettingsPresenterProvider;
+            private Provider<AccountSettingsScreen> providesAccountSettingsScreenProvider;
+
+            private AccountSettingsControllerSubcomponentImpl(AccountSettingsPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(AccountSettingsPresenterModule module) {
+                this.accountSettingsPresenterModule = (AccountSettingsPresenterModule) Preconditions.checkNotNull(module);
+                this.providesAccountSettingsScreenProvider = DoubleCheck.provider(AccountSettingsPresenterModule_ProvidesAccountSettingsScreenFactory.create(this.accountSettingsPresenterModule));
+                this.accountSettingsPresenterProvider = DoubleCheck.provider(AccountSettingsPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesPINManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, this.providesAccountSettingsScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesUserUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesUserDataUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesCurrencySelectorConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesSignOutConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyVerificationConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.idologyUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.providesAddPaymentMethodConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesVerifyPaymentMethodConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesPaymentMethodsUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesPaymentMethodsRefreshedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider, DaggerMainCoinbaseApplicationComponent.this.providesAccountSettingsPreferenceItemListProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+            }
+
+            public void inject(AccountSettingsController fragment) {
+                injectAccountSettingsController(fragment);
+            }
+
+            private AccountSettingsController injectAccountSettingsController(AccountSettingsController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                AccountSettingsController_MembersInjector.injectMPresenter(instance, (AccountSettingsPresenter) this.accountSettingsPresenterProvider.get());
+                AccountSettingsController_MembersInjector.injectMBottomNavigationConnector(instance, (BottomNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBottomNavigationConnectorProvider.get());
+                return instance;
+            }
+        }
+
+        private final class AccountTransactionsControllerSubcomponentImpl implements AccountTransactionsControllerSubcomponent {
+            private AccountTransactionsPresenterModule accountTransactionsPresenterModule;
+            private Provider<AccountTransactionsPresenter> accountTransactionsPresenterProvider;
+            private Provider<AccountTransactionsRouter> accountTransactionsRouterProvider;
+            private Provider<BuyRouter> buyRouterProvider;
+            private Provider<AccountTransactionsScreen> provideAccountDetailsScreenProvider;
+            private Provider<FetchAccountTask> provideFetchAccountTaskProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<SellRouter> sellRouterProvider;
+
+            private AccountTransactionsControllerSubcomponentImpl(AccountTransactionsPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(AccountTransactionsPresenterModule module) {
+                this.accountTransactionsPresenterModule = (AccountTransactionsPresenterModule) Preconditions.checkNotNull(module);
+                this.provideAccountDetailsScreenProvider = DoubleCheck.provider(AccountTransactionsPresenterModule_ProvideAccountDetailsScreenFactory.create(this.accountTransactionsPresenterModule));
+                this.provideFetchAccountTaskProvider = DoubleCheck.provider(AccountTransactionsPresenterModule_ProvideFetchAccountTaskFactory.create(this.accountTransactionsPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(AccountTransactionsPresenterModule_ProvidesActionBarControllerFactory.create(this.accountTransactionsPresenterModule));
+                this.buyRouterProvider = DoubleCheck.provider(BuyRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider, DaggerMainCoinbaseApplicationComponent.this.providesBuy3dsVerificationConnectorProvider));
+                this.sellRouterProvider = DoubleCheck.provider(SellRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider));
+                this.accountTransactionsRouterProvider = DoubleCheck.provider(AccountTransactionsRouter_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider));
+                this.accountTransactionsPresenterProvider = DoubleCheck.provider(AccountTransactionsPresenter_Factory.create(this.provideAccountDetailsScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.provideFetchAccountTaskProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesAccountUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesAccountAddressButtonConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesTransferMadeConnectorProvider, this.buyRouterProvider, this.sellRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider, this.accountTransactionsRouterProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider, DaggerMainCoinbaseApplicationComponent.this.featureFlagsProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(AccountTransactionsController controller) {
+                injectAccountTransactionsController(controller);
+            }
+
+            private AccountTransactionsController injectAccountTransactionsController(AccountTransactionsController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                AccountTransactionsController_MembersInjector.injectMPresenter(instance, (AccountTransactionsPresenter) this.accountTransactionsPresenterProvider.get());
+                AccountTransactionsController_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) MainActivitySubcomponentImpl.this.backgroundDimmerProvider.get());
+                AccountTransactionsController_MembersInjector.injectMBottomNavigationConnector(instance, (BottomNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBottomNavigationConnectorProvider.get());
+                AccountTransactionsController_MembersInjector.injectMMixpanelTracking(instance, (MixpanelTracking) DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider.get());
+                return instance;
+            }
+        }
+
+        private final class AddBankErrorControllerSubcomponentImpl implements AddBankErrorControllerSubcomponent {
+            private AddBankErrorPresenterModule addBankErrorPresenterModule;
+            private Provider<AddBankErrorPresenter> addBankErrorPresenterProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<AddBankErrorScreen> providesAddBankErrorScreenProvider;
+            private Provider<SuccessRouter> successRouterProvider;
+
+            private AddBankErrorControllerSubcomponentImpl(AddBankErrorPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(AddBankErrorPresenterModule module) {
+                this.addBankErrorPresenterModule = (AddBankErrorPresenterModule) Preconditions.checkNotNull(module);
+                this.providesAddBankErrorScreenProvider = DoubleCheck.provider(AddBankErrorPresenterModule_ProvidesAddBankErrorScreenFactory.create(this.addBankErrorPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(AddBankErrorPresenterModule_ProvidesActionBarControllerFactory.create(this.addBankErrorPresenterModule));
+                this.successRouterProvider = DoubleCheck.provider(SuccessRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.addBankErrorPresenterProvider = DoubleCheck.provider(AddBankErrorPresenter_Factory.create(this.providesAddBankErrorScreenProvider, this.successRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBankAccountsUpdatedConnectorProvider));
+            }
+
+            public void inject(AddBankErrorController controller) {
+                injectAddBankErrorController(controller);
+            }
+
+            private AddBankErrorController injectAddBankErrorController(AddBankErrorController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                AddBankErrorController_MembersInjector.injectMPresenter(instance, (AddBankErrorPresenter) this.addBankErrorPresenterProvider.get());
+                AddBankErrorController_MembersInjector.injectMMixpanelTracking(instance, (MixpanelTracking) DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider.get());
+                return instance;
+            }
+        }
+
+        private final class AddBankPickerControllerSubcomponentImpl implements AddBankPickerControllerSubcomponent {
+            private AddBankPickerPresenterModule addBankPickerPresenterModule;
+            private Provider<AddBankPickerPresenter> addBankPickerPresenterProvider;
+            private Provider<AddBankRouter> addBankRouterProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<AddBankPickerScreen> providesAddBankPickerScreenProvider;
+            private Provider<SuccessRouter> successRouterProvider;
+
+            private AddBankPickerControllerSubcomponentImpl(AddBankPickerPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(AddBankPickerPresenterModule module) {
+                this.addBankPickerPresenterModule = (AddBankPickerPresenterModule) Preconditions.checkNotNull(module);
+                this.providesAddBankPickerScreenProvider = DoubleCheck.provider(AddBankPickerPresenterModule_ProvidesAddBankPickerScreenFactory.create(this.addBankPickerPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(AddBankPickerPresenterModule_ProvidesActionBarControllerFactory.create(this.addBankPickerPresenterModule));
+                this.successRouterProvider = DoubleCheck.provider(SuccessRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.addBankRouterProvider = DoubleCheck.provider(AddBankRouter_Factory.create(this.providesActionBarControllerProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.providesAddBankPickerScreenProvider, this.successRouterProvider));
+                this.addBankPickerPresenterProvider = DoubleCheck.provider(AddBankPickerPresenter_Factory.create(this.providesAddBankPickerScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, this.addBankRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesBankAccountsUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesPlaidOnExitConnectorProvider));
+            }
+
+            public void inject(AddBankPickerController controller) {
+                injectAddBankPickerController(controller);
+            }
+
+            private AddBankPickerController injectAddBankPickerController(AddBankPickerController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                AddBankPickerController_MembersInjector.injectMPresenter(instance, (AddBankPickerPresenter) this.addBankPickerPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class AddPlaidAccountControllerSubcomponentImpl implements AddPlaidAccountControllerSubcomponent {
+            private AddPlaidAccountPresenterModule addPlaidAccountPresenterModule;
+            private Provider addPlaidAccountPresenterProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<AddPlaidAccountScreen> providesAddPlaidAccountScreenProvider;
+            private Provider<SuccessRouter> successRouterProvider;
+
+            private AddPlaidAccountControllerSubcomponentImpl(AddPlaidAccountPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(AddPlaidAccountPresenterModule module) {
+                this.addPlaidAccountPresenterModule = (AddPlaidAccountPresenterModule) Preconditions.checkNotNull(module);
+                this.providesAddPlaidAccountScreenProvider = DoubleCheck.provider(AddPlaidAccountPresenterModule_ProvidesAddPlaidAccountScreenFactory.create(this.addPlaidAccountPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(AddPlaidAccountPresenterModule_ProvidesActionBarControllerFactory.create(this.addPlaidAccountPresenterModule));
+                this.successRouterProvider = DoubleCheck.provider(SuccessRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.addPlaidAccountPresenterProvider = DoubleCheck.provider(AddPlaidAccountPresenter_Factory.create(this.providesAddPlaidAccountScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, MainActivitySubcomponentImpl.this.providesLayoutInflaterProvider, this.successRouterProvider));
+            }
+
+            public void inject(AddPlaidAccountController fragment) {
+                injectAddPlaidAccountController(fragment);
+            }
+
+            private AddPlaidAccountController injectAddPlaidAccountController(AddPlaidAccountController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                AddPlaidAccountController_MembersInjector.injectMPresenter(instance, this.addPlaidAccountPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class AlertsListLayoutSubcomponentImpl implements AlertsListLayoutSubcomponent {
+            private AlertsListPresenterModule alertsListPresenterModule;
+            private Provider<AlertsListPresenter> alertsListPresenterProvider;
+            private Provider<AlertsListRouter> alertsListRouterProvider;
+            private Provider<List<Data>> providesAlertsDataProvider;
+            private Provider<AlertsContainerScreen> providesParentScreenProvider;
+            private Provider<AlertsListScreen> providesScreenProvider;
+
+            private AlertsListLayoutSubcomponentImpl(AlertsListPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(AlertsListPresenterModule module) {
+                this.alertsListPresenterModule = (AlertsListPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(AlertsListPresenterModule_ProvidesScreenFactory.create(this.alertsListPresenterModule));
+                this.providesAlertsDataProvider = DoubleCheck.provider(AlertsListPresenterModule_ProvidesAlertsDataFactory.create(this.alertsListPresenterModule));
+                this.providesParentScreenProvider = DoubleCheck.provider(AlertsListPresenterModule_ProvidesParentScreenFactory.create(this.alertsListPresenterModule));
+                this.alertsListRouterProvider = DoubleCheck.provider(AlertsListRouter_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider));
+                this.alertsListPresenterProvider = DoubleCheck.provider(AlertsListPresenter_Factory.create(this.providesScreenProvider, this.providesAlertsDataProvider, DaggerMainCoinbaseApplicationComponent.this.alertsUtilsProvider, this.providesParentScreenProvider, this.alertsListRouterProvider));
+            }
+
+            public void inject(AlertsListLayout layout) {
+                injectAlertsListLayout(layout);
+            }
+
+            private AlertsListLayout injectAlertsListLayout(AlertsListLayout instance) {
+                AlertsListLayout_MembersInjector.injectMPresenter(instance, (AlertsListPresenter) this.alertsListPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class AvailableBalanceControllerSubcomponentImpl implements AvailableBalanceControllerSubcomponent {
+            private Provider<AvailableBalanceCalculator> availableBalanceCalculatorProvider;
+            private AvailableBalancePresenterModule availableBalancePresenterModule;
+            private Provider<AvailableBalancePresenter> availableBalancePresenterProvider;
+            private Provider<AvailableBalanceScreen> providesInvestmentTiersScreenProvider;
+            private Provider<SyncAccountsTask> providesSyncAccountsTaskProvider;
+
+            private AvailableBalanceControllerSubcomponentImpl(AvailableBalancePresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(AvailableBalancePresenterModule module) {
+                this.availableBalancePresenterModule = (AvailableBalancePresenterModule) Preconditions.checkNotNull(module);
+                this.providesInvestmentTiersScreenProvider = DoubleCheck.provider(AvailableBalancePresenterModule_ProvidesInvestmentTiersScreenFactory.create(this.availableBalancePresenterModule));
+                this.providesSyncAccountsTaskProvider = DoubleCheck.provider(AvailableBalancePresenterModule_ProvidesSyncAccountsTaskFactory.create(this.availableBalancePresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.availableBalanceCalculatorProvider = DoubleCheck.provider(AvailableBalanceCalculator_Factory.create(this.providesSyncAccountsTaskProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAccountsUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider, DaggerMainCoinbaseApplicationComponent.this.providesAdditionalPendingHoldsProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+                this.availableBalancePresenterProvider = DoubleCheck.provider(AvailableBalancePresenter_Factory.create(this.providesInvestmentTiersScreenProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.availableBalanceCalculatorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(AvailableBalanceController controller) {
+                injectAvailableBalanceController(controller);
+            }
+
+            private AvailableBalanceController injectAvailableBalanceController(AvailableBalanceController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                AvailableBalanceController_MembersInjector.injectMPresenter(instance, (AvailableBalancePresenter) this.availableBalancePresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class BuyConfirmationControllerSubcomponentImpl implements BuyConfirmationControllerSubcomponent {
+            private BuyConfirmationPresenterModule buyConfirmationPresenterModule;
+            private Provider<BuyConfirmationPresenter> buyConfirmationPresenterProvider;
+            private Provider<BuyRouter> buyRouterProvider;
+            private Provider<ActionBarController> provideActionBarControllerProvider;
+            private Provider provideBuyConfirmationScreenProvider;
+            private Provider<AbstractBuySellConfirmationScreen> provideBuySellConfirmationScreenProvider;
+            private Provider providesBuySellConfirmationPresenterProvider;
+
+            private BuyConfirmationControllerSubcomponentImpl(BuyConfirmationPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(BuyConfirmationPresenterModule module) {
+                this.buyConfirmationPresenterModule = (BuyConfirmationPresenterModule) Preconditions.checkNotNull(module);
+                this.provideBuyConfirmationScreenProvider = DoubleCheck.provider(BuyConfirmationPresenterModule_ProvideBuyConfirmationScreenFactory.create(this.buyConfirmationPresenterModule));
+                this.provideBuySellConfirmationScreenProvider = DoubleCheck.provider(BuyConfirmationPresenterModule_ProvideBuySellConfirmationScreenFactory.create(this.buyConfirmationPresenterModule));
+                this.provideActionBarControllerProvider = DoubleCheck.provider(BuyConfirmationPresenterModule_ProvideActionBarControllerFactory.create(this.buyConfirmationPresenterModule));
+                this.buyRouterProvider = DoubleCheck.provider(BuyRouter_Factory.create(this.provideActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider, DaggerMainCoinbaseApplicationComponent.this.providesBuy3dsVerificationConnectorProvider));
+                this.buyConfirmationPresenterProvider = DoubleCheck.provider(BuyConfirmationPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.provideBuyConfirmationScreenProvider, this.provideBuySellConfirmationScreenProvider, this.buyRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesBuySellMadeConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesBuy3dsVerificationConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesLinkedAccountConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.paymentMethodUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.transferUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.analyticsProvider, DaggerMainCoinbaseApplicationComponent.this.featureFlagsProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider, MainActivitySubcomponentImpl.this.providesGenericErrorTryAgainResProvider, DaggerMainCoinbaseApplicationComponent.this.providesWorldPayPollingWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.providesBuySellConfirmationPresenterProvider = DoubleCheck.provider(BuyConfirmationPresenterModule_ProvidesBuySellConfirmationPresenterFactory.create(this.buyConfirmationPresenterModule, this.buyConfirmationPresenterProvider));
+            }
+
+            public void inject(BuyConfirmationController controller) {
+                injectBuyConfirmationController(controller);
+            }
+
+            private BuyConfirmationController injectBuyConfirmationController(BuyConfirmationController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                AbstractBuySellConfirmationController_MembersInjector.injectMPresenter(instance, this.providesBuySellConfirmationPresenterProvider.get());
+                BuyConfirmationController_MembersInjector.injectMPresenter(instance, (BuyConfirmationPresenter) this.buyConfirmationPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class BuyControllerSubcomponentImpl implements BuyControllerSubcomponent {
+            private BuyPresenterModule buyPresenterModule;
+            private Provider<BuyPresenter> buyPresenterProvider;
+            private Provider<BuyRouter> buyRouterProvider;
+            private Provider<KeypadAmountFormatter> keypadAmountFormatterProvider;
+            private Provider<KeypadAmountValidator> keypadAmountValidatorProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider providesBuyScreenProvider;
+            private Provider<QuickstartManager> providesQuickStartManagerProvider;
+            private QuickstartModule quickstartModule;
+
+            private BuyControllerSubcomponentImpl(QuickstartModule quickstartModule, BuyPresenterModule module) {
+                initialize(quickstartModule, module);
+            }
+
+            private void initialize(QuickstartModule quickstartModule, BuyPresenterModule module) {
+                this.buyPresenterModule = (BuyPresenterModule) Preconditions.checkNotNull(module);
+                this.providesBuyScreenProvider = DoubleCheck.provider(BuyPresenterModule_ProvidesBuyScreenFactory.create(this.buyPresenterModule));
+                this.quickstartModule = (QuickstartModule) Preconditions.checkNotNull(quickstartModule);
+                this.providesQuickStartManagerProvider = DoubleCheck.provider(QuickstartModule_ProvidesQuickStartManagerFactory.create(quickstartModule, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesPhoneNumbersUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesGetPaymentMethodsRxProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(BuyPresenterModule_ProvidesActionBarControllerFactory.create(this.buyPresenterModule));
+                this.buyRouterProvider = DoubleCheck.provider(BuyRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider, DaggerMainCoinbaseApplicationComponent.this.providesBuy3dsVerificationConnectorProvider));
+                this.keypadAmountFormatterProvider = DoubleCheck.provider(KeypadAmountFormatter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesCurrenciesUpdatedConnectorProvider));
+                this.keypadAmountValidatorProvider = DoubleCheck.provider(KeypadAmountValidator_Factory.create());
+                this.buyPresenterProvider = DoubleCheck.provider(BuyPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesBuyScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesNumericKeypadConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesCurrenciesUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesLinkedAccountConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesBuySellSettingsConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesPhoneNumbersUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesQuickBuyConnectorProvider, this.providesQuickStartManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesGetPaymentMethodsRxProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider, this.buyRouterProvider, DaggerMainCoinbaseApplicationComponent.this.paymentMethodUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.transferUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider, this.keypadAmountFormatterProvider, this.keypadAmountValidatorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(BuyController controller) {
+                injectBuyController(controller);
+            }
+
+            private BuyController injectBuyController(BuyController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                BuyController_MembersInjector.injectMPresenter(instance, (BuyPresenter) this.buyPresenterProvider.get());
+                BuyController_MembersInjector.injectMActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                return instance;
+            }
+        }
+
+        private final class BuySellSuccessControllerSubcomponentImpl implements BuySellSuccessControllerSubcomponent {
+            private BuySellSuccessPresenterModule buySellSuccessPresenterModule;
+            private Provider<BuySellSuccessPresenter> buySellSuccessPresenterProvider;
+            private Provider<BuySellSuccessScreen> providesBuySellSuccessScreenProvider;
+
+            private BuySellSuccessControllerSubcomponentImpl(BuySellSuccessPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(BuySellSuccessPresenterModule module) {
+                this.buySellSuccessPresenterModule = (BuySellSuccessPresenterModule) Preconditions.checkNotNull(module);
+                this.providesBuySellSuccessScreenProvider = DoubleCheck.provider(BuySellSuccessPresenterModule_ProvidesBuySellSuccessScreenFactory.create(this.buySellSuccessPresenterModule));
+                this.buySellSuccessPresenterProvider = DoubleCheck.provider(BuySellSuccessPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesBuySellSuccessScreenProvider, DaggerMainCoinbaseApplicationComponent.this.transferUtilsProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider));
+            }
+
+            public void inject(BuySellSuccessController controller) {
+                injectBuySellSuccessController(controller);
+            }
+
+            private BuySellSuccessController injectBuySellSuccessController(BuySellSuccessController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                BuySellSuccessController_MembersInjector.injectMBottomNavigationConnector(instance, (BottomNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBottomNavigationConnectorProvider.get());
+                BuySellSuccessController_MembersInjector.injectMPresenter(instance, (BuySellSuccessPresenter) this.buySellSuccessPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class CardFormControllerSubcomponentImpl implements CardFormControllerSubcomponent {
+            private CardFormPresenterModule cardFormPresenterModule;
+            private Provider<CardFormPresenter> cardFormPresenterProvider;
+            private Provider<CardFormRouter> cardFormRouterProvider;
+            private CardFormViewModule cardFormViewModule;
+            private Provider providesCardFormScreenProvider;
+            private Provider<CreditCardValidator> providesCardValidatorProvider;
+            private Provider<Integer> providesCheckFieldsErrorResProvider;
+            private Provider<ActionBarController> providesCurrentControllerProvider;
+            private Provider<Integer> providesPaymentProcessingErrorResProvider;
+            private Provider<SuccessRouter> successRouterProvider;
+
+            private CardFormControllerSubcomponentImpl(CardFormPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(CardFormPresenterModule module) {
+                this.cardFormPresenterModule = (CardFormPresenterModule) Preconditions.checkNotNull(module);
+                this.providesCardFormScreenProvider = DoubleCheck.provider(CardFormPresenterModule_ProvidesCardFormScreenFactory.create(this.cardFormPresenterModule));
+                this.providesCurrentControllerProvider = DoubleCheck.provider(CardFormPresenterModule_ProvidesCurrentControllerFactory.create(this.cardFormPresenterModule));
+                this.successRouterProvider = DoubleCheck.provider(SuccessRouter_Factory.create(this.providesCurrentControllerProvider));
+                this.cardFormRouterProvider = DoubleCheck.provider(CardFormRouter_Factory.create(this.providesCardFormScreenProvider, this.providesCurrentControllerProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.successRouterProvider));
+                this.cardFormViewModule = new CardFormViewModule();
+                this.providesCheckFieldsErrorResProvider = DoubleCheck.provider(CardFormViewModule_ProvidesCheckFieldsErrorResFactory.create(this.cardFormViewModule));
+                this.providesPaymentProcessingErrorResProvider = DoubleCheck.provider(CardFormViewModule_ProvidesPaymentProcessingErrorResFactory.create(this.cardFormViewModule));
+                this.providesCardValidatorProvider = DoubleCheck.provider(CardFormPresenterModule_ProvidesCardValidatorFactory.create(this.cardFormPresenterModule));
+                this.cardFormPresenterProvider = DoubleCheck.provider(CardFormPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesCardFormScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.cardFormRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, this.providesCheckFieldsErrorResProvider, this.providesPaymentProcessingErrorResProvider, this.providesCardValidatorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMystiqueListSelectorConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMystiqueListButtonConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesBillingAddressDeletedConnectorProvider, this.successRouterProvider, MainActivitySubcomponentImpl.this.keyboardListenerProvider, DaggerMainCoinbaseApplicationComponent.this.worldPayValidatorProvider, DaggerMainCoinbaseApplicationComponent.this.providesWorldPayPollingWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(CardFormController controller) {
+                injectCardFormController(controller);
+            }
+
+            private CardFormController injectCardFormController(CardFormController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                CardFormController_MembersInjector.injectLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+                CardFormController_MembersInjector.injectMPresenter(instance, (CardFormPresenter) this.cardFormPresenterProvider.get());
+                CardFormController_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) MainActivitySubcomponentImpl.this.backgroundDimmerProvider.get());
+                return instance;
+            }
+        }
+
+        private final class ConfirmSendTransferControllerSubcomponentImpl implements ConfirmSendTransferControllerSubcomponent {
+            private ConfirmSendTransferPresenterModule confirmSendTransferPresenterModule;
+            private Provider<ConfirmSendTransferPresenter> confirmSendTransferPresenterProvider;
+            private Provider<ConfirmSendTransferScreen> providesScreenProvider;
+
+            private ConfirmSendTransferControllerSubcomponentImpl(ConfirmSendTransferPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(ConfirmSendTransferPresenterModule module) {
+                this.confirmSendTransferPresenterModule = (ConfirmSendTransferPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(ConfirmSendTransferPresenterModule_ProvidesScreenFactory.create(this.confirmSendTransferPresenterModule));
+                this.confirmSendTransferPresenterProvider = DoubleCheck.provider(ConfirmSendTransferPresenter_Factory.create(this.providesScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesTransferMadeConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(ConfirmSendTransferController controller) {
+                injectConfirmSendTransferController(controller);
+            }
+
+            private ConfirmSendTransferController injectConfirmSendTransferController(ConfirmSendTransferController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                DialogController_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) MainActivitySubcomponentImpl.this.backgroundDimmerProvider.get());
+                ConfirmSendTransferController_MembersInjector.injectMPresenter(instance, (ConfirmSendTransferPresenter) this.confirmSendTransferPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class ConnectedAccountsLayoutSubcomponentImpl implements ConnectedAccountsLayoutSubcomponent {
+            private ConnectedAccountsPresenterModule connectedAccountsPresenterModule;
+            private Provider<ConnectedAccountsPresenter> connectedAccountsPresenterProvider;
+            private PaymentMethodsViewModule paymentMethodsViewModule;
+            private Provider providesConnectedAccountsScreenProvider;
+            private Provider<Integer> providesPaymentMethodDeletedResProvider;
+
+            private ConnectedAccountsLayoutSubcomponentImpl(ConnectedAccountsPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(ConnectedAccountsPresenterModule module) {
+                this.connectedAccountsPresenterModule = (ConnectedAccountsPresenterModule) Preconditions.checkNotNull(module);
+                this.providesConnectedAccountsScreenProvider = DoubleCheck.provider(ConnectedAccountsPresenterModule_ProvidesConnectedAccountsScreenFactory.create(this.connectedAccountsPresenterModule));
+                this.paymentMethodsViewModule = new PaymentMethodsViewModule();
+                this.providesPaymentMethodDeletedResProvider = DoubleCheck.provider(PaymentMethodsViewModule_ProvidesPaymentMethodDeletedResFactory.create(this.paymentMethodsViewModule));
+                this.connectedAccountsPresenterProvider = DoubleCheck.provider(ConnectedAccountsPresenter_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, this.providesConnectedAccountsScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesGetPaymentMethodsRxProvider, DaggerMainCoinbaseApplicationComponent.this.providesPaymentMethodsUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesAddPaymentMethodConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesVerifyPaymentMethodConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesPaymentMethodsRefreshedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.paymentMethodUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, this.providesPaymentMethodDeletedResProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(ConnectedAccountsLayout layout) {
+                injectConnectedAccountsLayout(layout);
+            }
+
+            private ConnectedAccountsLayout injectConnectedAccountsLayout(ConnectedAccountsLayout instance) {
+                ConnectedAccountsLayout_MembersInjector.injectMPresenter(instance, (ConnectedAccountsPresenter) this.connectedAccountsPresenterProvider.get());
+                ConnectedAccountsLayout_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) MainActivitySubcomponentImpl.this.backgroundDimmerProvider.get());
+                return instance;
+            }
+        }
+
+        private final class CurrencyTabLayoutSubcomponentImpl implements CurrencyTabLayoutSubcomponent {
+            private CurrencyTabPresenterModule currencyTabPresenterModule;
+            private Provider<CurrencyTabPresenter> currencyTabPresenterProvider;
+            private Provider<CurrencyTabScreen> providesCurrencyTabScreenProvider;
+
+            private CurrencyTabLayoutSubcomponentImpl(CurrencyTabPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(CurrencyTabPresenterModule module) {
+                this.currencyTabPresenterModule = (CurrencyTabPresenterModule) Preconditions.checkNotNull(module);
+                this.providesCurrencyTabScreenProvider = DoubleCheck.provider(CurrencyTabPresenterModule_ProvidesCurrencyTabScreenFactory.create(this.currencyTabPresenterModule));
+                this.currencyTabPresenterProvider = DoubleCheck.provider(CurrencyTabPresenter_Factory.create(this.providesCurrencyTabScreenProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesCurrencyTabSelectorConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesCurrenciesUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+            }
+
+            public void inject(CurrencyTabLayout layout) {
+                injectCurrencyTabLayout(layout);
+            }
+
+            private CurrencyTabLayout injectCurrencyTabLayout(CurrencyTabLayout instance) {
+                CurrencyTabLayout_MembersInjector.injectMPresenter(instance, (CurrencyTabPresenter) this.currencyTabPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class DashboardCurrencyControllerSubcomponentImpl implements DashboardCurrencyControllerSubcomponent {
+            private Provider<BuyRouter> buyRouterProvider;
+            private DashboardCurrencyPresenterModule dashboardCurrencyPresenterModule;
+            private Provider<DashboardCurrencyPresenter> dashboardCurrencyPresenterProvider;
+            private Provider<DashboardCurrencyScreen> provideDashboardCurrencyPriceScreenProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<SellRouter> sellRouterProvider;
+
+            private DashboardCurrencyControllerSubcomponentImpl(DashboardCurrencyPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(DashboardCurrencyPresenterModule module) {
+                this.dashboardCurrencyPresenterModule = (DashboardCurrencyPresenterModule) Preconditions.checkNotNull(module);
+                this.provideDashboardCurrencyPriceScreenProvider = DoubleCheck.provider(DashboardCurrencyPresenterModule_ProvideDashboardCurrencyPriceScreenFactory.create(this.dashboardCurrencyPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(DashboardCurrencyPresenterModule_ProvidesActionBarControllerFactory.create(this.dashboardCurrencyPresenterModule));
+                this.buyRouterProvider = DoubleCheck.provider(BuyRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider, DaggerMainCoinbaseApplicationComponent.this.providesBuy3dsVerificationConnectorProvider));
+                this.sellRouterProvider = DoubleCheck.provider(SellRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider));
+                this.dashboardCurrencyPresenterProvider = DoubleCheck.provider(DashboardCurrencyPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.provideDashboardCurrencyPriceScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesDashboardTabPeriodSelectionConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesPriceChartPeriodUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesAccountItemClickedConnectorProvider, this.buyRouterProvider, this.sellRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+            }
+
+            public void inject(DashboardCurrencyController fragment) {
+                injectDashboardCurrencyController(fragment);
+            }
+
+            private DashboardCurrencyController injectDashboardCurrencyController(DashboardCurrencyController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                DashboardCurrencyController_MembersInjector.injectMPresenter(instance, (DashboardCurrencyPresenter) this.dashboardCurrencyPresenterProvider.get());
+                DashboardCurrencyController_MembersInjector.injectMBottomNavigationConnector(instance, (BottomNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBottomNavigationConnectorProvider.get());
+                return instance;
+            }
+        }
+
+        private final class DashboardMainControllerSubcomponentImpl implements DashboardMainControllerSubcomponent {
+            private Provider<BuyRouter> buyRouterProvider;
+            private DashboardMainPresenterModule dashboardMainPresenterModule;
+            private Provider<DashboardMainPresenter> dashboardMainPresenterProvider;
+            private Provider<GdprModalRouter> gdprModalRouterProvider;
+            private Provider<ModalRouterAggregator> modalRouterAggregatorProvider;
+            private Provider<OnboardingRouter> onboardingRouterProvider;
+            private Provider<DashboardMainScreen> provideDashboardPresenterModuleProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<List<ModalRouter>> providesModalRoutersProvider;
+            private Provider<WithdrawalBasedLimitsExistingUserModalRouter> withdrawalBasedLimitsExistingUserModalRouterProvider;
+
+            private DashboardMainControllerSubcomponentImpl(QuickstartModule module, DashboardMainPresenterModule presenterModule) {
+                initialize(module, presenterModule);
+            }
+
+            private void initialize(QuickstartModule module, DashboardMainPresenterModule presenterModule) {
+                this.dashboardMainPresenterModule = (DashboardMainPresenterModule) Preconditions.checkNotNull(presenterModule);
+                this.provideDashboardPresenterModuleProvider = DoubleCheck.provider(DashboardMainPresenterModule_ProvideDashboardPresenterModuleFactory.create(this.dashboardMainPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(DashboardMainPresenterModule_ProvidesActionBarControllerFactory.create(this.dashboardMainPresenterModule));
+                this.buyRouterProvider = DoubleCheck.provider(BuyRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider, DaggerMainCoinbaseApplicationComponent.this.providesBuy3dsVerificationConnectorProvider));
+                this.onboardingRouterProvider = DoubleCheck.provider(OnboardingRouter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesOnboardingUpdatedConnectorProvider));
+                this.gdprModalRouterProvider = DoubleCheck.provider(GdprModalRouter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesOnboardingUpdatedConnectorProvider, this.onboardingRouterProvider));
+                this.withdrawalBasedLimitsExistingUserModalRouterProvider = DoubleCheck.provider(WithdrawalBasedLimitsExistingUserModalRouter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider));
+                this.providesModalRoutersProvider = DoubleCheck.provider(DashboardMainPresenterModule_ProvidesModalRoutersFactory.create(this.dashboardMainPresenterModule, MainActivitySubcomponentImpl.this.launchMessageModalRouterProvider, this.gdprModalRouterProvider, this.withdrawalBasedLimitsExistingUserModalRouterProvider));
+                this.modalRouterAggregatorProvider = DoubleCheck.provider(ModalRouterAggregator_Factory.create(this.providesModalRoutersProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.dashboardMainPresenterProvider = DoubleCheck.provider(DashboardMainPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.provideDashboardPresenterModuleProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesDashboardDataConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesDashboardBalanceUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesDashboardPriceChartItemClickedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesDashboardRefreshConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesDashboardAlertsConnectorProvider, this.buyRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider, DaggerMainCoinbaseApplicationComponent.this.alertsUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, MainActivitySubcomponentImpl.this.statusBarUpdaterProvider, this.modalRouterAggregatorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+            }
+
+            public void inject(DashboardMainController fragment) {
+                injectDashboardMainController(fragment);
+            }
+
+            private DashboardMainController injectDashboardMainController(DashboardMainController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                DashboardMainController_MembersInjector.injectMPresenter(instance, (DashboardMainPresenter) this.dashboardMainPresenterProvider.get());
+                DashboardMainController_MembersInjector.injectMBottomNavigationConnector(instance, (BottomNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBottomNavigationConnectorProvider.get());
+                DashboardMainController_MembersInjector.injectMMixpanelTracking(instance, (MixpanelTracking) DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider.get());
+                return instance;
+            }
+        }
+
+        private final class DashboardPriceChartListLayoutSubcomponentImpl implements DashboardPriceChartListLayoutSubcomponent {
+            private DashboardPriceChartListPresenterModule dashboardPriceChartListPresenterModule;
+            private Provider<DashboardPriceChartListPresenter> dashboardPriceChartListPresenterProvider;
+            private Provider<DashboardPriceChartListScreen> providesDashboardPriceChartListScreenProvider;
+
+            private DashboardPriceChartListLayoutSubcomponentImpl(DashboardPriceChartListPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(DashboardPriceChartListPresenterModule module) {
+                this.dashboardPriceChartListPresenterModule = (DashboardPriceChartListPresenterModule) Preconditions.checkNotNull(module);
+                this.providesDashboardPriceChartListScreenProvider = DoubleCheck.provider(DashboardPriceChartListPresenterModule_ProvidesDashboardPriceChartListScreenFactory.create(this.dashboardPriceChartListPresenterModule));
+                this.dashboardPriceChartListPresenterProvider = DoubleCheck.provider(DashboardPriceChartListPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesDashboardPriceChartListScreenProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesCurrenciesUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesDashboardPriceChartItemClickedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesDashboardRefreshConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(DashboardPriceChartListLayout layout) {
+                injectDashboardPriceChartListLayout(layout);
+            }
+
+            private DashboardPriceChartListLayout injectDashboardPriceChartListLayout(DashboardPriceChartListLayout instance) {
+                DashboardPriceChartListLayout_MembersInjector.injectMPresenter(instance, (DashboardPriceChartListPresenter) this.dashboardPriceChartListPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class DashboardTabPeriodLayoutSubcomponentImpl implements DashboardTabPeriodLayoutSubcomponent {
+            private DashboardTabPeriodPresenterModule dashboardTabPeriodPresenterModule;
+            private Provider<DashboardTabPeriodPresenter> dashboardTabPeriodPresenterProvider;
+            private Provider<DashboardTabPeriodScreen> providesDashboardTabPeriodScreenProvider;
+
+            private DashboardTabPeriodLayoutSubcomponentImpl(DashboardTabPeriodPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(DashboardTabPeriodPresenterModule module) {
+                this.dashboardTabPeriodPresenterModule = (DashboardTabPeriodPresenterModule) Preconditions.checkNotNull(module);
+                this.providesDashboardTabPeriodScreenProvider = DoubleCheck.provider(DashboardTabPeriodPresenterModule_ProvidesDashboardTabPeriodScreenFactory.create(this.dashboardTabPeriodPresenterModule));
+                this.dashboardTabPeriodPresenterProvider = DoubleCheck.provider(DashboardTabPeriodPresenter_Factory.create(this.providesDashboardTabPeriodScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesDashboardTabPeriodSelectionConnectorProvider));
+            }
+
+            public void inject(DashboardTabPeriodLayout layout) {
+                injectDashboardTabPeriodLayout(layout);
+            }
+
+            private DashboardTabPeriodLayout injectDashboardTabPeriodLayout(DashboardTabPeriodLayout instance) {
+                DashboardTabPeriodLayout_MembersInjector.injectMPresenter(instance, (DashboardTabPeriodPresenter) this.dashboardTabPeriodPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class DelayedTransactionDialogControllerSubcomponentImpl implements DelayedTransactionDialogControllerSubcomponent {
+            private Provider<DelayedTransactionDialogPresenter> delayedTransactionDialogPresenterProvider;
+            private DelayedTransactionsControllerModule delayedTransactionsControllerModule;
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<SuccessRouter> successRouterProvider;
+
+            private DelayedTransactionDialogControllerSubcomponentImpl(DelayedTransactionsControllerModule module) {
+                initialize(module);
+            }
+
+            private void initialize(DelayedTransactionsControllerModule module) {
+                this.delayedTransactionDialogPresenterProvider = DoubleCheck.provider(DelayedTransactionDialogPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesDatabaseManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesTransferMadeConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.delayedTransactionsControllerModule = (DelayedTransactionsControllerModule) Preconditions.checkNotNull(module);
+                this.providesControllerProvider = DoubleCheck.provider(DelayedTransactionsControllerModule_ProvidesControllerFactory.create(this.delayedTransactionsControllerModule));
+                this.successRouterProvider = DoubleCheck.provider(SuccessRouter_Factory.create(this.providesControllerProvider));
+            }
+
+            public void inject(DelayedTransactionDialogController controller) {
+                injectDelayedTransactionDialogController(controller);
+            }
+
+            private DelayedTransactionDialogController injectDelayedTransactionDialogController(DelayedTransactionDialogController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                DialogController_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) MainActivitySubcomponentImpl.this.backgroundDimmerProvider.get());
+                DelayedTransactionDialogController_MembersInjector.injectMPresenter(instance, (DelayedTransactionDialogPresenter) this.delayedTransactionDialogPresenterProvider.get());
+                DelayedTransactionDialogController_MembersInjector.injectMSuccessRouter(instance, (SuccessRouter) this.successRouterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class DepositFiatConfirmationControllerSubcomponentImpl implements DepositFiatConfirmationControllerSubcomponent {
+            private Provider<DepositConfirmationPresenter> depositConfirmationPresenterProvider;
+            private DepositFiatConfirmationPresenterModule depositFiatConfirmationPresenterModule;
+            private Provider<DepositFiatConfirmationRouter> depositFiatConfirmationRouterProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider providesDepositFiatConfirmationScreenProvider;
+
+            private DepositFiatConfirmationControllerSubcomponentImpl(DepositFiatConfirmationPresenterModule depositFiatPresenterModule) {
+                initialize(depositFiatPresenterModule);
+            }
+
+            private void initialize(DepositFiatConfirmationPresenterModule depositFiatPresenterModule) {
+                this.depositFiatConfirmationPresenterModule = (DepositFiatConfirmationPresenterModule) Preconditions.checkNotNull(depositFiatPresenterModule);
+                this.providesActionBarControllerProvider = DoubleCheck.provider(DepositFiatConfirmationPresenterModule_ProvidesActionBarControllerFactory.create(this.depositFiatConfirmationPresenterModule));
+                this.depositFiatConfirmationRouterProvider = DoubleCheck.provider(DepositFiatConfirmationRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.providesDepositFiatConfirmationScreenProvider = DoubleCheck.provider(DepositFiatConfirmationPresenterModule_ProvidesDepositFiatConfirmationScreenFactory.create(this.depositFiatConfirmationPresenterModule));
+                this.depositConfirmationPresenterProvider = DoubleCheck.provider(DepositConfirmationPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.depositFiatConfirmationRouterProvider, this.providesDepositFiatConfirmationScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.paymentMethodUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.transferUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(DepositFiatConfirmationController controller) {
+                injectDepositFiatConfirmationController(controller);
+            }
+
+            private DepositFiatConfirmationController injectDepositFiatConfirmationController(DepositFiatConfirmationController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                DepositFiatConfirmationController_MembersInjector.injectMPresenter(instance, (DepositConfirmationPresenter) this.depositConfirmationPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class DepositFiatControllerSubcomponentImpl implements DepositFiatControllerSubcomponent {
+            private DepositFiatPresenterModule depositFiatPresenterModule;
+            private Provider<DepositFiatPresenter> depositFiatPresenterProvider;
+            private Provider<DepositFiatRouter> depositFiatRouterProvider;
+            private Provider<KeypadAmountFormatter> keypadAmountFormatterProvider;
+            private Provider<KeypadAmountValidator> keypadAmountValidatorProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<DepositFiatScreen> providesDepositFiatScreenProvider;
+            private Provider<QuickstartManager> providesQuickStartManagerProvider;
+            private QuickstartModule quickstartModule;
+
+            private DepositFiatControllerSubcomponentImpl(QuickstartModule quickstartModule, DepositFiatPresenterModule depositFiatPresenterModule) {
+                initialize(quickstartModule, depositFiatPresenterModule);
+            }
+
+            private void initialize(QuickstartModule quickstartModule, DepositFiatPresenterModule depositFiatPresenterModule) {
+                this.depositFiatPresenterModule = (DepositFiatPresenterModule) Preconditions.checkNotNull(depositFiatPresenterModule);
+                this.providesActionBarControllerProvider = DoubleCheck.provider(DepositFiatPresenterModule_ProvidesActionBarControllerFactory.create(depositFiatPresenterModule));
+                this.depositFiatRouterProvider = DoubleCheck.provider(DepositFiatRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.providesDepositFiatScreenProvider = DoubleCheck.provider(DepositFiatPresenterModule_ProvidesDepositFiatScreenFactory.create(depositFiatPresenterModule));
+                this.keypadAmountFormatterProvider = DoubleCheck.provider(KeypadAmountFormatter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesCurrenciesUpdatedConnectorProvider));
+                this.keypadAmountValidatorProvider = DoubleCheck.provider(KeypadAmountValidator_Factory.create());
+                this.quickstartModule = (QuickstartModule) Preconditions.checkNotNull(quickstartModule);
+                this.providesQuickStartManagerProvider = DoubleCheck.provider(QuickstartModule_ProvidesQuickStartManagerFactory.create(quickstartModule, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesPhoneNumbersUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesGetPaymentMethodsRxProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider));
+                this.depositFiatPresenterProvider = DoubleCheck.provider(DepositFiatPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesBankAccountsUpdatedConnectorProvider, this.depositFiatRouterProvider, this.providesDepositFiatScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesGetPaymentMethodsRxProvider, DaggerMainCoinbaseApplicationComponent.this.providesBuySellSettingsConnectorProvider, this.keypadAmountFormatterProvider, this.keypadAmountValidatorProvider, DaggerMainCoinbaseApplicationComponent.this.providesLinkedAccountConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesNumericKeypadConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesPaymentMethodsUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.paymentMethodUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.providesPhoneNumbersUpdatedConnectorProvider, this.providesQuickStartManagerProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(DepositFiatController depositFiatController) {
+                injectDepositFiatController(depositFiatController);
+            }
+
+            private DepositFiatController injectDepositFiatController(DepositFiatController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                DepositFiatController_MembersInjector.injectMDepositFiatPresenter(instance, (DepositFiatPresenter) this.depositFiatPresenterProvider.get());
+                DepositFiatController_MembersInjector.injectMCallingActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                return instance;
+            }
+        }
+
+        private final class DeviceVerifyControllerSubcomponentImpl implements DeviceVerifyControllerSubcomponent {
+            private AuthCompletionFactory_Factory authCompletionFactoryProvider;
+            private Provider<AuthRouter> authRouterProvider;
+            private Provider<CredentialsApiRxWrapper> credentialsApiRxWrapperProvider;
+            private DeviceVerifyPresenterModule deviceVerifyPresenterModule;
+            private Provider<DeviceVerifyPresenter> deviceVerifyPresenterProvider;
+            private Provider<DeviceVerifyRouter> deviceVerifyRouterProvider;
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<DeviceVerifyScreen> providesScreenProvider;
+            private Provider<SignInRouter> signInRouterProvider;
+
+            private DeviceVerifyControllerSubcomponentImpl(DeviceVerifyPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(DeviceVerifyPresenterModule module) {
+                this.deviceVerifyPresenterModule = (DeviceVerifyPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(DeviceVerifyPresenterModule_ProvidesScreenFactory.create(this.deviceVerifyPresenterModule));
+                this.providesControllerProvider = DoubleCheck.provider(DeviceVerifyPresenterModule_ProvidesControllerFactory.create(this.deviceVerifyPresenterModule));
+                this.deviceVerifyRouterProvider = DoubleCheck.provider(DeviceVerifyRouter_Factory.create(this.providesControllerProvider));
+                this.credentialsApiRxWrapperProvider = DoubleCheck.provider(CredentialsApiRxWrapper_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.authCompletionFactoryProvider = AuthCompletionFactory_Factory.create(this.providesControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.credentialsApiRxWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider);
+                this.authRouterProvider = DoubleCheck.provider(AuthRouter_Factory.create(this.providesControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider, DaggerMainCoinbaseApplicationComponent.this.activityPermissionCheckUtilsProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.authCompletionFactoryProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.signInRouterProvider = DoubleCheck.provider(SignInRouter_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesControllerProvider));
+                this.deviceVerifyPresenterProvider = DoubleCheck.provider(DeviceVerifyPresenter_Factory.create(this.providesScreenProvider, this.deviceVerifyRouterProvider, this.authRouterProvider, this.signInRouterProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesDeviceVerifyConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(DeviceVerifyController controller) {
+                injectDeviceVerifyController(controller);
+            }
+
+            private DeviceVerifyController injectDeviceVerifyController(DeviceVerifyController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                DeviceVerifyController_MembersInjector.injectMPresenter(instance, (DeviceVerifyPresenter) this.deviceVerifyPresenterProvider.get());
+                DeviceVerifyController_MembersInjector.injectMAnimationUtilsWrapper(instance, (AnimationUtilsWrapper) DaggerMainCoinbaseApplicationComponent.this.providesAnimationUtilsWrapperProvider.get());
+                return instance;
+            }
+        }
+
+        private final class EmailSettingsControllerSubcomponentImpl implements EmailSettingsControllerSubcomponent {
+            private EmailSettingsPresenterModule emailSettingsPresenterModule;
+            private Provider<EmailSettingsPresenter> emailSettingsPresenterProvider;
+            private Provider<GdprSettingsRouter> gdprSettingsRouterProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider providesScreenProvider;
+
+            private EmailSettingsControllerSubcomponentImpl(EmailSettingsPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(EmailSettingsPresenterModule module) {
+                this.emailSettingsPresenterModule = (EmailSettingsPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(EmailSettingsPresenterModule_ProvidesScreenFactory.create(this.emailSettingsPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(EmailSettingsPresenterModule_ProvidesActionBarControllerFactory.create(this.emailSettingsPresenterModule));
+                this.gdprSettingsRouterProvider = DoubleCheck.provider(GdprSettingsRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.emailSettingsPresenterProvider = DoubleCheck.provider(EmailSettingsPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesScreenProvider, this.gdprSettingsRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesPrivacyRightsSettingsClickedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider));
+            }
+
+            public void inject(EmailSettingsController controller) {
+                injectEmailSettingsController(controller);
+            }
+
+            private EmailSettingsController injectEmailSettingsController(EmailSettingsController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                EmailSettingsController_MembersInjector.injectMPresenter(instance, (EmailSettingsPresenter) this.emailSettingsPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class EmailVerifyControllerSubcomponentImpl implements EmailVerifyControllerSubcomponent {
+            private AuthCompletionFactory_Factory authCompletionFactoryProvider;
+            private Provider<AuthRouter> authRouterProvider;
+            private Provider<CredentialsApiRxWrapper> credentialsApiRxWrapperProvider;
+            private Provider<EmailVerifiedRouter> emailVerifiedRouterProvider;
+            private EmailVerifyPresenterModule emailVerifyPresenterModule;
+            private Provider<EmailVerifyPresenter> emailVerifyPresenterProvider;
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<EmailVerifyScreen> providesScreenProvider;
+            private Provider<SignInRouter> signInRouterProvider;
+
+            private EmailVerifyControllerSubcomponentImpl(EmailVerifyPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(EmailVerifyPresenterModule module) {
+                this.emailVerifyPresenterModule = (EmailVerifyPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(EmailVerifyPresenterModule_ProvidesScreenFactory.create(this.emailVerifyPresenterModule));
+                this.emailVerifiedRouterProvider = DoubleCheck.provider(EmailVerifiedRouter_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider));
+                this.providesControllerProvider = DoubleCheck.provider(EmailVerifyPresenterModule_ProvidesControllerFactory.create(this.emailVerifyPresenterModule));
+                this.credentialsApiRxWrapperProvider = DoubleCheck.provider(CredentialsApiRxWrapper_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.authCompletionFactoryProvider = AuthCompletionFactory_Factory.create(this.providesControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.credentialsApiRxWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider);
+                this.authRouterProvider = DoubleCheck.provider(AuthRouter_Factory.create(this.providesControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider, DaggerMainCoinbaseApplicationComponent.this.activityPermissionCheckUtilsProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.authCompletionFactoryProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.signInRouterProvider = DoubleCheck.provider(SignInRouter_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesControllerProvider));
+                this.emailVerifyPresenterProvider = DoubleCheck.provider(EmailVerifyPresenter_Factory.create(this.providesScreenProvider, this.emailVerifiedRouterProvider, this.authRouterProvider, this.signInRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider, DaggerMainCoinbaseApplicationComponent.this.providesEmailVerifiedConnectorProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.activityPermissionCheckUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(EmailVerifyController controller) {
+                injectEmailVerifyController(controller);
+            }
+
+            private EmailVerifyController injectEmailVerifyController(EmailVerifyController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                EmailVerifyController_MembersInjector.injectMPresenter(instance, (EmailVerifyPresenter) this.emailVerifyPresenterProvider.get());
+                EmailVerifyController_MembersInjector.injectMAnimationUtilsWrapper(instance, (AnimationUtilsWrapper) DaggerMainCoinbaseApplicationComponent.this.providesAnimationUtilsWrapperProvider.get());
+                return instance;
+            }
+        }
+
+        private final class ExistingUserDialogControllerSubcomponentImpl implements ExistingUserDialogControllerSubcomponent {
+            private ExistingUserDialogPresenterModule existingUserDialogPresenterModule;
+            private Provider<ExistingUserDialogPresenter> existingUserDialogPresenterProvider;
+            private Provider<ExistingUserDialogRouter> existingUserDialogRouterProvider;
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<ExistingUserDialogScreen> providesScreenProvider;
+
+            private ExistingUserDialogControllerSubcomponentImpl(ExistingUserDialogPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(ExistingUserDialogPresenterModule module) {
+                this.existingUserDialogPresenterModule = (ExistingUserDialogPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(ExistingUserDialogPresenterModule_ProvidesScreenFactory.create(this.existingUserDialogPresenterModule));
+                this.providesControllerProvider = DoubleCheck.provider(ExistingUserDialogPresenterModule_ProvidesControllerFactory.create(this.existingUserDialogPresenterModule));
+                this.existingUserDialogRouterProvider = DoubleCheck.provider(ExistingUserDialogRouter_Factory.create(this.providesControllerProvider));
+                this.existingUserDialogPresenterProvider = DoubleCheck.provider(ExistingUserDialogPresenter_Factory.create(this.providesScreenProvider, this.existingUserDialogRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider));
+            }
+
+            public void inject(ExistingUserDialogController controller) {
+                injectExistingUserDialogController(controller);
+            }
+
+            private ExistingUserDialogController injectExistingUserDialogController(ExistingUserDialogController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                DialogController_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) MainActivitySubcomponentImpl.this.backgroundDimmerProvider.get());
+                ExistingUserDialogController_MembersInjector.injectMPresenter(instance, (ExistingUserDialogPresenter) this.existingUserDialogPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class FiatTransactionsControllerSubcomponentImpl implements FiatTransactionsControllerSubcomponent {
+            private FiatTransactionsControllerModule fiatTransactionsControllerModule;
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<QuickstartManager> providesQuickStartManagerProvider;
+            private Provider<LimitExceededTrackingContext> providesSendExceededTrackingContextProvider;
+            private Provider<WithdrawalBasedLimitsErrorRouter> providesWithdrawalBasedLimitsErrorRouterProvider;
+            private QuickstartModule quickstartModule;
+            private Provider<WithdrawalBasedLimitsApiErrorHandler> withdrawalBasedLimitsApiErrorHandlerProvider;
+            private Provider<WithdrawalBasedLimitsErrorControllerRouter> withdrawalBasedLimitsErrorControllerRouterProvider;
+
+            private FiatTransactionsControllerSubcomponentImpl(QuickstartModule module, FiatTransactionsControllerModule controllerModule) {
+                initialize(module, controllerModule);
+            }
+
+            private void initialize(QuickstartModule module, FiatTransactionsControllerModule controllerModule) {
+                this.quickstartModule = (QuickstartModule) Preconditions.checkNotNull(module);
+                this.providesQuickStartManagerProvider = DoubleCheck.provider(QuickstartModule_ProvidesQuickStartManagerFactory.create(this.quickstartModule, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesPhoneNumbersUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesGetPaymentMethodsRxProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider));
+                this.fiatTransactionsControllerModule = (FiatTransactionsControllerModule) Preconditions.checkNotNull(controllerModule);
+                this.providesControllerProvider = DoubleCheck.provider(FiatTransactionsControllerModule_ProvidesControllerFactory.create(this.fiatTransactionsControllerModule));
+                this.providesSendExceededTrackingContextProvider = DoubleCheck.provider(FiatTransactionsControllerModule_ProvidesSendExceededTrackingContextFactory.create(this.fiatTransactionsControllerModule));
+                this.withdrawalBasedLimitsErrorControllerRouterProvider = DoubleCheck.provider(WithdrawalBasedLimitsErrorControllerRouter_Factory.create(this.providesControllerProvider, this.providesSendExceededTrackingContextProvider));
+                this.providesWithdrawalBasedLimitsErrorRouterProvider = DoubleCheck.provider(FiatTransactionsControllerModule_ProvidesWithdrawalBasedLimitsErrorRouterFactory.create(this.fiatTransactionsControllerModule, this.withdrawalBasedLimitsErrorControllerRouterProvider));
+                this.withdrawalBasedLimitsApiErrorHandlerProvider = DoubleCheck.provider(WithdrawalBasedLimitsApiErrorHandler_Factory.create(this.providesWithdrawalBasedLimitsErrorRouterProvider));
+            }
+
+            public void inject(FiatTransactionsController fragment) {
+                injectFiatTransactionsController(fragment);
+            }
+
+            private FiatTransactionsController injectFiatTransactionsController(FiatTransactionsController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                FiatTransactionsController_MembersInjector.injectDbManager(instance, (DatabaseManager) DaggerMainCoinbaseApplicationComponent.this.providesDatabaseManagerProvider.get());
+                FiatTransactionsController_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+                FiatTransactionsController_MembersInjector.injectMQuickstartManager(instance, (QuickstartManager) this.providesQuickStartManagerProvider.get());
+                FiatTransactionsController_MembersInjector.injectMPaymentMethodsTask(instance, (GetPaymentMethodsTaskRx) DaggerMainCoinbaseApplicationComponent.this.providesGetPaymentMethodsRxProvider.get());
+                FiatTransactionsController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                FiatTransactionsController_MembersInjector.injectMBuySellMadeConnector(instance, (BuySellMadeConnector) DaggerMainCoinbaseApplicationComponent.this.providesBuySellMadeConnectorProvider.get());
+                FiatTransactionsController_MembersInjector.injectMBankAccountsUpdatedConnector(instance, (BankAccountsUpdatedConnector) DaggerMainCoinbaseApplicationComponent.this.providesBankAccountsUpdatedConnectorProvider.get());
+                FiatTransactionsController_MembersInjector.injectMPaymentMethodsUpdateConnector(instance, (PaymentMethodsUpdatedConnector) DaggerMainCoinbaseApplicationComponent.this.providesPaymentMethodsUpdatedConnectorProvider.get());
+                FiatTransactionsController_MembersInjector.injectMPhoneNumbersUpdatedConnector(instance, (PhoneNumbersUpdatedConnector) DaggerMainCoinbaseApplicationComponent.this.providesPhoneNumbersUpdatedConnectorProvider.get());
+                FiatTransactionsController_MembersInjector.injectMFiatTransactionsConnector(instance, (FiatTransactionsConnector) DaggerMainCoinbaseApplicationComponent.this.fiatTransactionsConnectorProvider.get());
+                FiatTransactionsController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                FiatTransactionsController_MembersInjector.injectMMoneyFormatterUtil(instance, (MoneyFormatterUtil) DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider.get());
+                FiatTransactionsController_MembersInjector.injectMWithdrawalBasedLimitsApiErrorHandler(instance, (WithdrawalBasedLimitsApiErrorHandler) this.withdrawalBasedLimitsApiErrorHandlerProvider.get());
+                FiatTransactionsController_MembersInjector.injectMMixpanelTracking(instance, (MixpanelTracking) DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider.get());
+                return instance;
+            }
+        }
+
+        private final class GdprIntroControllerSubcomponentImpl implements GdprIntroControllerSubcomponent {
+            private GdprIntroPresenterModule gdprIntroPresenterModule;
+            private Provider<GdprIntroPresenter> gdprIntroPresenterProvider;
+            private Provider<GdprIntroRouter> gdprIntroRouterProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<GdprIntroScreen> providesScreenProvider;
+
+            private GdprIntroControllerSubcomponentImpl(GdprIntroPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(GdprIntroPresenterModule module) {
+                this.gdprIntroPresenterModule = (GdprIntroPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(GdprIntroPresenterModule_ProvidesScreenFactory.create(this.gdprIntroPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(GdprIntroPresenterModule_ProvidesActionBarControllerFactory.create(this.gdprIntroPresenterModule));
+                this.gdprIntroRouterProvider = DoubleCheck.provider(GdprIntroRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.gdprIntroPresenterProvider = DoubleCheck.provider(GdprIntroPresenter_Factory.create(this.providesScreenProvider, this.gdprIntroRouterProvider));
+            }
+
+            public void inject(GdprIntroController controller) {
+                injectGdprIntroController(controller);
+            }
+
+            private GdprIntroController injectGdprIntroController(GdprIntroController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                GdprIntroController_MembersInjector.injectMPresenter(instance, (GdprIntroPresenter) this.gdprIntroPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class GdprMarketingEmailControllerSubcomponentImpl implements GdprMarketingEmailControllerSubcomponent {
+            private GdprMarketingEmailPresenterModule gdprMarketingEmailPresenterModule;
+            private Provider<GdprMarketingEmailPresenter> gdprMarketingEmailPresenterProvider;
+            private Provider<OnboardingRouter> onboardingRouterProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<GdprMarketingEmailScreen> providesScreenProvider;
+
+            private GdprMarketingEmailControllerSubcomponentImpl(GdprMarketingEmailPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(GdprMarketingEmailPresenterModule module) {
+                this.gdprMarketingEmailPresenterModule = (GdprMarketingEmailPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(GdprMarketingEmailPresenterModule_ProvidesScreenFactory.create(this.gdprMarketingEmailPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(GdprMarketingEmailPresenterModule_ProvidesActionBarControllerFactory.create(this.gdprMarketingEmailPresenterModule));
+                this.onboardingRouterProvider = DoubleCheck.provider(OnboardingRouter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesOnboardingUpdatedConnectorProvider));
+                this.gdprMarketingEmailPresenterProvider = DoubleCheck.provider(GdprMarketingEmailPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, this.onboardingRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesOnboardingUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider));
+            }
+
+            public void inject(GdprMarketingEmailController controller) {
+                injectGdprMarketingEmailController(controller);
+            }
+
+            private GdprMarketingEmailController injectGdprMarketingEmailController(GdprMarketingEmailController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                GdprMarketingEmailController_MembersInjector.injectMPresenter(instance, (GdprMarketingEmailPresenter) this.gdprMarketingEmailPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class GdprPrivacyPolicyControllerSubcomponentImpl implements GdprPrivacyPolicyControllerSubcomponent {
+            private GdprPrivacyPolicyPresenterModule gdprPrivacyPolicyPresenterModule;
+            private Provider<GdprPrivacyPolicyPresenter> gdprPrivacyPolicyPresenterProvider;
+            private Provider<OnboardingRouter> onboardingRouterProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<GdprPrivacyPolicyScreen> providesScreenProvider;
+
+            private GdprPrivacyPolicyControllerSubcomponentImpl(GdprPrivacyPolicyPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(GdprPrivacyPolicyPresenterModule module) {
+                this.gdprPrivacyPolicyPresenterModule = (GdprPrivacyPolicyPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(GdprPrivacyPolicyPresenterModule_ProvidesScreenFactory.create(this.gdprPrivacyPolicyPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(GdprPrivacyPolicyPresenterModule_ProvidesActionBarControllerFactory.create(this.gdprPrivacyPolicyPresenterModule));
+                this.onboardingRouterProvider = DoubleCheck.provider(OnboardingRouter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesOnboardingUpdatedConnectorProvider));
+                this.gdprPrivacyPolicyPresenterProvider = DoubleCheck.provider(GdprPrivacyPolicyPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, this.onboardingRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesOnboardingUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider));
+            }
+
+            public void inject(GdprPrivacyPolicyController controller) {
+                injectGdprPrivacyPolicyController(controller);
+            }
+
+            private GdprPrivacyPolicyController injectGdprPrivacyPolicyController(GdprPrivacyPolicyController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                GdprPrivacyPolicyController_MembersInjector.injectMPresenter(instance, (GdprPrivacyPolicyPresenter) this.gdprPrivacyPolicyPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class GdprPrivacyRequestControllerSubcomponentImpl implements GdprPrivacyRequestControllerSubcomponent {
+            private GdprPrivacyRequestPresenterModule gdprPrivacyRequestPresenterModule;
+            private Provider<GdprPrivacyRequestPresenter> gdprPrivacyRequestPresenterProvider;
+            private Provider<GdprSettingsRouter> gdprSettingsRouterProvider;
+            private Provider mapOfClassOfAndFunc0OfPrivacyRequestViewModelProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider providesRequestCorrectionViewModelProvider;
+            private Provider providesRequestDataViewModelProvider;
+            private Provider providesRequestDeletionViewModelProvider;
+            private Provider providesRequestExportViewModelProvider;
+            private Provider providesRequestRestrictionProcessingViewModelProvider;
+            private Provider<GdprPrivacyRequestScreen> providesScreenProvider;
+
+            private GdprPrivacyRequestControllerSubcomponentImpl(GdprPrivacyRequestPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(GdprPrivacyRequestPresenterModule module) {
+                this.gdprPrivacyRequestPresenterModule = (GdprPrivacyRequestPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(GdprPrivacyRequestPresenterModule_ProvidesScreenFactory.create(this.gdprPrivacyRequestPresenterModule));
+                this.providesRequestDataViewModelProvider = DoubleCheck.provider(GdprPrivacyRequestPresenterModule_ProvidesRequestDataViewModelFactory.create(this.gdprPrivacyRequestPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesPrivacyRightsSettingsClickedConnectorProvider));
+                this.providesRequestDeletionViewModelProvider = DoubleCheck.provider(GdprPrivacyRequestPresenterModule_ProvidesRequestDeletionViewModelFactory.create(this.gdprPrivacyRequestPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesPrivacyRightsSettingsClickedConnectorProvider));
+                this.providesRequestExportViewModelProvider = DoubleCheck.provider(GdprPrivacyRequestPresenterModule_ProvidesRequestExportViewModelFactory.create(this.gdprPrivacyRequestPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesPrivacyRightsSettingsClickedConnectorProvider));
+                this.providesRequestRestrictionProcessingViewModelProvider = DoubleCheck.provider(GdprPrivacyRequestPresenterModule_ProvidesRequestRestrictionProcessingViewModelFactory.create(this.gdprPrivacyRequestPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesPrivacyRightsSettingsClickedConnectorProvider));
+                this.providesRequestCorrectionViewModelProvider = DoubleCheck.provider(GdprPrivacyRequestPresenterModule_ProvidesRequestCorrectionViewModelFactory.create(this.gdprPrivacyRequestPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesPrivacyRightsSettingsClickedConnectorProvider));
+                this.mapOfClassOfAndFunc0OfPrivacyRequestViewModelProvider = MapFactory.builder(5).put(RequestDataItem.class, this.providesRequestDataViewModelProvider).put(RequestDeletion.class, this.providesRequestDeletionViewModelProvider).put(RequestExport.class, this.providesRequestExportViewModelProvider).put(RequestRestrictionItem.class, this.providesRequestRestrictionProcessingViewModelProvider).put(RequestCorrectionItem.class, this.providesRequestCorrectionViewModelProvider).build();
+                this.providesActionBarControllerProvider = DoubleCheck.provider(GdprPrivacyRequestPresenterModule_ProvidesActionBarControllerFactory.create(this.gdprPrivacyRequestPresenterModule));
+                this.gdprSettingsRouterProvider = DoubleCheck.provider(GdprSettingsRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.gdprPrivacyRequestPresenterProvider = DoubleCheck.provider(GdprPrivacyRequestPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesPrivacyRightsSettingsClickedConnectorProvider, this.mapOfClassOfAndFunc0OfPrivacyRequestViewModelProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, this.gdprSettingsRouterProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(GdprPrivacyRequestController controller) {
+                injectGdprPrivacyRequestController(controller);
+            }
+
+            private GdprPrivacyRequestController injectGdprPrivacyRequestController(GdprPrivacyRequestController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                GdprPrivacyRequestController_MembersInjector.injectMPresenter(instance, (GdprPrivacyRequestPresenter) this.gdprPrivacyRequestPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class GdprRequestSentControllerSubcomponentImpl implements GdprRequestSentControllerSubcomponent {
+            private GdprRequestSentPresenterModule gdprRequestSentPresenterModule;
+            private Provider<GdprRequestSentPresenter> gdprRequestSentPresenterProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<SuccessRouter> successRouterProvider;
+
+            private GdprRequestSentControllerSubcomponentImpl(GdprRequestSentPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(GdprRequestSentPresenterModule module) {
+                this.gdprRequestSentPresenterModule = (GdprRequestSentPresenterModule) Preconditions.checkNotNull(module);
+                this.providesActionBarControllerProvider = DoubleCheck.provider(GdprRequestSentPresenterModule_ProvidesActionBarControllerFactory.create(this.gdprRequestSentPresenterModule));
+                this.successRouterProvider = DoubleCheck.provider(SuccessRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.gdprRequestSentPresenterProvider = DoubleCheck.provider(GdprRequestSentPresenter_Factory.create(this.successRouterProvider));
+            }
+
+            public void inject(GdprRequestSentController controller) {
+                injectGdprRequestSentController(controller);
+            }
+
+            private GdprRequestSentController injectGdprRequestSentController(GdprRequestSentController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                GdprRequestSentController_MembersInjector.injectMPresenter(instance, (GdprRequestSentPresenter) this.gdprRequestSentPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class IdologyAddressFormLayoutSubcomponentImpl implements IdologyAddressFormLayoutSubcomponent {
+            private IdologyAddressFormPresenterModule idologyAddressFormPresenterModule;
+            private Provider<IdologyAddressFormPresenter> idologyAddressFormPresenterProvider;
+            private Provider<IdologyFormErrorMatcher> idologyFormErrorMatcherProvider;
+            private Provider<IdologyForm> idologyFormProvider;
+            private Provider<List<String>> providesIdologyHandledFieldsProvider;
+            private Provider<IdologyAddressFormScreen> providesIdologyScreenProvider;
+            private Provider<String> providesIdologyTrackingContextProvider;
+
+            private IdologyAddressFormLayoutSubcomponentImpl(IdologyAddressFormPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(IdologyAddressFormPresenterModule module) {
+                this.idologyAddressFormPresenterModule = (IdologyAddressFormPresenterModule) Preconditions.checkNotNull(module);
+                this.providesIdologyScreenProvider = DoubleCheck.provider(IdologyAddressFormPresenterModule_ProvidesIdologyScreenFactory.create(this.idologyAddressFormPresenterModule));
+                this.providesIdologyHandledFieldsProvider = DoubleCheck.provider(IdologyAddressFormPresenterModule_ProvidesIdologyHandledFieldsFactory.create(this.idologyAddressFormPresenterModule));
+                this.idologyFormErrorMatcherProvider = DoubleCheck.provider(IdologyFormErrorMatcher_Factory.create(this.providesIdologyHandledFieldsProvider));
+                this.providesIdologyTrackingContextProvider = DoubleCheck.provider(IdologyAddressFormPresenterModule_ProvidesIdologyTrackingContextFactory.create(this.idologyAddressFormPresenterModule));
+                this.idologyFormProvider = DoubleCheck.provider(IdologyForm_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesProgressConnectorProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyRetryConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyVerificationConnectorProvider, this.idologyFormErrorMatcherProvider, this.providesIdologyTrackingContextProvider));
+                this.idologyAddressFormPresenterProvider = DoubleCheck.provider(IdologyAddressFormPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesIdologyScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyFormValidConnectorProvider, this.idologyFormProvider, this.idologyFormErrorMatcherProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyAutoCompleteShownConnectorProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, this.providesIdologyTrackingContextProvider, DaggerMainCoinbaseApplicationComponent.this.providesGoogleApiClientProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(IdologyAddressFormLayout controller) {
+                injectIdologyAddressFormLayout(controller);
+            }
+
+            private IdologyAddressFormLayout injectIdologyAddressFormLayout(IdologyAddressFormLayout instance) {
+                IdologyAddressFormLayout_MembersInjector.injectMPresenter(instance, (IdologyAddressFormPresenter) this.idologyAddressFormPresenterProvider.get());
+                IdologyAddressFormLayout_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+                return instance;
+            }
+        }
+
+        private final class IdologyFailureControllerSubcomponentImpl implements IdologyFailureControllerSubcomponent {
+            private Provider<IdologyArgsBuilder> idologyArgsBuilderProvider;
+            private IdologyFailurePresenterModule idologyFailurePresenterModule;
+            private Provider<IdologyFailurePresenter> idologyFailurePresenterProvider;
+            private Provider<IdologyRouter> idologyRouterProvider;
+            private Provider<IdologyTrackingContextProvider> idologyTrackingContextProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+
+            private IdologyFailureControllerSubcomponentImpl(IdologyFailurePresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(IdologyFailurePresenterModule module) {
+                this.idologyFailurePresenterModule = (IdologyFailurePresenterModule) Preconditions.checkNotNull(module);
+                this.providesActionBarControllerProvider = DoubleCheck.provider(IdologyFailurePresenterModule_ProvidesActionBarControllerFactory.create(this.idologyFailurePresenterModule));
+                this.idologyTrackingContextProvider = DoubleCheck.provider(IdologyTrackingContextProvider_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.idologyArgsBuilderProvider = DoubleCheck.provider(IdologyArgsBuilder_Factory.create(this.providesActionBarControllerProvider));
+                this.idologyRouterProvider = DoubleCheck.provider(IdologyRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider, this.idologyArgsBuilderProvider));
+                this.idologyFailurePresenterProvider = DoubleCheck.provider(IdologyFailurePresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, this.idologyTrackingContextProvider, this.idologyRouterProvider));
+            }
+
+            public void inject(IdologyFailureController controller) {
+                injectIdologyFailureController(controller);
+            }
+
+            private IdologyFailureController injectIdologyFailureController(IdologyFailureController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                IdologyFailureController_MembersInjector.injectMPresenter(instance, (IdologyFailurePresenter) this.idologyFailurePresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class IdologyFormLayoutSubcomponentImpl implements IdologyFormLayoutSubcomponent {
+            private IdologyFormPresenterModule idologyFormPresenterModule;
+            private Provider<IdologyFormPresenter> idologyFormPresenterProvider;
+            private Provider<IdologyFormScreen> providesIdologyScreenProvider;
+            private Provider<String> providesIdologyTrackingContextProvider;
+
+            private IdologyFormLayoutSubcomponentImpl(IdologyFormPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(IdologyFormPresenterModule module) {
+                this.idologyFormPresenterModule = (IdologyFormPresenterModule) Preconditions.checkNotNull(module);
+                this.providesIdologyScreenProvider = DoubleCheck.provider(IdologyFormPresenterModule_ProvidesIdologyScreenFactory.create(this.idologyFormPresenterModule));
+                this.providesIdologyTrackingContextProvider = DoubleCheck.provider(IdologyFormPresenterModule_ProvidesIdologyTrackingContextFactory.create(this.idologyFormPresenterModule));
+                this.idologyFormPresenterProvider = DoubleCheck.provider(IdologyFormPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesIdologyScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyVerificationConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyOptionSelectedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyFormValidConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyRetryConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesDatePickerButtonConnectorProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, this.providesIdologyTrackingContextProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+            }
+
+            public void inject(IdologyFormLayout controller) {
+                injectIdologyFormLayout(controller);
+            }
+
+            private IdologyFormLayout injectIdologyFormLayout(IdologyFormLayout instance) {
+                IdologyFormLayout_MembersInjector.injectMPresenter(instance, (IdologyFormPresenter) this.idologyFormPresenterProvider.get());
+                IdologyFormLayout_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) MainActivitySubcomponentImpl.this.backgroundDimmerProvider.get());
+                return instance;
+            }
+        }
+
+        private final class IdologyNameFormLayoutSubcomponentImpl implements IdologyNameFormLayoutSubcomponent {
+            private Provider<IdologyFormErrorMatcher> idologyFormErrorMatcherProvider;
+            private Provider<IdologyForm> idologyFormProvider;
+            private IdologyNameFormPresenterModule idologyNameFormPresenterModule;
+            private Provider<IdologyNameFormPresenter> idologyNameFormPresenterProvider;
+            private Provider<List<String>> providesIdologyHandledFieldsProvider;
+            private Provider<IdologyNameFormScreen> providesIdologyScreenProvider;
+            private Provider<String> providesIdologyTrackingContextProvider;
+
+            private IdologyNameFormLayoutSubcomponentImpl(IdologyNameFormPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(IdologyNameFormPresenterModule module) {
+                this.idologyNameFormPresenterModule = (IdologyNameFormPresenterModule) Preconditions.checkNotNull(module);
+                this.providesIdologyScreenProvider = DoubleCheck.provider(IdologyNameFormPresenterModule_ProvidesIdologyScreenFactory.create(this.idologyNameFormPresenterModule));
+                this.providesIdologyHandledFieldsProvider = DoubleCheck.provider(IdologyNameFormPresenterModule_ProvidesIdologyHandledFieldsFactory.create(this.idologyNameFormPresenterModule));
+                this.idologyFormErrorMatcherProvider = DoubleCheck.provider(IdologyFormErrorMatcher_Factory.create(this.providesIdologyHandledFieldsProvider));
+                this.providesIdologyTrackingContextProvider = DoubleCheck.provider(IdologyNameFormPresenterModule_ProvidesIdologyTrackingContextFactory.create(this.idologyNameFormPresenterModule));
+                this.idologyFormProvider = DoubleCheck.provider(IdologyForm_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesProgressConnectorProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyRetryConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyVerificationConnectorProvider, this.idologyFormErrorMatcherProvider, this.providesIdologyTrackingContextProvider));
+                this.idologyNameFormPresenterProvider = DoubleCheck.provider(IdologyNameFormPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesIdologyScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyFormValidConnectorProvider, this.idologyFormProvider, this.idologyFormErrorMatcherProvider, DaggerMainCoinbaseApplicationComponent.this.providesDatePickerButtonConnectorProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, this.providesIdologyTrackingContextProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(IdologyNameFormLayout controller) {
+                injectIdologyNameFormLayout(controller);
+            }
+
+            private IdologyNameFormLayout injectIdologyNameFormLayout(IdologyNameFormLayout instance) {
+                IdologyNameFormLayout_MembersInjector.injectMPresenter(instance, (IdologyNameFormPresenter) this.idologyNameFormPresenterProvider.get());
+                IdologyNameFormLayout_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) MainActivitySubcomponentImpl.this.backgroundDimmerProvider.get());
+                return instance;
+            }
+        }
+
+        private final class IdologyQuestionsLayoutSubcomponentImpl implements IdologyQuestionsLayoutSubcomponent {
+            private IdologyQuestionsPresenterModule idologyQuestionsPresenterModule;
+            private Provider<IdologyQuestionsPresenter> idologyQuestionsPresenterProvider;
+            private Provider<IdologyQuestionsScreen> providesIdologyQuestionsScreenProvider;
+            private Provider<String> providesIdologyTrackingContextProvider;
+
+            private IdologyQuestionsLayoutSubcomponentImpl(IdologyQuestionsPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(IdologyQuestionsPresenterModule module) {
+                this.idologyQuestionsPresenterModule = (IdologyQuestionsPresenterModule) Preconditions.checkNotNull(module);
+                this.providesIdologyQuestionsScreenProvider = DoubleCheck.provider(IdologyQuestionsPresenterModule_ProvidesIdologyQuestionsScreenFactory.create(this.idologyQuestionsPresenterModule));
+                this.providesIdologyTrackingContextProvider = DoubleCheck.provider(IdologyQuestionsPresenterModule_ProvidesIdologyTrackingContextFactory.create(this.idologyQuestionsPresenterModule));
+                this.idologyQuestionsPresenterProvider = DoubleCheck.provider(IdologyQuestionsPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesIdologyQuestionsScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyAnswerListValidConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyVerificationConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyRetryConnectorProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, this.providesIdologyTrackingContextProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(IdologyQuestionsLayout layout) {
+                injectIdologyQuestionsLayout(layout);
+            }
+
+            private IdologyQuestionsLayout injectIdologyQuestionsLayout(IdologyQuestionsLayout instance) {
+                IdologyQuestionsLayout_MembersInjector.injectMPresenter(instance, (IdologyQuestionsPresenter) this.idologyQuestionsPresenterProvider.get());
+                IdologyQuestionsLayout_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                return instance;
+            }
+        }
+
+        private final class IdologySettingsControllerSubcomponentImpl implements IdologySettingsControllerSubcomponent {
+            private Provider<IdologyArgsBuilder> idologyArgsBuilderProvider;
+            private Provider<IdologyRouter> idologyRouterProvider;
+            private IdologySettingsPresenterModule idologySettingsPresenterModule;
+            private Provider<IdologySettingsPresenter> idologySettingsPresenterProvider;
+            private Provider<IdologySuccessSettingsRouter> idologySuccessSettingsRouterProvider;
+            private Provider<InAppIdologyFailureRouter> inAppIdologyFailureRouterProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<IdologyFailureRouter> providesIdologyFailureRouterProvider;
+            private Provider<IdologySettingsScreen> providesIdologyLinkedAccountsScreenProvider;
+            private Provider<IdologySuccessRouter> providesIdologySuccessRouterProvider;
+
+            private IdologySettingsControllerSubcomponentImpl(IdologySettingsPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(IdologySettingsPresenterModule module) {
+                this.idologySettingsPresenterModule = (IdologySettingsPresenterModule) Preconditions.checkNotNull(module);
+                this.providesIdologyLinkedAccountsScreenProvider = DoubleCheck.provider(IdologySettingsPresenterModule_ProvidesIdologyLinkedAccountsScreenFactory.create(this.idologySettingsPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(IdologySettingsPresenterModule_ProvidesActionBarControllerFactory.create(this.idologySettingsPresenterModule));
+                this.idologyArgsBuilderProvider = DoubleCheck.provider(IdologyArgsBuilder_Factory.create(this.providesActionBarControllerProvider));
+                this.idologyRouterProvider = DoubleCheck.provider(IdologyRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider, this.idologyArgsBuilderProvider));
+                this.idologySuccessSettingsRouterProvider = DoubleCheck.provider(IdologySuccessSettingsRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, this.idologyArgsBuilderProvider));
+                this.providesIdologySuccessRouterProvider = DoubleCheck.provider(IdologySettingsPresenterModule_ProvidesIdologySuccessRouterFactory.create(this.idologySettingsPresenterModule, this.idologySuccessSettingsRouterProvider));
+                this.inAppIdologyFailureRouterProvider = DoubleCheck.provider(InAppIdologyFailureRouter_Factory.create(this.providesActionBarControllerProvider, this.idologyArgsBuilderProvider));
+                this.providesIdologyFailureRouterProvider = DoubleCheck.provider(IdologySettingsPresenterModule_ProvidesIdologyFailureRouterFactory.create(this.idologySettingsPresenterModule, this.inAppIdologyFailureRouterProvider));
+                this.idologySettingsPresenterProvider = DoubleCheck.provider(IdologySettingsPresenter_Factory.create(this.providesIdologyLinkedAccountsScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyFormValidConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyVerificationConnectorProvider, this.idologyRouterProvider, this.providesIdologySuccessRouterProvider, this.providesIdologyFailureRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyRetryConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(IdologySettingsController controller) {
+                injectIdologySettingsController(controller);
+            }
+
+            private IdologySettingsController injectIdologySettingsController(IdologySettingsController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                IdologySettingsController_MembersInjector.injectMPresenter(instance, (IdologySettingsPresenter) this.idologySettingsPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class IdologySettingsQuestionsControllerSubcomponentImpl implements IdologySettingsQuestionsControllerSubcomponent {
+            private Provider<IdologyArgsBuilder> idologyArgsBuilderProvider;
+            private Provider<IdologyRouter> idologyRouterProvider;
+            private IdologySettingsQuestionsPresenterModule idologySettingsQuestionsPresenterModule;
+            private Provider<IdologySettingsQuestionsPresenter> idologySettingsQuestionsPresenterProvider;
+            private Provider<IdologySuccessSettingsRouter> idologySuccessSettingsRouterProvider;
+            private Provider<InAppIdologyFailureRouter> inAppIdologyFailureRouterProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<IdologyFailureRouter> providesIdologyFailureRouterProvider;
+            private Provider<IdologySettingsQuestionsScreen> providesIdologyQuestionsScreenProvider;
+            private Provider<IdologySuccessRouter> providesIdologySuccessRouterProvider;
+
+            private IdologySettingsQuestionsControllerSubcomponentImpl(IdologySettingsQuestionsPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(IdologySettingsQuestionsPresenterModule module) {
+                this.idologySettingsQuestionsPresenterModule = (IdologySettingsQuestionsPresenterModule) Preconditions.checkNotNull(module);
+                this.providesIdologyQuestionsScreenProvider = DoubleCheck.provider(IdologySettingsQuestionsPresenterModule_ProvidesIdologyQuestionsScreenFactory.create(this.idologySettingsQuestionsPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(IdologySettingsQuestionsPresenterModule_ProvidesActionBarControllerFactory.create(this.idologySettingsQuestionsPresenterModule));
+                this.idologyArgsBuilderProvider = DoubleCheck.provider(IdologyArgsBuilder_Factory.create(this.providesActionBarControllerProvider));
+                this.idologySuccessSettingsRouterProvider = DoubleCheck.provider(IdologySuccessSettingsRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, this.idologyArgsBuilderProvider));
+                this.providesIdologySuccessRouterProvider = DoubleCheck.provider(IdologySettingsQuestionsPresenterModule_ProvidesIdologySuccessRouterFactory.create(this.idologySettingsQuestionsPresenterModule, this.idologySuccessSettingsRouterProvider));
+                this.inAppIdologyFailureRouterProvider = DoubleCheck.provider(InAppIdologyFailureRouter_Factory.create(this.providesActionBarControllerProvider, this.idologyArgsBuilderProvider));
+                this.providesIdologyFailureRouterProvider = DoubleCheck.provider(IdologySettingsQuestionsPresenterModule_ProvidesIdologyFailureRouterFactory.create(this.idologySettingsQuestionsPresenterModule, this.inAppIdologyFailureRouterProvider));
+                this.idologyRouterProvider = DoubleCheck.provider(IdologyRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider, this.idologyArgsBuilderProvider));
+                this.idologySettingsQuestionsPresenterProvider = DoubleCheck.provider(IdologySettingsQuestionsPresenter_Factory.create(this.providesIdologyQuestionsScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyAnswerListValidConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyVerificationConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyRetryConnectorProvider, this.providesIdologySuccessRouterProvider, this.providesIdologyFailureRouterProvider, this.idologyRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(IdologySettingsQuestionsController controller) {
+                injectIdologySettingsQuestionsController(controller);
+            }
+
+            private IdologySettingsQuestionsController injectIdologySettingsQuestionsController(IdologySettingsQuestionsController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                IdologySettingsQuestionsController_MembersInjector.injectMPresenter(instance, (IdologySettingsQuestionsPresenter) this.idologySettingsQuestionsPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class IdologySourceOfFundsFormLayoutSubcomponentImpl implements IdologySourceOfFundsFormLayoutSubcomponent {
+            private Provider<IdologyFormErrorMatcher> idologyFormErrorMatcherProvider;
+            private Provider<IdologyForm> idologyFormProvider;
+            private IdologySourceOfFundsFormPresenterModule idologySourceOfFundsFormPresenterModule;
+            private Provider<IdologySourceOfFundsFormPresenter> idologySourceOfFundsFormPresenterProvider;
+            private Provider<List<String>> providesIdologyHandledFieldsProvider;
+            private Provider<IdologySourceOfFundsFormScreen> providesIdologyScreenProvider;
+            private Provider<String> providesIdologyTrackingContextProvider;
+
+            private IdologySourceOfFundsFormLayoutSubcomponentImpl(IdologySourceOfFundsFormPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(IdologySourceOfFundsFormPresenterModule module) {
+                this.idologySourceOfFundsFormPresenterModule = (IdologySourceOfFundsFormPresenterModule) Preconditions.checkNotNull(module);
+                this.providesIdologyScreenProvider = DoubleCheck.provider(IdologySourceOfFundsFormPresenterModule_ProvidesIdologyScreenFactory.create(this.idologySourceOfFundsFormPresenterModule));
+                this.providesIdologyHandledFieldsProvider = DoubleCheck.provider(IdologySourceOfFundsFormPresenterModule_ProvidesIdologyHandledFieldsFactory.create(this.idologySourceOfFundsFormPresenterModule));
+                this.idologyFormErrorMatcherProvider = DoubleCheck.provider(IdologyFormErrorMatcher_Factory.create(this.providesIdologyHandledFieldsProvider));
+                this.providesIdologyTrackingContextProvider = DoubleCheck.provider(IdologySourceOfFundsFormPresenterModule_ProvidesIdologyTrackingContextFactory.create(this.idologySourceOfFundsFormPresenterModule));
+                this.idologyFormProvider = DoubleCheck.provider(IdologyForm_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesProgressConnectorProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyRetryConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyVerificationConnectorProvider, this.idologyFormErrorMatcherProvider, this.providesIdologyTrackingContextProvider));
+                this.idologySourceOfFundsFormPresenterProvider = DoubleCheck.provider(IdologySourceOfFundsFormPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesIdologyScreenProvider, this.idologyFormProvider, this.idologyFormErrorMatcherProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyOptionSelectedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyFormValidConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesProgressConnectorProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, this.providesIdologyTrackingContextProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+            }
+
+            public void inject(IdologySourceOfFundsFormLayout controller) {
+                injectIdologySourceOfFundsFormLayout(controller);
+            }
+
+            private IdologySourceOfFundsFormLayout injectIdologySourceOfFundsFormLayout(IdologySourceOfFundsFormLayout instance) {
+                IdologySourceOfFundsFormLayout_MembersInjector.injectMPresenter(instance, (IdologySourceOfFundsFormPresenter) this.idologySourceOfFundsFormPresenterProvider.get());
+                IdologySourceOfFundsFormLayout_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) MainActivitySubcomponentImpl.this.backgroundDimmerProvider.get());
+                return instance;
+            }
+        }
+
+        private final class IdologySuccessControllerSubcomponentImpl implements IdologySuccessControllerSubcomponent {
+            private IdologySuccessPresenterModule idologySuccessPresenterModule;
+            private Provider<IdologySuccessPresenter> idologySuccessPresenterProvider;
+            private Provider<IdologyTrackingContextProvider> idologyTrackingContextProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<IdologySuccessScreen> providesIdologySuccessScreenProvider;
+            private Provider<SuccessRouter> successRouterProvider;
+
+            private IdologySuccessControllerSubcomponentImpl(IdologySuccessPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(IdologySuccessPresenterModule module) {
+                this.idologySuccessPresenterModule = (IdologySuccessPresenterModule) Preconditions.checkNotNull(module);
+                this.providesIdologySuccessScreenProvider = DoubleCheck.provider(IdologySuccessPresenterModule_ProvidesIdologySuccessScreenFactory.create(this.idologySuccessPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(IdologySuccessPresenterModule_ProvidesActionBarControllerFactory.create(this.idologySuccessPresenterModule));
+                this.idologyTrackingContextProvider = DoubleCheck.provider(IdologyTrackingContextProvider_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.successRouterProvider = DoubleCheck.provider(SuccessRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.idologySuccessPresenterProvider = DoubleCheck.provider(IdologySuccessPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesIdologySuccessScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, this.idologyTrackingContextProvider, this.successRouterProvider));
+            }
+
+            public void inject(IdologySuccessController controller) {
+                injectIdologySuccessController(controller);
+            }
+
+            private IdologySuccessController injectIdologySuccessController(IdologySuccessController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                IdologySuccessController_MembersInjector.injectMPresenter(instance, (IdologySuccessPresenter) this.idologySuccessPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class InAppIdentityAcceptableDocumentsControllerSubcomponentImpl implements InAppIdentityAcceptableDocumentsControllerSubcomponent {
+            private InAppIdentityAcceptableDocumentsPresenterModule inAppIdentityAcceptableDocumentsPresenterModule;
+            private Provider<InAppIdentityAcceptableDocumentsPresenter> inAppIdentityAcceptableDocumentsPresenterProvider;
+            private Provider<InAppIdentityAcceptableDocumentsRouter> inAppIdentityAcceptableDocumentsRouterProvider;
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<IdentityAcceptableDocumentsScreen> providesScreenProvider;
+
+            private InAppIdentityAcceptableDocumentsControllerSubcomponentImpl(InAppIdentityAcceptableDocumentsPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(InAppIdentityAcceptableDocumentsPresenterModule module) {
+                this.inAppIdentityAcceptableDocumentsPresenterModule = (InAppIdentityAcceptableDocumentsPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(InAppIdentityAcceptableDocumentsPresenterModule_ProvidesScreenFactory.create(this.inAppIdentityAcceptableDocumentsPresenterModule));
+                this.providesControllerProvider = DoubleCheck.provider(InAppIdentityAcceptableDocumentsPresenterModule_ProvidesControllerFactory.create(this.inAppIdentityAcceptableDocumentsPresenterModule));
+                this.inAppIdentityAcceptableDocumentsRouterProvider = DoubleCheck.provider(InAppIdentityAcceptableDocumentsRouter_Factory.create(this.providesControllerProvider));
+                this.inAppIdentityAcceptableDocumentsPresenterProvider = DoubleCheck.provider(InAppIdentityAcceptableDocumentsPresenter_Factory.create(this.providesScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdentityVerificationBitmapConnectorProvider, this.inAppIdentityAcceptableDocumentsRouterProvider));
+            }
+
+            public void inject(InAppIdentityAcceptableDocumentsController controller) {
+                injectInAppIdentityAcceptableDocumentsController(controller);
+            }
+
+            private InAppIdentityAcceptableDocumentsController injectInAppIdentityAcceptableDocumentsController(InAppIdentityAcceptableDocumentsController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                InAppIdentityAcceptableDocumentsController_MembersInjector.injectMPresenter(instance, (InAppIdentityAcceptableDocumentsPresenter) this.inAppIdentityAcceptableDocumentsPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class InvestmentTiersRequirementsControllerSubcomponentImpl implements InvestmentTiersRequirementsControllerSubcomponent {
+            private InvestmentTiersRequirementsPresenterModule investmentTiersRequirementsPresenterModule;
+            private Provider<InvestmentTiersRequirementsPresenter> investmentTiersRequirementsPresenterProvider;
+            private Provider<InvestmentTiersRequirementsRouter> investmentTiersRequirementsRouterProvider;
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<InvestmentTiersRequirementsScreen> providesInvestmentTiersScreenProvider;
+
+            private InvestmentTiersRequirementsControllerSubcomponentImpl(InvestmentTiersRequirementsPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(InvestmentTiersRequirementsPresenterModule module) {
+                this.investmentTiersRequirementsPresenterModule = (InvestmentTiersRequirementsPresenterModule) Preconditions.checkNotNull(module);
+                this.providesInvestmentTiersScreenProvider = DoubleCheck.provider(InvestmentTiersRequirementsPresenterModule_ProvidesInvestmentTiersScreenFactory.create(this.investmentTiersRequirementsPresenterModule));
+                this.providesControllerProvider = DoubleCheck.provider(InvestmentTiersRequirementsPresenterModule_ProvidesControllerFactory.create(this.investmentTiersRequirementsPresenterModule));
+                this.investmentTiersRequirementsRouterProvider = DoubleCheck.provider(InvestmentTiersRequirementsRouter_Factory.create(this.providesControllerProvider));
+                this.investmentTiersRequirementsPresenterProvider = DoubleCheck.provider(InvestmentTiersRequirementsPresenter_Factory.create(this.providesInvestmentTiersScreenProvider, this.investmentTiersRequirementsRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(InvestmentTiersRequirementsController controller) {
+                injectInvestmentTiersRequirementsController(controller);
+            }
+
+            private InvestmentTiersRequirementsController injectInvestmentTiersRequirementsController(InvestmentTiersRequirementsController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                InvestmentTiersRequirementsController_MembersInjector.injectMPresenter(instance, (InvestmentTiersRequirementsPresenter) this.investmentTiersRequirementsPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class InvestmentTiersSettingsControllerSubcomponentImpl implements InvestmentTiersSettingsControllerSubcomponent {
+            private InvestmentTiersSettingsPresenterModule investmentTiersSettingsPresenterModule;
+            private Provider<InvestmentTiersSettingsPresenter> investmentTiersSettingsPresenterProvider;
+            private Provider<InvestmentTiersSettingsRouter> investmentTiersSettingsRouterProvider;
+            private Provider<AutoResizeTextViewAdjustor> providesAutoResizeTextViewAdjustorProvider;
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<InvestmentTiersSettingsScreen> providesInvestmentTiersScreenProvider;
+
+            private InvestmentTiersSettingsControllerSubcomponentImpl(InvestmentTiersSettingsPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(InvestmentTiersSettingsPresenterModule module) {
+                this.investmentTiersSettingsPresenterModule = (InvestmentTiersSettingsPresenterModule) Preconditions.checkNotNull(module);
+                this.providesInvestmentTiersScreenProvider = DoubleCheck.provider(InvestmentTiersSettingsPresenterModule_ProvidesInvestmentTiersScreenFactory.create(this.investmentTiersSettingsPresenterModule));
+                this.providesControllerProvider = DoubleCheck.provider(InvestmentTiersSettingsPresenterModule_ProvidesControllerFactory.create(this.investmentTiersSettingsPresenterModule));
+                this.investmentTiersSettingsRouterProvider = DoubleCheck.provider(InvestmentTiersSettingsRouter_Factory.create(this.providesControllerProvider));
+                this.providesAutoResizeTextViewAdjustorProvider = DoubleCheck.provider(InvestmentTiersSettingsPresenterModule_ProvidesAutoResizeTextViewAdjustorFactory.create(this.investmentTiersSettingsPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.investmentTiersSettingsPresenterProvider = DoubleCheck.provider(InvestmentTiersSettingsPresenter_Factory.create(this.providesInvestmentTiersScreenProvider, this.investmentTiersSettingsRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesAutoResizeTextViewAdjustorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(InvestmentTiersSettingsController controller) {
+                injectInvestmentTiersSettingsController(controller);
+            }
+
+            private InvestmentTiersSettingsController injectInvestmentTiersSettingsController(InvestmentTiersSettingsController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                InvestmentTiersSettingsController_MembersInjector.injectMPresenter(instance, (InvestmentTiersSettingsPresenter) this.investmentTiersSettingsPresenterProvider.get());
+                InvestmentTiersSettingsController_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) MainActivitySubcomponentImpl.this.backgroundDimmerProvider.get());
+                return instance;
+            }
+        }
+
+        private final class JumioDocumentScanControllerSubcomponentImpl implements JumioDocumentScanControllerSubcomponent {
+            private InAppIdentityDocumentScanPresenterModule inAppIdentityDocumentScanPresenterModule;
+            private Provider<InAppIdentityDocumentScanRouter> inAppIdentityDocumentScanRouterProvider;
+            private Provider<JumioDocumentScanPresenter> jumioDocumentScanPresenterProvider;
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<JumioDocumentScanScreen> providesJumioDocumentScanScreenProvider;
+
+            private JumioDocumentScanControllerSubcomponentImpl(InAppIdentityDocumentScanPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(InAppIdentityDocumentScanPresenterModule module) {
+                this.inAppIdentityDocumentScanPresenterModule = (InAppIdentityDocumentScanPresenterModule) Preconditions.checkNotNull(module);
+                this.providesJumioDocumentScanScreenProvider = DoubleCheck.provider(InAppIdentityDocumentScanPresenterModule_ProvidesJumioDocumentScanScreenFactory.create(this.inAppIdentityDocumentScanPresenterModule));
+                this.providesControllerProvider = DoubleCheck.provider(InAppIdentityDocumentScanPresenterModule_ProvidesControllerFactory.create(this.inAppIdentityDocumentScanPresenterModule));
+                this.inAppIdentityDocumentScanRouterProvider = DoubleCheck.provider(InAppIdentityDocumentScanRouter_Factory.create(this.providesControllerProvider));
+                this.jumioDocumentScanPresenterProvider = DoubleCheck.provider(JumioDocumentScanPresenter_Factory.create(this.providesJumioDocumentScanScreenProvider, this.inAppIdentityDocumentScanRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesRetakeAndContinueConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesPhotoTakenConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdentityVerificationBitmapConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.faceDetectionUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider));
+            }
+
+            public void inject(InAppIdentityDocumentScanController controller) {
+                injectInAppIdentityDocumentScanController(controller);
+            }
+
+            private InAppIdentityDocumentScanController injectInAppIdentityDocumentScanController(InAppIdentityDocumentScanController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                InAppIdentityDocumentScanController_MembersInjector.injectMPresenter(instance, (JumioDocumentScanPresenter) this.jumioDocumentScanPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class LinkedAccountsPickerControllerSubcomponentImpl implements LinkedAccountsPickerControllerSubcomponent {
+            private LinkedAccountsPickerPresenterModule linkedAccountsPickerPresenterModule;
+            private Provider<LinkedAccountsPickerPresenter> linkedAccountsPickerPresenterProvider;
+            private Provider providesLinkedAccountsPickerScreenProvider;
+
+            private LinkedAccountsPickerControllerSubcomponentImpl(LinkedAccountsPickerPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(LinkedAccountsPickerPresenterModule module) {
+                this.linkedAccountsPickerPresenterModule = (LinkedAccountsPickerPresenterModule) Preconditions.checkNotNull(module);
+                this.providesLinkedAccountsPickerScreenProvider = DoubleCheck.provider(LinkedAccountsPickerPresenterModule_ProvidesLinkedAccountsPickerScreenFactory.create(this.linkedAccountsPickerPresenterModule));
+                this.linkedAccountsPickerPresenterProvider = DoubleCheck.provider(LinkedAccountsPickerPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesLinkedAccountsPickerScreenProvider, DaggerMainCoinbaseApplicationComponent.this.paymentMethodUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.providesLinkedAccountConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider));
+            }
+
+            public void inject(LinkedAccountsPickerController controller) {
+                injectLinkedAccountsPickerController(controller);
+            }
+
+            private LinkedAccountsPickerController injectLinkedAccountsPickerController(LinkedAccountsPickerController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                LinkedAccountsPickerController_MembersInjector.injectMPresenter(instance, (LinkedAccountsPickerPresenter) this.linkedAccountsPickerPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class LoginControllerSubcomponentImpl implements LoginControllerSubcomponent {
+            private AuthCompletionFactory_Factory authCompletionFactoryProvider;
+            private Provider<AuthRouter> authRouterProvider;
+            private Provider<CredentialsApiRxWrapper> credentialsApiRxWrapperProvider;
+            private Provider<LoginAuthManager> loginAuthManagerProvider;
+            private LoginControllerSubcomponentModule loginControllerSubcomponentModule;
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<SignInRouter> signInRouterProvider;
+            private Provider<TwoFactorRouter> twoFactorRouterProvider;
+
+            private LoginControllerSubcomponentImpl(LoginControllerSubcomponentModule module) {
+                initialize(module);
+            }
+
+            private void initialize(LoginControllerSubcomponentModule module) {
+                this.credentialsApiRxWrapperProvider = DoubleCheck.provider(CredentialsApiRxWrapper_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.loginControllerSubcomponentModule = (LoginControllerSubcomponentModule) Preconditions.checkNotNull(module);
+                this.providesControllerProvider = DoubleCheck.provider(LoginControllerSubcomponentModule_ProvidesControllerFactory.create(this.loginControllerSubcomponentModule));
+                this.authCompletionFactoryProvider = AuthCompletionFactory_Factory.create(this.providesControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.credentialsApiRxWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider);
+                this.authRouterProvider = DoubleCheck.provider(AuthRouter_Factory.create(this.providesControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider, DaggerMainCoinbaseApplicationComponent.this.activityPermissionCheckUtilsProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.authCompletionFactoryProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.loginAuthManagerProvider = DoubleCheck.provider(LoginAuthManager_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.authRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.signInRouterProvider = DoubleCheck.provider(SignInRouter_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesControllerProvider));
+                this.twoFactorRouterProvider = DoubleCheck.provider(TwoFactorRouter_Factory.create(this.providesControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.authRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(LoginController controller) {
+                injectLoginController(controller);
+            }
+
+            private LoginController injectLoginController(LoginController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                LoginController_MembersInjector.injectMAuthManager(instance, (AuthManager) DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider.get());
+                LoginController_MembersInjector.injectMCredentialsApiRxWrapper(instance, (CredentialsApiRxWrapper) this.credentialsApiRxWrapperProvider.get());
+                LoginController_MembersInjector.injectMEmailVerifiedConnector(instance, (EmailVerifiedConnector) DaggerMainCoinbaseApplicationComponent.this.providesEmailVerifiedConnectorProvider.get());
+                LoginController_MembersInjector.injectMDeviceVerifyConnector(instance, (DeviceVerifyConnector) DaggerMainCoinbaseApplicationComponent.this.providesDeviceVerifyConnectorProvider.get());
+                LoginController_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+                LoginController_MembersInjector.injectMLoginAuthManager(instance, (LoginAuthManager) this.loginAuthManagerProvider.get());
+                LoginController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                LoginController_MembersInjector.injectMSignInRouter(instance, (SignInRouter) this.signInRouterProvider.get());
+                LoginController_MembersInjector.injectMTwoFactorRouter(instance, (TwoFactorRouter) this.twoFactorRouterProvider.get());
+                LoginController_MembersInjector.injectMAuthRouter(instance, (AuthRouter) this.authRouterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class MainControllerSubcomponentImpl implements MainControllerSubcomponent {
+            private MainControllerPresenterModule mainControllerPresenterModule;
+            private Provider<MainControllerPresenter> mainControllerPresenterProvider;
+            private Provider<MainScreen> providesMainScreenProvider;
+
+            private MainControllerSubcomponentImpl(MainControllerPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(MainControllerPresenterModule module) {
+                this.mainControllerPresenterModule = (MainControllerPresenterModule) Preconditions.checkNotNull(module);
+                this.providesMainScreenProvider = DoubleCheck.provider(MainControllerPresenterModule_ProvidesMainScreenFactory.create(this.mainControllerPresenterModule));
+                this.mainControllerPresenterProvider = DoubleCheck.provider(MainControllerPresenter_Factory.create(this.providesMainScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesBottomNavigationConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider, MainActivitySubcomponentImpl.this.keyboardListenerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(MainController controller) {
+                injectMainController(controller);
+            }
+
+            private MainController injectMainController(MainController instance) {
+                MainController_MembersInjector.injectMActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                MainController_MembersInjector.injectMPresenter(instance, (MainControllerPresenter) this.mainControllerPresenterProvider.get());
+                MainController_MembersInjector.injectMControllerFuncs(instance, (List) MainActivitySubcomponentImpl.this.providesPageControllersProvider.get());
+                MainController_MembersInjector.injectMModalControllerMap(instance, (Map) MainActivitySubcomponentImpl.this.providesModalControllerMapProvider.get());
+                MainController_MembersInjector.injectMControllerMap(instance, (Map) MainActivitySubcomponentImpl.this.providesPageControllerMapProvider.get());
+                return instance;
+            }
+        }
+
+        private final class MystiqueBottomNavigationLayoutSubcomponentImpl implements MystiqueBottomNavigationLayoutSubcomponent {
+            private MystiqueBottomNavigationPresenterModule mystiqueBottomNavigationPresenterModule;
+            private Provider<List<NavigationItem>> providesBottomNavigationItemListProvider;
+            private Provider<MystiqueBottomNavigationScreen> providesScreenProvider;
+
+            private MystiqueBottomNavigationLayoutSubcomponentImpl(MystiqueBottomNavigationPresenterModule module) {
+                initialize(module);
+            }
+
+            private MystiqueBottomNavigationPresenter getMystiqueBottomNavigationPresenter() {
+                return new MystiqueBottomNavigationPresenter((MystiqueBottomNavigationScreen) this.providesScreenProvider.get(), (List) this.providesBottomNavigationItemListProvider.get(), (Application) DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider.get(), (LayoutInflater) MainActivitySubcomponentImpl.this.providesLayoutInflaterProvider.get(), (BottomNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBottomNavigationConnectorProvider.get(), (MixpanelTracking) DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider.get(), (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            }
+
+            private void initialize(MystiqueBottomNavigationPresenterModule module) {
+                this.mystiqueBottomNavigationPresenterModule = (MystiqueBottomNavigationPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(MystiqueBottomNavigationPresenterModule_ProvidesScreenFactory.create(this.mystiqueBottomNavigationPresenterModule));
+                this.providesBottomNavigationItemListProvider = DoubleCheck.provider(MystiqueBottomNavigationPresenterModule_ProvidesBottomNavigationItemListFactory.create(this.mystiqueBottomNavigationPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+            }
+
+            public void inject(MystiqueBottomNavigationLayout activity) {
+                injectMystiqueBottomNavigationLayout(activity);
+            }
+
+            private MystiqueBottomNavigationLayout injectMystiqueBottomNavigationLayout(MystiqueBottomNavigationLayout instance) {
+                MystiqueBottomNavigationLayout_MembersInjector.injectMPresenter(instance, getMystiqueBottomNavigationPresenter());
+                return instance;
+            }
+        }
+
+        private final class PaymentMethodsControllerSubcomponentImpl implements PaymentMethodsControllerSubcomponent {
+            private PaymentMethodsPresenterModule paymentMethodsPresenterModule;
+            private Provider<PaymentMethodsPresenter> paymentMethodsPresenterProvider;
+            private Provider<PaymentMethodsRouter> paymentMethodsRouterProvider;
+            private PaymentMethodsViewModule paymentMethodsViewModule;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<Integer> providesPaymentMethodDeletedResProvider;
+            private Provider<PaymentMethodsScreen> providesPaymentMethodsScreenProvider;
+            private Provider<SuccessRouter> successRouterProvider;
+
+            private PaymentMethodsControllerSubcomponentImpl(PaymentMethodsPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(PaymentMethodsPresenterModule module) {
+                this.paymentMethodsPresenterModule = (PaymentMethodsPresenterModule) Preconditions.checkNotNull(module);
+                this.providesPaymentMethodsScreenProvider = DoubleCheck.provider(PaymentMethodsPresenterModule_ProvidesPaymentMethodsScreenFactory.create(this.paymentMethodsPresenterModule));
+                this.paymentMethodsViewModule = new PaymentMethodsViewModule();
+                this.providesPaymentMethodDeletedResProvider = DoubleCheck.provider(PaymentMethodsViewModule_ProvidesPaymentMethodDeletedResFactory.create(this.paymentMethodsViewModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(PaymentMethodsPresenterModule_ProvidesActionBarControllerFactory.create(this.paymentMethodsPresenterModule));
+                this.paymentMethodsRouterProvider = DoubleCheck.provider(PaymentMethodsRouter_Factory.create(this.providesActionBarControllerProvider, this.providesPaymentMethodsScreenProvider));
+                this.successRouterProvider = DoubleCheck.provider(SuccessRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.paymentMethodsPresenterProvider = DoubleCheck.provider(PaymentMethodsPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesPaymentMethodsScreenProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, this.providesPaymentMethodDeletedResProvider, DaggerMainCoinbaseApplicationComponent.this.providesGetPaymentMethodsRxProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, this.paymentMethodsRouterProvider, this.successRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesBankAccountsUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesPaymentMethodsUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.paymentMethodUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider, DaggerMainCoinbaseApplicationComponent.this.featureFlagsProvider));
+            }
+
+            public void inject(PaymentMethodsController fragment) {
+                injectPaymentMethodsController(fragment);
+            }
+
+            private PaymentMethodsController injectPaymentMethodsController(PaymentMethodsController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                PaymentMethodsController_MembersInjector.injectMPresenter(instance, (PaymentMethodsPresenter) this.paymentMethodsPresenterProvider.get());
+                PaymentMethodsController_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) MainActivitySubcomponentImpl.this.backgroundDimmerProvider.get());
+                return instance;
+            }
+        }
+
+        private final class PhoneNumberControllerSubcomponentImpl implements PhoneNumberControllerSubcomponent {
+            private PhoneNumberPresenterModule phoneNumberPresenterModule;
+            private Provider<PhoneNumberPresenter> phoneNumberPresenterProvider;
+            private Provider<PhoneNumberScreen> providePhoneNumberPresenterModuleProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<SuccessRouter> successRouterProvider;
+
+            private PhoneNumberControllerSubcomponentImpl(PhoneNumberPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(PhoneNumberPresenterModule module) {
+                this.phoneNumberPresenterModule = (PhoneNumberPresenterModule) Preconditions.checkNotNull(module);
+                this.providePhoneNumberPresenterModuleProvider = DoubleCheck.provider(PhoneNumberPresenterModule_ProvidePhoneNumberPresenterModuleFactory.create(this.phoneNumberPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(PhoneNumberPresenterModule_ProvidesActionBarControllerFactory.create(this.phoneNumberPresenterModule));
+                this.successRouterProvider = DoubleCheck.provider(SuccessRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.phoneNumberPresenterProvider = DoubleCheck.provider(PhoneNumberPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providePhoneNumberPresenterModuleProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesPhoneNumbersUpdatedConnectorProvider, this.successRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(PhoneNumberController fragment) {
+                injectPhoneNumberController(fragment);
+            }
+
+            private PhoneNumberController injectPhoneNumberController(PhoneNumberController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                PhoneNumberController_MembersInjector.injectMPresenter(instance, (PhoneNumberPresenter) this.phoneNumberPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class PlaidControllerSubcomponentImpl implements PlaidControllerSubcomponent {
+            private PlaidPresenterModule plaidPresenterModule;
+            private Provider<PlaidPresenter> plaidPresenterProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<PlaidScreen> providesPlaidScreenProvider;
+            private Provider<SuccessRouter> successRouterProvider;
+
+            private PlaidControllerSubcomponentImpl(PlaidPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(PlaidPresenterModule module) {
+                this.plaidPresenterModule = (PlaidPresenterModule) Preconditions.checkNotNull(module);
+                this.providesPlaidScreenProvider = DoubleCheck.provider(PlaidPresenterModule_ProvidesPlaidScreenFactory.create(this.plaidPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(PlaidPresenterModule_ProvidesActionBarControllerFactory.create(this.plaidPresenterModule));
+                this.successRouterProvider = DoubleCheck.provider(SuccessRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.plaidPresenterProvider = DoubleCheck.provider(PlaidPresenter_Factory.create(this.providesPlaidScreenProvider, this.successRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesBankAccountsUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, MainActivitySubcomponentImpl.this.statusBarUpdaterProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesPlaidOnExitConnectorProvider));
+            }
+
+            public void inject(PlaidController controller) {
+                injectPlaidController(controller);
+            }
+
+            private PlaidController injectPlaidController(PlaidController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                PlaidController_MembersInjector.injectMPresenter(instance, (PlaidPresenter) this.plaidPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class PriceAlertsControllerSubcomponentImpl implements PriceAlertsControllerSubcomponent {
+            private PriceAlertsPresenterModule priceAlertsPresenterModule;
+            private Provider<PriceAlertsPresenter> priceAlertsPresenterProvider;
+            private Provider<PriceAlertsRouter> priceAlertsRouterProvider;
+            private Provider providesPriceAlertsScreenProvider;
+
+            private PriceAlertsControllerSubcomponentImpl(PriceAlertsPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(PriceAlertsPresenterModule module) {
+                this.priceAlertsPresenterModule = (PriceAlertsPresenterModule) Preconditions.checkNotNull(module);
+                this.providesPriceAlertsScreenProvider = DoubleCheck.provider(PriceAlertsPresenterModule_ProvidesPriceAlertsScreenFactory.create(this.priceAlertsPresenterModule));
+                this.priceAlertsRouterProvider = DoubleCheck.provider(PriceAlertsRouter_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider));
+                this.priceAlertsPresenterProvider = DoubleCheck.provider(PriceAlertsPresenter_Factory.create(this.providesPriceAlertsScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesCurrencyTabSelectorConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesPriceAlertsConnectorProvider, this.priceAlertsRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider, DaggerMainCoinbaseApplicationComponent.this.spotPriceUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+            }
+
+            public void inject(PriceAlertsController fragment) {
+                injectPriceAlertsController(fragment);
+            }
+
+            private PriceAlertsController injectPriceAlertsController(PriceAlertsController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                PriceAlertsController_MembersInjector.injectMPresenter(instance, (PriceAlertsPresenter) this.priceAlertsPresenterProvider.get());
+                PriceAlertsController_MembersInjector.injectMSnackBarWrapper(instance, (SnackBarWrapper) MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider.get());
+                return instance;
+            }
+        }
+
+        private final class PriceChartLayoutSubcomponentImpl implements PriceChartLayoutSubcomponent {
+            private PriceChartPresenterModule priceChartPresenterModule;
+            private Provider<PriceChartPresenter> priceChartPresenterProvider;
+            private Provider<PriceChartScreen> providesPriceChartLayoutScreenProvider;
+
+            private PriceChartLayoutSubcomponentImpl(PriceChartPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(PriceChartPresenterModule module) {
+                this.priceChartPresenterModule = (PriceChartPresenterModule) Preconditions.checkNotNull(module);
+                this.providesPriceChartLayoutScreenProvider = DoubleCheck.provider(PriceChartPresenterModule_ProvidesPriceChartLayoutScreenFactory.create(this.priceChartPresenterModule));
+                this.priceChartPresenterProvider = DoubleCheck.provider(PriceChartPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesPriceChartLayoutScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesPriceChartDataUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesPriceChartPeriodUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider, DaggerMainCoinbaseApplicationComponent.this.spotPriceUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+            }
+
+            public void inject(PriceChartLayout layout) {
+                injectPriceChartLayout(layout);
+            }
+
+            private PriceChartLayout injectPriceChartLayout(PriceChartLayout instance) {
+                PriceChartLayout_MembersInjector.injectMPresenter(instance, (PriceChartPresenter) this.priceChartPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class PrivacyRightsControllerSubcomponentImpl implements PrivacyRightsControllerSubcomponent {
+            private Provider<GdprSettingsRouter> gdprSettingsRouterProvider;
+            private Provider<Map<Integer, Func0<SettingsPreferenceItem>>> mapOfIntegerAndFunc0OfSettingsPreferenceItemProvider;
+            private PrivacyRightsPresenterModule privacyRightsPresenterModule;
+            private Provider<PrivacyRightsPresenter> privacyRightsPresenterProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<List<Func0<SettingsPreferenceItem>>> providesPrefsItemListProvider;
+            private Provider<Func0<SettingsPreferenceItem>> providesPrivacyRightsHeaderProvider;
+            private Provider<Func0<SettingsPreferenceItem>> providesRequestCorrectionItemProvider;
+            private Provider<Func0<SettingsPreferenceItem>> providesRequestDataItemProvider;
+            private Provider<Func0<SettingsPreferenceItem>> providesRequestDeletionProvider;
+            private Provider<Func0<SettingsPreferenceItem>> providesRequestExportProvider;
+            private Provider<Func0<SettingsPreferenceItem>> providesRequestRestrictionItemProvider;
+            private Provider providesScreenProvider;
+
+            private PrivacyRightsControllerSubcomponentImpl(PrivacyRightsPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(PrivacyRightsPresenterModule module) {
+                this.privacyRightsPresenterModule = (PrivacyRightsPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(PrivacyRightsPresenterModule_ProvidesScreenFactory.create(this.privacyRightsPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(PrivacyRightsPresenterModule_ProvidesActionBarControllerFactory.create(this.privacyRightsPresenterModule));
+                this.gdprSettingsRouterProvider = DoubleCheck.provider(GdprSettingsRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.providesPrivacyRightsHeaderProvider = DoubleCheck.provider(PrivacyRightsPresenterModule_ProvidesPrivacyRightsHeaderFactory.create(this.privacyRightsPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.providesRequestDataItemProvider = DoubleCheck.provider(PrivacyRightsPresenterModule_ProvidesRequestDataItemFactory.create(this.privacyRightsPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesPrivacyRightsSettingsClickedConnectorProvider));
+                this.providesRequestDeletionProvider = DoubleCheck.provider(PrivacyRightsPresenterModule_ProvidesRequestDeletionFactory.create(this.privacyRightsPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesPrivacyRightsSettingsClickedConnectorProvider));
+                this.providesRequestExportProvider = DoubleCheck.provider(PrivacyRightsPresenterModule_ProvidesRequestExportFactory.create(this.privacyRightsPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesPrivacyRightsSettingsClickedConnectorProvider));
+                this.providesRequestRestrictionItemProvider = DoubleCheck.provider(PrivacyRightsPresenterModule_ProvidesRequestRestrictionItemFactory.create(this.privacyRightsPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesPrivacyRightsSettingsClickedConnectorProvider));
+                this.providesRequestCorrectionItemProvider = DoubleCheck.provider(PrivacyRightsPresenterModule_ProvidesRequestCorrectionItemFactory.create(this.privacyRightsPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesPrivacyRightsSettingsClickedConnectorProvider));
+                this.mapOfIntegerAndFunc0OfSettingsPreferenceItemProvider = MapFactory.builder(6).put(Integer.valueOf(0), this.providesPrivacyRightsHeaderProvider).put(Integer.valueOf(1), this.providesRequestDataItemProvider).put(Integer.valueOf(2), this.providesRequestDeletionProvider).put(Integer.valueOf(3), this.providesRequestExportProvider).put(Integer.valueOf(4), this.providesRequestRestrictionItemProvider).put(Integer.valueOf(5), this.providesRequestCorrectionItemProvider).build();
+                this.providesPrefsItemListProvider = DoubleCheck.provider(PrivacyRightsPresenterModule_ProvidesPrefsItemListFactory.create(this.privacyRightsPresenterModule, this.mapOfIntegerAndFunc0OfSettingsPreferenceItemProvider));
+                this.privacyRightsPresenterProvider = DoubleCheck.provider(PrivacyRightsPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesScreenProvider, this.gdprSettingsRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesPrivacyRightsSettingsClickedConnectorProvider, this.providesPrefsItemListProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(PrivacyRightsController controller) {
+                injectPrivacyRightsController(controller);
+            }
+
+            private PrivacyRightsController injectPrivacyRightsController(PrivacyRightsController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                PrivacyRightsController_MembersInjector.injectMPresenter(instance, (PrivacyRightsPresenter) this.privacyRightsPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class SellConfirmationControllerSubcomponentImpl implements SellConfirmationControllerSubcomponent {
+            private Provider<ActionBarController> provideActionBarControllerProvider;
+            private Provider<AbstractBuySellConfirmationScreen> provideBuySellConfirmationScreenProvider;
+            private Provider provideSellConfirmationScreenProvider;
+            private Provider providesBuySellConfirmationPresenterProvider;
+            private SellConfirmationPresenterModule sellConfirmationPresenterModule;
+            private Provider<SellConfirmationPresenter> sellConfirmationPresenterProvider;
+            private Provider<SellRouter> sellRouterProvider;
+
+            private SellConfirmationControllerSubcomponentImpl(SellConfirmationPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(SellConfirmationPresenterModule module) {
+                this.sellConfirmationPresenterModule = (SellConfirmationPresenterModule) Preconditions.checkNotNull(module);
+                this.provideSellConfirmationScreenProvider = DoubleCheck.provider(SellConfirmationPresenterModule_ProvideSellConfirmationScreenFactory.create(this.sellConfirmationPresenterModule));
+                this.provideBuySellConfirmationScreenProvider = DoubleCheck.provider(SellConfirmationPresenterModule_ProvideBuySellConfirmationScreenFactory.create(this.sellConfirmationPresenterModule));
+                this.provideActionBarControllerProvider = DoubleCheck.provider(SellConfirmationPresenterModule_ProvideActionBarControllerFactory.create(this.sellConfirmationPresenterModule));
+                this.sellRouterProvider = DoubleCheck.provider(SellRouter_Factory.create(this.provideActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider));
+                this.sellConfirmationPresenterProvider = DoubleCheck.provider(SellConfirmationPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.provideSellConfirmationScreenProvider, this.provideBuySellConfirmationScreenProvider, this.sellRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesBuySellMadeConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesLinkedAccountConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.paymentMethodUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.transferUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.providesBuySellConfirmationPresenterProvider = DoubleCheck.provider(SellConfirmationPresenterModule_ProvidesBuySellConfirmationPresenterFactory.create(this.sellConfirmationPresenterModule, this.sellConfirmationPresenterProvider));
+            }
+
+            public void inject(SellConfirmationController controller) {
+                injectSellConfirmationController(controller);
+            }
+
+            private SellConfirmationController injectSellConfirmationController(SellConfirmationController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                AbstractBuySellConfirmationController_MembersInjector.injectMPresenter(instance, this.providesBuySellConfirmationPresenterProvider.get());
+                SellConfirmationController_MembersInjector.injectMPresenter(instance, (SellConfirmationPresenter) this.sellConfirmationPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class SellControllerSubcomponentImpl implements SellControllerSubcomponent {
+            private Provider<AvailableBalanceAppBarPresenter> availableBalanceAppBarPresenterProvider;
+            private Provider<AvailableBalanceCalculator> availableBalanceCalculatorProvider;
+            private Provider<AvailableBalanceRouter> availableBalanceRouterProvider;
+            private Provider<KeypadAmountFormatter> keypadAmountFormatterProvider;
+            private Provider<KeypadAmountValidator> keypadAmountValidatorProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<AvailableBalanceAppBarScreen> providesAvailableBalanceAppBarScreenProvider;
+            private Provider<QuickstartManager> providesQuickStartManagerProvider;
+            private Provider providesSellScreenProvider;
+            private Provider<LimitExceededTrackingContext> providesSendExceededTrackingContextProvider;
+            private Provider<SyncAccountsTask> providesSyncAccountsTaskProvider;
+            private Provider<WithdrawalBasedLimitsErrorRouter> providesWithdrawalBasedLimitsErrorRouterProvider;
+            private QuickstartModule quickstartModule;
+            private SellPresenterModule sellPresenterModule;
+            private Provider sellPresenterProvider;
+            private Provider<SellRouter> sellRouterProvider;
+            private Provider<WithdrawalBasedLimitsApiErrorHandler> withdrawalBasedLimitsApiErrorHandlerProvider;
+            private Provider<WithdrawalBasedLimitsErrorControllerRouter> withdrawalBasedLimitsErrorControllerRouterProvider;
+
+            private SellControllerSubcomponentImpl(QuickstartModule quickstartModule, SellPresenterModule module) {
+                initialize(quickstartModule, module);
+            }
+
+            private void initialize(QuickstartModule quickstartModule, SellPresenterModule module) {
+                this.sellPresenterModule = (SellPresenterModule) Preconditions.checkNotNull(module);
+                this.providesSellScreenProvider = DoubleCheck.provider(SellPresenterModule_ProvidesSellScreenFactory.create(this.sellPresenterModule));
+                this.providesAvailableBalanceAppBarScreenProvider = DoubleCheck.provider(SellPresenterModule_ProvidesAvailableBalanceAppBarScreenFactory.create(this.sellPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(SellPresenterModule_ProvidesActionBarControllerFactory.create(this.sellPresenterModule));
+                this.availableBalanceRouterProvider = DoubleCheck.provider(AvailableBalanceRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider));
+                this.providesSyncAccountsTaskProvider = DoubleCheck.provider(SellPresenterModule_ProvidesSyncAccountsTaskFactory.create(this.sellPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.availableBalanceCalculatorProvider = DoubleCheck.provider(AvailableBalanceCalculator_Factory.create(this.providesSyncAccountsTaskProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAccountsUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider, DaggerMainCoinbaseApplicationComponent.this.providesAdditionalPendingHoldsProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+                this.availableBalanceAppBarPresenterProvider = DoubleCheck.provider(AvailableBalanceAppBarPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesAvailableBalanceAppBarScreenProvider, this.availableBalanceRouterProvider, this.availableBalanceCalculatorProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider));
+                this.quickstartModule = (QuickstartModule) Preconditions.checkNotNull(quickstartModule);
+                this.providesQuickStartManagerProvider = DoubleCheck.provider(QuickstartModule_ProvidesQuickStartManagerFactory.create(quickstartModule, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesPhoneNumbersUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesGetPaymentMethodsRxProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider));
+                this.sellRouterProvider = DoubleCheck.provider(SellRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider));
+                this.keypadAmountFormatterProvider = DoubleCheck.provider(KeypadAmountFormatter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesCurrenciesUpdatedConnectorProvider));
+                this.keypadAmountValidatorProvider = DoubleCheck.provider(KeypadAmountValidator_Factory.create());
+                this.providesSendExceededTrackingContextProvider = DoubleCheck.provider(SellPresenterModule_ProvidesSendExceededTrackingContextFactory.create(this.sellPresenterModule));
+                this.withdrawalBasedLimitsErrorControllerRouterProvider = DoubleCheck.provider(WithdrawalBasedLimitsErrorControllerRouter_Factory.create(this.providesActionBarControllerProvider, this.providesSendExceededTrackingContextProvider));
+                this.providesWithdrawalBasedLimitsErrorRouterProvider = DoubleCheck.provider(SellPresenterModule_ProvidesWithdrawalBasedLimitsErrorRouterFactory.create(this.sellPresenterModule, this.withdrawalBasedLimitsErrorControllerRouterProvider));
+                this.withdrawalBasedLimitsApiErrorHandlerProvider = DoubleCheck.provider(WithdrawalBasedLimitsApiErrorHandler_Factory.create(this.providesWithdrawalBasedLimitsErrorRouterProvider));
+                this.sellPresenterProvider = DoubleCheck.provider(SellPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesSellScreenProvider, this.providesAvailableBalanceAppBarScreenProvider, this.availableBalanceAppBarPresenterProvider, DaggerMainCoinbaseApplicationComponent.this.providesNumericKeypadConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesCurrenciesUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesLinkedAccountConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesBuySellSettingsConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesPhoneNumbersUpdatedConnectorProvider, this.providesQuickStartManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesGetPaymentMethodsRxProvider, this.sellRouterProvider, DaggerMainCoinbaseApplicationComponent.this.paymentMethodUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.transferUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider, this.keypadAmountFormatterProvider, this.keypadAmountValidatorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, this.withdrawalBasedLimitsApiErrorHandlerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(SellController controller) {
+                injectSellController(controller);
+            }
+
+            private SellController injectSellController(SellController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                SellController_MembersInjector.injectMPresenter(instance, this.sellPresenterProvider.get());
+                SellController_MembersInjector.injectMActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                return instance;
+            }
+        }
+
+        private final class SendControllerSubcomponentImpl implements SendControllerSubcomponent {
+            private Provider<AvailableBalanceAppBarPresenter> availableBalanceAppBarPresenterProvider;
+            private Provider<AvailableBalanceCalculator> availableBalanceCalculatorProvider;
+            private Provider<AvailableBalanceRouter> availableBalanceRouterProvider;
+            private Provider<KeypadAmountFormatter> keypadAmountFormatterProvider;
+            private Provider<KeypadAmountValidator> keypadAmountValidatorProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<AvailableBalanceAppBarScreen> providesAvailableBalanceAppBarScreenProvider;
+            private Provider<LimitExceededTrackingContext> providesSendExceededTrackingContextProvider;
+            private Provider providesSendScreenProvider;
+            private Provider<SyncAccountsTask> providesSyncAccountsTaskProvider;
+            private SendPresenterModule sendPresenterModule;
+            private Provider<SendPresenter> sendPresenterProvider;
+            private Provider<SendRouter> sendRouterProvider;
+            private Provider<WithdrawalBasedLimitsErrorControllerRouter> withdrawalBasedLimitsErrorControllerRouterProvider;
+
+            private SendControllerSubcomponentImpl(SendPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(SendPresenterModule module) {
+                this.sendPresenterModule = (SendPresenterModule) Preconditions.checkNotNull(module);
+                this.providesSendScreenProvider = DoubleCheck.provider(SendPresenterModule_ProvidesSendScreenFactory.create(this.sendPresenterModule));
+                this.providesAvailableBalanceAppBarScreenProvider = DoubleCheck.provider(SendPresenterModule_ProvidesAvailableBalanceAppBarScreenFactory.create(this.sendPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(SendPresenterModule_ProvidesActionBarControllerFactory.create(this.sendPresenterModule));
+                this.availableBalanceRouterProvider = DoubleCheck.provider(AvailableBalanceRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider));
+                this.providesSyncAccountsTaskProvider = DoubleCheck.provider(SendPresenterModule_ProvidesSyncAccountsTaskFactory.create(this.sendPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.availableBalanceCalculatorProvider = DoubleCheck.provider(AvailableBalanceCalculator_Factory.create(this.providesSyncAccountsTaskProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAccountsUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider, DaggerMainCoinbaseApplicationComponent.this.providesAdditionalPendingHoldsProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+                this.availableBalanceAppBarPresenterProvider = DoubleCheck.provider(AvailableBalanceAppBarPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesAvailableBalanceAppBarScreenProvider, this.availableBalanceRouterProvider, this.availableBalanceCalculatorProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider));
+                this.sendRouterProvider = DoubleCheck.provider(SendRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.providesSendExceededTrackingContextProvider = DoubleCheck.provider(SendPresenterModule_ProvidesSendExceededTrackingContextFactory.create(this.sendPresenterModule));
+                this.withdrawalBasedLimitsErrorControllerRouterProvider = DoubleCheck.provider(WithdrawalBasedLimitsErrorControllerRouter_Factory.create(this.providesActionBarControllerProvider, this.providesSendExceededTrackingContextProvider));
+                this.keypadAmountFormatterProvider = DoubleCheck.provider(KeypadAmountFormatter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesCurrenciesUpdatedConnectorProvider));
+                this.keypadAmountValidatorProvider = DoubleCheck.provider(KeypadAmountValidator_Factory.create());
+                this.sendPresenterProvider = DoubleCheck.provider(SendPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesSendScreenProvider, this.providesAvailableBalanceAppBarScreenProvider, this.availableBalanceAppBarPresenterProvider, this.sendRouterProvider, this.withdrawalBasedLimitsErrorControllerRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesNumericKeypadConnectorProvider, this.keypadAmountFormatterProvider, this.keypadAmountValidatorProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesCurrenciesUpdatedConnectorProvider, this.availableBalanceCalculatorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(SendController controller) {
+                injectSendController(controller);
+            }
+
+            private SendController injectSendController(SendController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                SendController_MembersInjector.injectMPresenter(instance, (SendPresenter) this.sendPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class SignInPhoneNumberControllerSubcomponentImpl implements SignInPhoneNumberControllerSubcomponent {
+            private AuthCompletionFactory_Factory authCompletionFactoryProvider;
+            private Provider<AuthRouter> authRouterProvider;
+            private Provider<CredentialsApiRxWrapper> credentialsApiRxWrapperProvider;
+            private Provider<SignInPhoneNumberScreen> providePhoneNumberPresenterModuleProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private SignInPhoneNumberPresenterModule signInPhoneNumberPresenterModule;
+            private Provider<SignInPhoneNumberPresenter> signInPhoneNumberPresenterProvider;
+            private Provider<SignInPhoneNumberRouter> signInPhoneNumberRouterProvider;
+            private Provider<SignInRouter> signInRouterProvider;
+
+            private SignInPhoneNumberControllerSubcomponentImpl(SignInPhoneNumberPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(SignInPhoneNumberPresenterModule module) {
+                this.signInPhoneNumberPresenterModule = (SignInPhoneNumberPresenterModule) Preconditions.checkNotNull(module);
+                this.providePhoneNumberPresenterModuleProvider = DoubleCheck.provider(SignInPhoneNumberPresenterModule_ProvidePhoneNumberPresenterModuleFactory.create(this.signInPhoneNumberPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(SignInPhoneNumberPresenterModule_ProvidesActionBarControllerFactory.create(this.signInPhoneNumberPresenterModule));
+                this.signInPhoneNumberRouterProvider = DoubleCheck.provider(SignInPhoneNumberRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.signInRouterProvider = DoubleCheck.provider(SignInRouter_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesActionBarControllerProvider));
+                this.credentialsApiRxWrapperProvider = DoubleCheck.provider(CredentialsApiRxWrapper_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.authCompletionFactoryProvider = AuthCompletionFactory_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.credentialsApiRxWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider);
+                this.authRouterProvider = DoubleCheck.provider(AuthRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider, DaggerMainCoinbaseApplicationComponent.this.activityPermissionCheckUtilsProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.authCompletionFactoryProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.signInPhoneNumberPresenterProvider = DoubleCheck.provider(SignInPhoneNumberPresenter_Factory.create(this.providePhoneNumberPresenterModuleProvider, this.signInPhoneNumberRouterProvider, this.signInRouterProvider, this.authRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(SignInPhoneNumberController controller) {
+                injectSignInPhoneNumberController(controller);
+            }
+
+            private SignInPhoneNumberController injectSignInPhoneNumberController(SignInPhoneNumberController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                SignInPhoneNumberController_MembersInjector.injectMPresenter(instance, (SignInPhoneNumberPresenter) this.signInPhoneNumberPresenterProvider.get());
+                SignInPhoneNumberController_MembersInjector.injectMMixpanelTracking(instance, (MixpanelTracking) DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider.get());
+                SignInPhoneNumberController_MembersInjector.injectMOptionalViewHider(instance, (OptionalViewHider) MainActivitySubcomponentImpl.this.optionalViewHiderProvider.get());
+                return instance;
+            }
+        }
+
+        private final class SignInVerifyPhoneNumberControllerSubcomponentImpl implements SignInVerifyPhoneNumberControllerSubcomponent {
+            private AuthCompletionFactory_Factory authCompletionFactoryProvider;
+            private Provider<AuthRouter> authRouterProvider;
+            private Provider<CredentialsApiRxWrapper> credentialsApiRxWrapperProvider;
+            private Provider<SignInVerifyPhoneNumberScreen> providePhoneNumberPresenterModuleProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private SignInVerifyPhoneNumberPresenterModule signInVerifyPhoneNumberPresenterModule;
+            private Provider<SignInVerifyPhoneNumberPresenter> signInVerifyPhoneNumberPresenterProvider;
+
+            private SignInVerifyPhoneNumberControllerSubcomponentImpl(SignInVerifyPhoneNumberPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(SignInVerifyPhoneNumberPresenterModule module) {
+                this.signInVerifyPhoneNumberPresenterModule = (SignInVerifyPhoneNumberPresenterModule) Preconditions.checkNotNull(module);
+                this.providePhoneNumberPresenterModuleProvider = DoubleCheck.provider(SignInVerifyPhoneNumberPresenterModule_ProvidePhoneNumberPresenterModuleFactory.create(this.signInVerifyPhoneNumberPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(SignInVerifyPhoneNumberPresenterModule_ProvidesActionBarControllerFactory.create(this.signInVerifyPhoneNumberPresenterModule));
+                this.credentialsApiRxWrapperProvider = DoubleCheck.provider(CredentialsApiRxWrapper_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.authCompletionFactoryProvider = AuthCompletionFactory_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.credentialsApiRxWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider);
+                this.authRouterProvider = DoubleCheck.provider(AuthRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider, DaggerMainCoinbaseApplicationComponent.this.activityPermissionCheckUtilsProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.authCompletionFactoryProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.signInVerifyPhoneNumberPresenterProvider = DoubleCheck.provider(SignInVerifyPhoneNumberPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providePhoneNumberPresenterModuleProvider, this.authRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(SignInVerifyPhoneNumberController controller) {
+                injectSignInVerifyPhoneNumberController(controller);
+            }
+
+            private SignInVerifyPhoneNumberController injectSignInVerifyPhoneNumberController(SignInVerifyPhoneNumberController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                SignInVerifyPhoneNumberController_MembersInjector.injectMPresenter(instance, (SignInVerifyPhoneNumberPresenter) this.signInVerifyPhoneNumberPresenterProvider.get());
+                SignInVerifyPhoneNumberController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                SignInVerifyPhoneNumberController_MembersInjector.injectMAnimationUtilsWrapper(instance, (AnimationUtilsWrapper) DaggerMainCoinbaseApplicationComponent.this.providesAnimationUtilsWrapperProvider.get());
+                SignInVerifyPhoneNumberController_MembersInjector.injectMMixpanelTracking(instance, (MixpanelTracking) DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider.get());
+                SignInVerifyPhoneNumberController_MembersInjector.injectMOptionalViewHider(instance, (OptionalViewHider) MainActivitySubcomponentImpl.this.optionalViewHiderProvider.get());
+                return instance;
+            }
+        }
+
+        private final class SignUpControllerSubcomponentImpl implements SignUpControllerSubcomponent {
+            private AuthCompletionFactory_Factory authCompletionFactoryProvider;
+            private Provider<AuthRouter> authRouterProvider;
+            private Provider<CredentialsApiRxWrapper> credentialsApiRxWrapperProvider;
+            private Provider<OnboardingRouter> onboardingRouterProvider;
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<SignInRouter> signInRouterProvider;
+            private SignUpControllerSubcomponentModule signUpControllerSubcomponentModule;
+
+            private SignUpControllerSubcomponentImpl(SignUpControllerSubcomponentModule module) {
+                initialize(module);
+            }
+
+            private void initialize(SignUpControllerSubcomponentModule module) {
+                this.signUpControllerSubcomponentModule = (SignUpControllerSubcomponentModule) Preconditions.checkNotNull(module);
+                this.providesControllerProvider = DoubleCheck.provider(SignUpControllerSubcomponentModule_ProvidesControllerFactory.create(this.signUpControllerSubcomponentModule));
+                this.credentialsApiRxWrapperProvider = DoubleCheck.provider(CredentialsApiRxWrapper_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.authCompletionFactoryProvider = AuthCompletionFactory_Factory.create(this.providesControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.credentialsApiRxWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider);
+                this.authRouterProvider = DoubleCheck.provider(AuthRouter_Factory.create(this.providesControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider, DaggerMainCoinbaseApplicationComponent.this.activityPermissionCheckUtilsProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.authCompletionFactoryProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.signInRouterProvider = DoubleCheck.provider(SignInRouter_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesControllerProvider));
+                this.onboardingRouterProvider = DoubleCheck.provider(OnboardingRouter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesOnboardingUpdatedConnectorProvider));
+            }
+
+            public void inject(SignUpController controller) {
+                injectSignUpController(controller);
+            }
+
+            private SignUpController injectSignUpController(SignUpController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                SignUpController_MembersInjector.injectMAnalytics(instance, (Analytics) DaggerMainCoinbaseApplicationComponent.this.analyticsProvider.get());
+                SignUpController_MembersInjector.injectMEmailVerifiedConnector(instance, (EmailVerifiedConnector) DaggerMainCoinbaseApplicationComponent.this.providesEmailVerifiedConnectorProvider.get());
+                SignUpController_MembersInjector.injectMAuthManager(instance, (AuthManager) DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider.get());
+                SignUpController_MembersInjector.injectMAuthRouter(instance, (AuthRouter) this.authRouterProvider.get());
+                SignUpController_MembersInjector.injectMCredentialsApiRxWrapper(instance, (CredentialsApiRxWrapper) this.credentialsApiRxWrapperProvider.get());
+                SignUpController_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+                SignUpController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                SignUpController_MembersInjector.injectMSignInRouter(instance, (SignInRouter) this.signInRouterProvider.get());
+                SignUpController_MembersInjector.injectMOnboardingRouter(instance, (OnboardingRouter) this.onboardingRouterProvider.get());
+                SignUpController_MembersInjector.injectMOnboardingUpdatedConnector(instance, (OnboardingUpdatedConnector) DaggerMainCoinbaseApplicationComponent.this.providesOnboardingUpdatedConnectorProvider.get());
+                return instance;
+            }
+        }
+
+        private final class StateIdologyAddressFormControllerSubcomponentImpl implements StateIdologyAddressFormControllerSubcomponent {
+            private Provider<IdologyArgsBuilder> idologyArgsBuilderProvider;
+            private Provider<IdologyRouter> idologyRouterProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<StateIdologyAddressFormScreen> providesStateIdologyAddressFormScreenProvider;
+            private StateIdologyAddressFormPresenterModule stateIdologyAddressFormPresenterModule;
+            private Provider<StateIdologyAddressFormPresenter> stateIdologyAddressFormPresenterProvider;
+
+            private StateIdologyAddressFormControllerSubcomponentImpl(StateIdologyAddressFormPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(StateIdologyAddressFormPresenterModule module) {
+                this.stateIdologyAddressFormPresenterModule = (StateIdologyAddressFormPresenterModule) Preconditions.checkNotNull(module);
+                this.providesStateIdologyAddressFormScreenProvider = DoubleCheck.provider(StateIdologyAddressFormPresenterModule_ProvidesStateIdologyAddressFormScreenFactory.create(this.stateIdologyAddressFormPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(StateIdologyAddressFormPresenterModule_ProvidesActionBarControllerFactory.create(this.stateIdologyAddressFormPresenterModule));
+                this.idologyArgsBuilderProvider = DoubleCheck.provider(IdologyArgsBuilder_Factory.create(this.providesActionBarControllerProvider));
+                this.idologyRouterProvider = DoubleCheck.provider(IdologyRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider, this.idologyArgsBuilderProvider));
+                this.stateIdologyAddressFormPresenterProvider = DoubleCheck.provider(StateIdologyAddressFormPresenter_Factory.create(this.providesStateIdologyAddressFormScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyFormValidConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyVerificationConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyAutoCompleteShownConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesProgressConnectorProvider, this.idologyRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(StateIdologyAddressFormController controller) {
+                injectStateIdologyAddressFormController(controller);
+            }
+
+            private StateIdologyAddressFormController injectStateIdologyAddressFormController(StateIdologyAddressFormController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                StateIdologyAddressFormController_MembersInjector.injectMPresenter(instance, (StateIdologyAddressFormPresenter) this.stateIdologyAddressFormPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class StateIdologyFailureControllerSubcomponentImpl implements StateIdologyFailureControllerSubcomponent {
+            private Provider<IdologyArgsBuilder> idologyArgsBuilderProvider;
+            private Provider<IdologyRouter> idologyRouterProvider;
+            private Provider<IdologyTrackingContextProvider> idologyTrackingContextProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private StateIdologyFailurePresenterModule stateIdologyFailurePresenterModule;
+            private Provider<StateIdologyFailurePresenter> stateIdologyFailurePresenterProvider;
+
+            private StateIdologyFailureControllerSubcomponentImpl(StateIdologyFailurePresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(StateIdologyFailurePresenterModule module) {
+                this.stateIdologyFailurePresenterModule = (StateIdologyFailurePresenterModule) Preconditions.checkNotNull(module);
+                this.providesActionBarControllerProvider = DoubleCheck.provider(StateIdologyFailurePresenterModule_ProvidesActionBarControllerFactory.create(this.stateIdologyFailurePresenterModule));
+                this.idologyTrackingContextProvider = DoubleCheck.provider(IdologyTrackingContextProvider_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.idologyArgsBuilderProvider = DoubleCheck.provider(IdologyArgsBuilder_Factory.create(this.providesActionBarControllerProvider));
+                this.idologyRouterProvider = DoubleCheck.provider(IdologyRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider, this.idologyArgsBuilderProvider));
+                this.stateIdologyFailurePresenterProvider = DoubleCheck.provider(StateIdologyFailurePresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, this.idologyTrackingContextProvider, this.idologyRouterProvider));
+            }
+
+            public void inject(StateIdologyFailureController controller) {
+                injectStateIdologyFailureController(controller);
+            }
+
+            private StateIdologyFailureController injectStateIdologyFailureController(StateIdologyFailureController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                StateIdologyFailureController_MembersInjector.injectMPresenter(instance, (StateIdologyFailurePresenter) this.stateIdologyFailurePresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class StateIdologyNameFormControllerSubcomponentImpl implements StateIdologyNameFormControllerSubcomponent {
+            private Provider<IdologyArgsBuilder> idologyArgsBuilderProvider;
+            private Provider<IdologyRouter> idologyRouterProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<StateIdologyFormScreen> providesStateIdologyNameFormScreenProvider;
+            private Provider<SignInRouter> signInRouterProvider;
+            private StateIdologyNameFormPresenterModule stateIdologyNameFormPresenterModule;
+            private Provider<StateIdologyNameFormPresenter> stateIdologyNameFormPresenterProvider;
+
+            private StateIdologyNameFormControllerSubcomponentImpl(StateIdologyNameFormPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(StateIdologyNameFormPresenterModule module) {
+                this.stateIdologyNameFormPresenterModule = (StateIdologyNameFormPresenterModule) Preconditions.checkNotNull(module);
+                this.providesStateIdologyNameFormScreenProvider = DoubleCheck.provider(StateIdologyNameFormPresenterModule_ProvidesStateIdologyNameFormScreenFactory.create(this.stateIdologyNameFormPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(StateIdologyNameFormPresenterModule_ProvidesActionBarControllerFactory.create(this.stateIdologyNameFormPresenterModule));
+                this.idologyArgsBuilderProvider = DoubleCheck.provider(IdologyArgsBuilder_Factory.create(this.providesActionBarControllerProvider));
+                this.idologyRouterProvider = DoubleCheck.provider(IdologyRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider, this.idologyArgsBuilderProvider));
+                this.signInRouterProvider = DoubleCheck.provider(SignInRouter_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesActionBarControllerProvider));
+                this.stateIdologyNameFormPresenterProvider = DoubleCheck.provider(StateIdologyNameFormPresenter_Factory.create(this.providesStateIdologyNameFormScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyFormValidConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyVerificationConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesProgressConnectorProvider, this.idologyRouterProvider, this.signInRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(StateIdologyNameFormController controller) {
+                injectStateIdologyNameFormController(controller);
+            }
+
+            private StateIdologyNameFormController injectStateIdologyNameFormController(StateIdologyNameFormController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                StateIdologyNameFormController_MembersInjector.injectMPresenter(instance, (StateIdologyNameFormPresenter) this.stateIdologyNameFormPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class StateIdologyQuestionsControllerSubcomponentImpl implements StateIdologyQuestionsControllerSubcomponent {
+            private AuthCompletionFactory_Factory authCompletionFactoryProvider;
+            private Provider<AuthRouter> authRouterProvider;
+            private Provider<CredentialsApiRxWrapper> credentialsApiRxWrapperProvider;
+            private Provider<IdologyArgsBuilder> idologyArgsBuilderProvider;
+            private Provider<IdologyRouter> idologyRouterProvider;
+            private Provider<IdologySettingsQuestionsPresenter> idologySettingsQuestionsPresenterProvider;
+            private Provider<IdologySuccessAuthRouter> idologySuccessAuthRouterProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<IdologyFailureRouter> providesIdologyFailureRouterProvider;
+            private Provider<IdologySettingsQuestionsScreen> providesIdologyQuestionsScreenProvider;
+            private Provider<IdologySuccessRouter> providesIdologySuccessRouterProvider;
+            private StateIdologySettingsQuestionsPresenterModule stateIdologySettingsQuestionsPresenterModule;
+            private Provider<UpfrontKycIdologyFailureRouter> upfrontKycIdologyFailureRouterProvider;
+
+            private StateIdologyQuestionsControllerSubcomponentImpl(StateIdologySettingsQuestionsPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(StateIdologySettingsQuestionsPresenterModule module) {
+                this.stateIdologySettingsQuestionsPresenterModule = (StateIdologySettingsQuestionsPresenterModule) Preconditions.checkNotNull(module);
+                this.providesIdologyQuestionsScreenProvider = DoubleCheck.provider(StateIdologySettingsQuestionsPresenterModule_ProvidesIdologyQuestionsScreenFactory.create(this.stateIdologySettingsQuestionsPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(StateIdologySettingsQuestionsPresenterModule_ProvidesActionBarControllerFactory.create(this.stateIdologySettingsQuestionsPresenterModule));
+                this.credentialsApiRxWrapperProvider = DoubleCheck.provider(CredentialsApiRxWrapper_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.authCompletionFactoryProvider = AuthCompletionFactory_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.credentialsApiRxWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider);
+                this.authRouterProvider = DoubleCheck.provider(AuthRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider, DaggerMainCoinbaseApplicationComponent.this.activityPermissionCheckUtilsProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.authCompletionFactoryProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.idologySuccessAuthRouterProvider = DoubleCheck.provider(IdologySuccessAuthRouter_Factory.create(this.authRouterProvider));
+                this.providesIdologySuccessRouterProvider = DoubleCheck.provider(StateIdologySettingsQuestionsPresenterModule_ProvidesIdologySuccessRouterFactory.create(this.stateIdologySettingsQuestionsPresenterModule, this.idologySuccessAuthRouterProvider));
+                this.idologyArgsBuilderProvider = DoubleCheck.provider(IdologyArgsBuilder_Factory.create(this.providesActionBarControllerProvider));
+                this.upfrontKycIdologyFailureRouterProvider = DoubleCheck.provider(UpfrontKycIdologyFailureRouter_Factory.create(this.providesActionBarControllerProvider, this.idologyArgsBuilderProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider, this.authRouterProvider));
+                this.providesIdologyFailureRouterProvider = DoubleCheck.provider(StateIdologySettingsQuestionsPresenterModule_ProvidesIdologyFailureRouterFactory.create(this.stateIdologySettingsQuestionsPresenterModule, this.upfrontKycIdologyFailureRouterProvider));
+                this.idologyRouterProvider = DoubleCheck.provider(IdologyRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider, this.idologyArgsBuilderProvider));
+                this.idologySettingsQuestionsPresenterProvider = DoubleCheck.provider(IdologySettingsQuestionsPresenter_Factory.create(this.providesIdologyQuestionsScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyAnswerListValidConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyVerificationConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyRetryConnectorProvider, this.providesIdologySuccessRouterProvider, this.providesIdologyFailureRouterProvider, this.idologyRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(StateIdologyQuestionsController controller) {
+                injectStateIdologyQuestionsController(controller);
+            }
+
+            private StateIdologyQuestionsController injectStateIdologyQuestionsController(StateIdologyQuestionsController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                StateIdologyQuestionsController_MembersInjector.injectMPresenter(instance, (IdologySettingsQuestionsPresenter) this.idologySettingsQuestionsPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class StateIdologyRetryFormControllerSubcomponentImpl implements StateIdologyRetryFormControllerSubcomponent {
+            private AuthCompletionFactory_Factory authCompletionFactoryProvider;
+            private Provider<AuthRouter> authRouterProvider;
+            private Provider<CredentialsApiRxWrapper> credentialsApiRxWrapperProvider;
+            private Provider<IdologyArgsBuilder> idologyArgsBuilderProvider;
+            private Provider<IdologyRouter> idologyRouterProvider;
+            private Provider<IdologyTrackingContextProvider> idologyTrackingContextProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<IdologyFailureRouter> providesIdologyFailureRouterProvider;
+            private Provider<StateIdologyRetryFormScreen> providesStateIdologyRetryFormScreenProvider;
+            private Provider<SignInRouter> signInRouterProvider;
+            private StateIdologyRetryFormPresenterModule stateIdologyRetryFormPresenterModule;
+            private Provider<StateIdologyRetryFormPresenter> stateIdologyRetryFormPresenterProvider;
+            private Provider<UpfrontKycIdologyFailureRouter> upfrontKycIdologyFailureRouterProvider;
+
+            private StateIdologyRetryFormControllerSubcomponentImpl(StateIdologyRetryFormPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(StateIdologyRetryFormPresenterModule module) {
+                this.stateIdologyRetryFormPresenterModule = (StateIdologyRetryFormPresenterModule) Preconditions.checkNotNull(module);
+                this.providesStateIdologyRetryFormScreenProvider = DoubleCheck.provider(StateIdologyRetryFormPresenterModule_ProvidesStateIdologyRetryFormScreenFactory.create(this.stateIdologyRetryFormPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(StateIdologyRetryFormPresenterModule_ProvidesActionBarControllerFactory.create(this.stateIdologyRetryFormPresenterModule));
+                this.idologyArgsBuilderProvider = DoubleCheck.provider(IdologyArgsBuilder_Factory.create(this.providesActionBarControllerProvider));
+                this.idologyRouterProvider = DoubleCheck.provider(IdologyRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider, this.idologyArgsBuilderProvider));
+                this.credentialsApiRxWrapperProvider = DoubleCheck.provider(CredentialsApiRxWrapper_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.authCompletionFactoryProvider = AuthCompletionFactory_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.credentialsApiRxWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider);
+                this.authRouterProvider = DoubleCheck.provider(AuthRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider, DaggerMainCoinbaseApplicationComponent.this.activityPermissionCheckUtilsProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.authCompletionFactoryProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.upfrontKycIdologyFailureRouterProvider = DoubleCheck.provider(UpfrontKycIdologyFailureRouter_Factory.create(this.providesActionBarControllerProvider, this.idologyArgsBuilderProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider, this.authRouterProvider));
+                this.providesIdologyFailureRouterProvider = DoubleCheck.provider(StateIdologyRetryFormPresenterModule_ProvidesIdologyFailureRouterFactory.create(this.stateIdologyRetryFormPresenterModule, this.upfrontKycIdologyFailureRouterProvider));
+                this.signInRouterProvider = DoubleCheck.provider(SignInRouter_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesActionBarControllerProvider));
+                this.idologyTrackingContextProvider = DoubleCheck.provider(IdologyTrackingContextProvider_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.stateIdologyRetryFormPresenterProvider = DoubleCheck.provider(StateIdologyRetryFormPresenter_Factory.create(this.providesStateIdologyRetryFormScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyFormValidConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyVerificationConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyRetryConnectorProvider, this.idologyRouterProvider, this.providesIdologyFailureRouterProvider, this.signInRouterProvider, this.authRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, this.idologyTrackingContextProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(StateIdologyRetryFormController controller) {
+                injectStateIdologyRetryFormController(controller);
+            }
+
+            private StateIdologyRetryFormController injectStateIdologyRetryFormController(StateIdologyRetryFormController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                StateIdologyRetryFormController_MembersInjector.injectMPresenter(instance, (StateIdologyRetryFormPresenter) this.stateIdologyRetryFormPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class StateIdologySourceOfFundsFormControllerSubcomponentImpl implements StateIdologySourceOfFundsFormControllerSubcomponent {
+            private AuthCompletionFactory_Factory authCompletionFactoryProvider;
+            private Provider<AuthRouter> authRouterProvider;
+            private Provider<CredentialsApiRxWrapper> credentialsApiRxWrapperProvider;
+            private Provider<IdologyArgsBuilder> idologyArgsBuilderProvider;
+            private Provider<IdologyRouter> idologyRouterProvider;
+            private Provider<IdologyTrackingContextProvider> idologyTrackingContextProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<IdologyFailureRouter> providesIdologyFailureRouterProvider;
+            private Provider<StateIdologySourceOfFundsScreen> providesStateIdologySourceOfFundsFormScreenProvider;
+            private StateIdologySourceOfFundsFormPresenterModule stateIdologySourceOfFundsFormPresenterModule;
+            private Provider<StateIdologySourceOfFundsFormPresenter> stateIdologySourceOfFundsFormPresenterProvider;
+            private Provider<UpfrontKycIdologyFailureRouter> upfrontKycIdologyFailureRouterProvider;
+
+            private StateIdologySourceOfFundsFormControllerSubcomponentImpl(StateIdologySourceOfFundsFormPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(StateIdologySourceOfFundsFormPresenterModule module) {
+                this.stateIdologySourceOfFundsFormPresenterModule = (StateIdologySourceOfFundsFormPresenterModule) Preconditions.checkNotNull(module);
+                this.providesStateIdologySourceOfFundsFormScreenProvider = DoubleCheck.provider(StateIdologySourceOfFundsFormPresenterModule_ProvidesStateIdologySourceOfFundsFormScreenFactory.create(this.stateIdologySourceOfFundsFormPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(StateIdologySourceOfFundsFormPresenterModule_ProvidesActionBarControllerFactory.create(this.stateIdologySourceOfFundsFormPresenterModule));
+                this.idologyArgsBuilderProvider = DoubleCheck.provider(IdologyArgsBuilder_Factory.create(this.providesActionBarControllerProvider));
+                this.idologyRouterProvider = DoubleCheck.provider(IdologyRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider, this.idologyArgsBuilderProvider));
+                this.credentialsApiRxWrapperProvider = DoubleCheck.provider(CredentialsApiRxWrapper_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.authCompletionFactoryProvider = AuthCompletionFactory_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.credentialsApiRxWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider);
+                this.authRouterProvider = DoubleCheck.provider(AuthRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider, DaggerMainCoinbaseApplicationComponent.this.activityPermissionCheckUtilsProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.authCompletionFactoryProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.upfrontKycIdologyFailureRouterProvider = DoubleCheck.provider(UpfrontKycIdologyFailureRouter_Factory.create(this.providesActionBarControllerProvider, this.idologyArgsBuilderProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider, this.authRouterProvider));
+                this.providesIdologyFailureRouterProvider = DoubleCheck.provider(StateIdologySourceOfFundsFormPresenterModule_ProvidesIdologyFailureRouterFactory.create(this.stateIdologySourceOfFundsFormPresenterModule, this.upfrontKycIdologyFailureRouterProvider));
+                this.idologyTrackingContextProvider = DoubleCheck.provider(IdologyTrackingContextProvider_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.stateIdologySourceOfFundsFormPresenterProvider = DoubleCheck.provider(StateIdologySourceOfFundsFormPresenter_Factory.create(this.providesStateIdologySourceOfFundsFormScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyFormValidConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyVerificationConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdologyRetryConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesProgressConnectorProvider, this.idologyRouterProvider, this.providesIdologyFailureRouterProvider, this.authRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, this.idologyTrackingContextProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(StateIdologySourceOfFundsFormController controller) {
+                injectStateIdologySourceOfFundsFormController(controller);
+            }
+
+            private StateIdologySourceOfFundsFormController injectStateIdologySourceOfFundsFormController(StateIdologySourceOfFundsFormController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                StateIdologySourceOfFundsFormController_MembersInjector.injectMPresenter(instance, (StateIdologySourceOfFundsFormPresenter) this.stateIdologySourceOfFundsFormPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class StateLockedControllerSubcomponentImpl implements StateLockedControllerSubcomponent {
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<StateLockedScreen> providesStateLockedScreenProvider;
+            private StateLockedPresenterModule stateLockedPresenterModule;
+            private Provider<StateLockedPresenter> stateLockedPresenterProvider;
+            private Provider<StateRegistrationRouter> stateRegistrationRouterProvider;
+
+            private StateLockedControllerSubcomponentImpl(StateLockedPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(StateLockedPresenterModule module) {
+                this.stateLockedPresenterModule = (StateLockedPresenterModule) Preconditions.checkNotNull(module);
+                this.providesStateLockedScreenProvider = DoubleCheck.provider(StateLockedPresenterModule_ProvidesStateLockedScreenFactory.create(this.stateLockedPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(StateLockedPresenterModule_ProvidesActionBarControllerFactory.create(this.stateLockedPresenterModule));
+                this.stateRegistrationRouterProvider = DoubleCheck.provider(StateRegistrationRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesStateDisclosureFinishedConnectorProvider));
+                this.stateLockedPresenterProvider = DoubleCheck.provider(StateLockedPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesStateLockedScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesStateDisclosureFinishedConnectorProvider, this.stateRegistrationRouterProvider));
+            }
+
+            public void inject(StateLockedController controller) {
+                injectStateLockedController(controller);
+            }
+
+            private StateLockedController injectStateLockedController(StateLockedController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                StateLockedController_MembersInjector.injectMPresenter(instance, (StateLockedPresenter) this.stateLockedPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class StateSelectorControllerSubcomponentImpl implements StateSelectorControllerSubcomponent {
+            private AuthCompletionFactory_Factory authCompletionFactoryProvider;
+            private Provider<AuthRouter> authRouterProvider;
+            private Provider<CredentialsApiRxWrapper> credentialsApiRxWrapperProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<StateSelectorScreen> providesStateSelectorScreenProvider;
+            private Provider<StateRegistrationRouter> stateRegistrationRouterProvider;
+            private StateSelectorPresenterModule stateSelectorPresenterModule;
+            private Provider<StateSelectorPresenter> stateSelectorPresenterProvider;
+
+            private StateSelectorControllerSubcomponentImpl(StateSelectorPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(StateSelectorPresenterModule module) {
+                this.stateSelectorPresenterModule = (StateSelectorPresenterModule) Preconditions.checkNotNull(module);
+                this.providesStateSelectorScreenProvider = DoubleCheck.provider(StateSelectorPresenterModule_ProvidesStateSelectorScreenFactory.create(this.stateSelectorPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(StateSelectorPresenterModule_ProvidesActionBarControllerFactory.create(this.stateSelectorPresenterModule));
+                this.stateRegistrationRouterProvider = DoubleCheck.provider(StateRegistrationRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesStateDisclosureFinishedConnectorProvider));
+                this.credentialsApiRxWrapperProvider = DoubleCheck.provider(CredentialsApiRxWrapper_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.authCompletionFactoryProvider = AuthCompletionFactory_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.credentialsApiRxWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider);
+                this.authRouterProvider = DoubleCheck.provider(AuthRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider, DaggerMainCoinbaseApplicationComponent.this.activityPermissionCheckUtilsProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.authCompletionFactoryProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.stateSelectorPresenterProvider = DoubleCheck.provider(StateSelectorPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesStateSelectorScreenProvider, this.stateRegistrationRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesStateListSelectorConnectorProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesStateDisclosureFinishedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, this.authRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(StateSelectorController controller) {
+                injectStateSelectorController(controller);
+            }
+
+            private StateSelectorController injectStateSelectorController(StateSelectorController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                StateSelectorController_MembersInjector.injectMPresenter(instance, (StateSelectorPresenter) this.stateSelectorPresenterProvider.get());
+                StateSelectorController_MembersInjector.injectMMixpanelTracking(instance, (MixpanelTracking) DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider.get());
+                return instance;
+            }
+        }
+
+        private final class StateSuspendedControllerSubcomponentImpl implements StateSuspendedControllerSubcomponent {
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<StateSuspendedScreen> providesStateSuspendedScreenProvider;
+            private Provider<StateRegistrationRouter> stateRegistrationRouterProvider;
+            private StateSuspendedPresenterModule stateSuspendedPresenterModule;
+            private Provider<StateSuspendedPresenter> stateSuspendedPresenterProvider;
+
+            private StateSuspendedControllerSubcomponentImpl(StateSuspendedPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(StateSuspendedPresenterModule module) {
+                this.stateSuspendedPresenterModule = (StateSuspendedPresenterModule) Preconditions.checkNotNull(module);
+                this.providesStateSuspendedScreenProvider = DoubleCheck.provider(StateSuspendedPresenterModule_ProvidesStateSuspendedScreenFactory.create(this.stateSuspendedPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(StateSuspendedPresenterModule_ProvidesActionBarControllerFactory.create(this.stateSuspendedPresenterModule));
+                this.stateRegistrationRouterProvider = DoubleCheck.provider(StateRegistrationRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesStateDisclosureFinishedConnectorProvider));
+                this.stateSuspendedPresenterProvider = DoubleCheck.provider(StateSuspendedPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesStateSuspendedScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesStateDisclosureFinishedConnectorProvider, this.stateRegistrationRouterProvider));
+            }
+
+            public void inject(StateSuspendedController controller) {
+                injectStateSuspendedController(controller);
+            }
+
+            private StateSuspendedController injectStateSuspendedController(StateSuspendedController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                StateSuspendedController_MembersInjector.injectMPresenter(instance, (StateSuspendedPresenter) this.stateSuspendedPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class TakeDocumentPhotoControllerSubcomponentImpl implements TakeDocumentPhotoControllerSubcomponent {
+            private Provider<TakeDocumentPhotoScreen> providesTakeDocumentPhotoScreenProvider;
+            private TakeDocumentPhotoPresenterModule takeDocumentPhotoPresenterModule;
+            private Provider<TakeDocumentPhotoPresenter> takeDocumentPhotoPresenterProvider;
+
+            private TakeDocumentPhotoControllerSubcomponentImpl(TakeDocumentPhotoPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(TakeDocumentPhotoPresenterModule module) {
+                this.takeDocumentPhotoPresenterModule = (TakeDocumentPhotoPresenterModule) Preconditions.checkNotNull(module);
+                this.providesTakeDocumentPhotoScreenProvider = DoubleCheck.provider(TakeDocumentPhotoPresenterModule_ProvidesTakeDocumentPhotoScreenFactory.create(this.takeDocumentPhotoPresenterModule));
+                this.takeDocumentPhotoPresenterProvider = DoubleCheck.provider(TakeDocumentPhotoPresenter_Factory.create(this.providesTakeDocumentPhotoScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdentityVerificationBitmapConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesPhotoTakenConnectorProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, MainActivitySubcomponentImpl.this.providesWindowProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+            }
+
+            public void inject(TakeDocumentPhotoController controller) {
+                injectTakeDocumentPhotoController(controller);
+            }
+
+            private TakeDocumentPhotoController injectTakeDocumentPhotoController(TakeDocumentPhotoController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                TakeDocumentPhotoController_MembersInjector.injectMIdentityVerificationBitmapConnector(instance, (IdentityVerificationBitmapConnector) DaggerMainCoinbaseApplicationComponent.this.providesIdentityVerificationBitmapConnectorProvider.get());
+                TakeDocumentPhotoController_MembersInjector.injectMPresenter(instance, (TakeDocumentPhotoPresenter) this.takeDocumentPhotoPresenterProvider.get());
+                TakeDocumentPhotoController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                return instance;
+            }
+        }
+
+        private final class TransactionListLayoutSubcomponentImpl implements TransactionListLayoutSubcomponent {
+            private Provider<TransactionListScreen> providesTransactionListScreenProvider;
+            private TransactionListPresenterModule transactionListPresenterModule;
+            private Provider<TransactionListPresenter> transactionListPresenterProvider;
+
+            private TransactionListLayoutSubcomponentImpl(TransactionListPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(TransactionListPresenterModule module) {
+                this.transactionListPresenterModule = (TransactionListPresenterModule) Preconditions.checkNotNull(module);
+                this.providesTransactionListScreenProvider = DoubleCheck.provider(TransactionListPresenterModule_ProvidesTransactionListScreenFactory.create(this.transactionListPresenterModule));
+                this.transactionListPresenterProvider = DoubleCheck.provider(TransactionListPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesDatabaseManagerProvider, this.providesTransactionListScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesRefreshRequestedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesTransactionDetailButtonConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+            }
+
+            public void inject(TransactionListLayout layout) {
+                injectTransactionListLayout(layout);
+            }
+
+            private TransactionListLayout injectTransactionListLayout(TransactionListLayout instance) {
+                TransactionListLayout_MembersInjector.injectMPresenter(instance, (TransactionListPresenter) this.transactionListPresenterProvider.get());
+                TransactionListLayout_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) MainActivitySubcomponentImpl.this.backgroundDimmerProvider.get());
+                TransactionListLayout_MembersInjector.injectMMoneyFormatterUtil(instance, (MoneyFormatterUtil) DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider.get());
+                return instance;
+            }
+        }
+
+        private final class TransferSendControllerSubcomponentImpl implements TransferSendControllerSubcomponent {
+            private Provider<ApiErrorHandler> providesApiErrorHandlerProvider;
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<LimitExceededTrackingContext> providesSendExceededTrackingContextProvider;
+            private Provider<TransferSendScreen> providesTransferSendScreenProvider;
+            private Provider<WithdrawalBasedLimitsErrorRouter> providesWithdrawalBasedLimitsErrorControllerRouterProvider;
+            private Provider<SuccessRouter> successRouterProvider;
+            private TransferSendControllerModule transferSendControllerModule;
+            private TransferSendPresenterModule transferSendPresenterModule;
+            private Provider<TransferSendPresenter> transferSendPresenterProvider;
+            private Provider<WithdrawalBasedLimitsApiErrorHandler> withdrawalBasedLimitsApiErrorHandlerProvider;
+            private Provider<WithdrawalBasedLimitsErrorControllerRouter> withdrawalBasedLimitsErrorControllerRouterProvider;
+
+            private TransferSendControllerSubcomponentImpl(TransferSendPresenterModule module, TransferSendControllerModule module2) {
+                initialize(module, module2);
+            }
+
+            private void initialize(TransferSendPresenterModule module, TransferSendControllerModule module2) {
+                this.transferSendPresenterModule = (TransferSendPresenterModule) Preconditions.checkNotNull(module);
+                this.providesTransferSendScreenProvider = DoubleCheck.provider(TransferSendPresenterModule_ProvidesTransferSendScreenFactory.create(this.transferSendPresenterModule));
+                this.transferSendControllerModule = (TransferSendControllerModule) Preconditions.checkNotNull(module2);
+                this.providesControllerProvider = DoubleCheck.provider(TransferSendControllerModule_ProvidesControllerFactory.create(this.transferSendControllerModule));
+                this.providesSendExceededTrackingContextProvider = DoubleCheck.provider(TransferSendControllerModule_ProvidesSendExceededTrackingContextFactory.create(this.transferSendControllerModule));
+                this.withdrawalBasedLimitsErrorControllerRouterProvider = DoubleCheck.provider(WithdrawalBasedLimitsErrorControllerRouter_Factory.create(this.providesControllerProvider, this.providesSendExceededTrackingContextProvider));
+                this.providesWithdrawalBasedLimitsErrorControllerRouterProvider = DoubleCheck.provider(TransferSendControllerModule_ProvidesWithdrawalBasedLimitsErrorControllerRouterFactory.create(this.transferSendControllerModule, this.withdrawalBasedLimitsErrorControllerRouterProvider));
+                this.withdrawalBasedLimitsApiErrorHandlerProvider = DoubleCheck.provider(WithdrawalBasedLimitsApiErrorHandler_Factory.create(this.providesWithdrawalBasedLimitsErrorControllerRouterProvider));
+                this.providesApiErrorHandlerProvider = DoubleCheck.provider(TransferSendPresenterModule_ProvidesApiErrorHandlerFactory.create(this.transferSendPresenterModule, this.withdrawalBasedLimitsApiErrorHandlerProvider));
+                this.transferSendPresenterProvider = DoubleCheck.provider(TransferSendPresenter_Factory.create(this.providesTransferSendScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesCurrenciesUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider, DaggerMainCoinbaseApplicationComponent.this.currencyUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.providesPINManagerProvider, DaggerMainCoinbaseApplicationComponent.this.cryptoUriParserProvider, DaggerMainCoinbaseApplicationComponent.this.providesTransferMadeConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, this.providesApiErrorHandlerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+                this.successRouterProvider = DoubleCheck.provider(SuccessRouter_Factory.create(this.providesControllerProvider));
+            }
+
+            public void inject(TransferSendController controller) {
+                injectTransferSendController(controller);
+            }
+
+            private TransferSendController injectTransferSendController(TransferSendController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                TransferSendController_MembersInjector.injectMPresenter(instance, (TransferSendPresenter) this.transferSendPresenterProvider.get());
+                TransferSendController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                TransferSendController_MembersInjector.injectMSuccessRouter(instance, (SuccessRouter) this.successRouterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class TwoFactorControllerSubcomponentImpl implements TwoFactorControllerSubcomponent {
+            private AuthCompletionFactory_Factory authCompletionFactoryProvider;
+            private Provider<AuthRouter> authRouterProvider;
+            private Provider<CredentialsApiRxWrapper> credentialsApiRxWrapperProvider;
+            private Provider<LoginAuthManager> loginAuthManagerProvider;
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<TwoFactorScreen> providesScreenProvider;
+            private Provider<SignInRouter> signInRouterProvider;
+            private TwoFactorPresenterModule twoFactorPresenterModule;
+            private Provider<TwoFactorPresenter> twoFactorPresenterProvider;
+            private Provider<TwoFactorRouter> twoFactorRouterProvider;
+
+            private TwoFactorControllerSubcomponentImpl(TwoFactorPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(TwoFactorPresenterModule module) {
+                this.twoFactorPresenterModule = (TwoFactorPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(TwoFactorPresenterModule_ProvidesScreenFactory.create(this.twoFactorPresenterModule));
+                this.providesControllerProvider = DoubleCheck.provider(TwoFactorPresenterModule_ProvidesControllerFactory.create(this.twoFactorPresenterModule));
+                this.credentialsApiRxWrapperProvider = DoubleCheck.provider(CredentialsApiRxWrapper_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.authCompletionFactoryProvider = AuthCompletionFactory_Factory.create(this.providesControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.credentialsApiRxWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider);
+                this.authRouterProvider = DoubleCheck.provider(AuthRouter_Factory.create(this.providesControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider, DaggerMainCoinbaseApplicationComponent.this.activityPermissionCheckUtilsProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.authCompletionFactoryProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.twoFactorRouterProvider = DoubleCheck.provider(TwoFactorRouter_Factory.create(this.providesControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.authRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.signInRouterProvider = DoubleCheck.provider(SignInRouter_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesControllerProvider));
+                this.loginAuthManagerProvider = DoubleCheck.provider(LoginAuthManager_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.authRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.twoFactorPresenterProvider = DoubleCheck.provider(TwoFactorPresenter_Factory.create(this.providesScreenProvider, this.twoFactorRouterProvider, this.signInRouterProvider, this.authRouterProvider, this.loginAuthManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+            }
+
+            public void inject(TwoFactorController controller) {
+                injectTwoFactorController(controller);
+            }
+
+            private TwoFactorController injectTwoFactorController(TwoFactorController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                TwoFactorController_MembersInjector.injectMPresenter(instance, (TwoFactorPresenter) this.twoFactorPresenterProvider.get());
+                TwoFactorController_MembersInjector.injectMAnimationUtilsWrapper(instance, (AnimationUtilsWrapper) DaggerMainCoinbaseApplicationComponent.this.providesAnimationUtilsWrapperProvider.get());
+                TwoFactorController_MembersInjector.injectMOptionalViewHider(instance, (OptionalViewHider) MainActivitySubcomponentImpl.this.optionalViewHiderProvider.get());
+                return instance;
+            }
+        }
+
+        private final class UpfrontKycIdentityAcceptableDocumentsControllerSubcomponentImpl implements UpfrontKycIdentityAcceptableDocumentsControllerSubcomponent {
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<UpfrontKycIdentityAcceptableDocumentsScreen> providesScreenProvider;
+            private Provider<SignInRouter> signInRouterProvider;
+            private UpfrontKycIdentityAcceptableDocumentsPresenterModule upfrontKycIdentityAcceptableDocumentsPresenterModule;
+            private Provider<UpfrontKycIdentityAcceptableDocumentsPresenter> upfrontKycIdentityAcceptableDocumentsPresenterProvider;
+            private UpfrontKycIdentityAcceptableDocumentsRouter_Factory upfrontKycIdentityAcceptableDocumentsRouterProvider;
+
+            private UpfrontKycIdentityAcceptableDocumentsControllerSubcomponentImpl(UpfrontKycIdentityAcceptableDocumentsPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(UpfrontKycIdentityAcceptableDocumentsPresenterModule module) {
+                this.upfrontKycIdentityAcceptableDocumentsPresenterModule = (UpfrontKycIdentityAcceptableDocumentsPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(UpfrontKycIdentityAcceptableDocumentsPresenterModule_ProvidesScreenFactory.create(this.upfrontKycIdentityAcceptableDocumentsPresenterModule));
+                this.providesControllerProvider = DoubleCheck.provider(UpfrontKycIdentityAcceptableDocumentsPresenterModule_ProvidesControllerFactory.create(this.upfrontKycIdentityAcceptableDocumentsPresenterModule));
+                this.signInRouterProvider = DoubleCheck.provider(SignInRouter_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesControllerProvider));
+                this.upfrontKycIdentityAcceptableDocumentsRouterProvider = UpfrontKycIdentityAcceptableDocumentsRouter_Factory.create(this.providesControllerProvider, this.signInRouterProvider);
+                this.upfrontKycIdentityAcceptableDocumentsPresenterProvider = DoubleCheck.provider(UpfrontKycIdentityAcceptableDocumentsPresenter_Factory.create(this.providesScreenProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdentityVerificationBitmapConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, this.upfrontKycIdentityAcceptableDocumentsRouterProvider));
+            }
+
+            public void inject(UpfrontKycIdentityAcceptableDocumentsController controller) {
+                injectUpfrontKycIdentityAcceptableDocumentsController(controller);
+            }
+
+            private UpfrontKycIdentityAcceptableDocumentsController injectUpfrontKycIdentityAcceptableDocumentsController(UpfrontKycIdentityAcceptableDocumentsController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                UpfrontKycIdentityAcceptableDocumentsController_MembersInjector.injectMPresenter(instance, (UpfrontKycIdentityAcceptableDocumentsPresenter) this.upfrontKycIdentityAcceptableDocumentsPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class UpfrontKycIdentityDocumentScanControllerSubcomponentImpl implements UpfrontKycIdentityDocumentScanControllerSubcomponent {
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<UpfrontKycIdentityDocumentScanScreen> providesJumioDocumentScanScreenProvider;
+            private UpfrontKycIdentityDocumentScanPresenterModule upfrontKycIdentityDocumentScanPresenterModule;
+            private Provider<UpfrontKycIdentityDocumentScanPresenter> upfrontKycIdentityDocumentScanPresenterProvider;
+            private Provider<UpfrontKycIdentityDocumentScanRouter> upfrontKycIdentityDocumentScanRouterProvider;
+
+            private UpfrontKycIdentityDocumentScanControllerSubcomponentImpl(UpfrontKycIdentityDocumentScanPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(UpfrontKycIdentityDocumentScanPresenterModule module) {
+                this.upfrontKycIdentityDocumentScanPresenterModule = (UpfrontKycIdentityDocumentScanPresenterModule) Preconditions.checkNotNull(module);
+                this.providesJumioDocumentScanScreenProvider = DoubleCheck.provider(UpfrontKycIdentityDocumentScanPresenterModule_ProvidesJumioDocumentScanScreenFactory.create(this.upfrontKycIdentityDocumentScanPresenterModule));
+                this.providesControllerProvider = DoubleCheck.provider(UpfrontKycIdentityDocumentScanPresenterModule_ProvidesControllerFactory.create(this.upfrontKycIdentityDocumentScanPresenterModule));
+                this.upfrontKycIdentityDocumentScanRouterProvider = DoubleCheck.provider(UpfrontKycIdentityDocumentScanRouter_Factory.create(this.providesControllerProvider));
+                this.upfrontKycIdentityDocumentScanPresenterProvider = DoubleCheck.provider(UpfrontKycIdentityDocumentScanPresenter_Factory.create(this.providesJumioDocumentScanScreenProvider, this.upfrontKycIdentityDocumentScanRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesRetakeAndContinueConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesPhotoTakenConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdentityVerificationBitmapConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.faceDetectionUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+            }
+
+            public void inject(UpfrontKycIdentityDocumentScanController controller) {
+                injectUpfrontKycIdentityDocumentScanController(controller);
+            }
+
+            private UpfrontKycIdentityDocumentScanController injectUpfrontKycIdentityDocumentScanController(UpfrontKycIdentityDocumentScanController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                UpfrontKycIdentityDocumentScanController_MembersInjector.injectMPresenter(instance, (UpfrontKycIdentityDocumentScanPresenter) this.upfrontKycIdentityDocumentScanPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class UpfrontKycIdentityFailedControllerSubcomponentImpl implements UpfrontKycIdentityFailedControllerSubcomponent {
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<UpfrontKycIdentityFailedScreen> providesScreenProvider;
+            private Provider<SignInRouter> signInRouterProvider;
+            private UpfrontKycIdentityFailedPresenterModule upfrontKycIdentityFailedPresenterModule;
+            private Provider<UpfrontKycIdentityFailedPresenter> upfrontKycIdentityFailedPresenterProvider;
+            private Provider<UpfrontKycIdentityFailedRouter> upfrontKycIdentityFailedRouterProvider;
+
+            private UpfrontKycIdentityFailedControllerSubcomponentImpl(UpfrontKycIdentityFailedPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(UpfrontKycIdentityFailedPresenterModule module) {
+                this.upfrontKycIdentityFailedPresenterModule = (UpfrontKycIdentityFailedPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(UpfrontKycIdentityFailedPresenterModule_ProvidesScreenFactory.create(this.upfrontKycIdentityFailedPresenterModule));
+                this.providesControllerProvider = DoubleCheck.provider(UpfrontKycIdentityFailedPresenterModule_ProvidesControllerFactory.create(this.upfrontKycIdentityFailedPresenterModule));
+                this.signInRouterProvider = DoubleCheck.provider(SignInRouter_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesControllerProvider));
+                this.upfrontKycIdentityFailedRouterProvider = DoubleCheck.provider(UpfrontKycIdentityFailedRouter_Factory.create(this.providesControllerProvider));
+                this.upfrontKycIdentityFailedPresenterProvider = DoubleCheck.provider(UpfrontKycIdentityFailedPresenter_Factory.create(this.providesScreenProvider, this.signInRouterProvider, this.upfrontKycIdentityFailedRouterProvider));
+            }
+
+            public void inject(UpfrontKycIdentityFailedController controller) {
+                injectUpfrontKycIdentityFailedController(controller);
+            }
+
+            private UpfrontKycIdentityFailedController injectUpfrontKycIdentityFailedController(UpfrontKycIdentityFailedController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                UpfrontKycIdentityFailedController_MembersInjector.injectMPresenter(instance, (UpfrontKycIdentityFailedPresenter) this.upfrontKycIdentityFailedPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class UpfrontKycIdentityProcessingControllerSubcomponentImpl implements UpfrontKycIdentityProcessingControllerSubcomponent {
+            private AuthCompletionFactory_Factory authCompletionFactoryProvider;
+            private Provider<AuthRouter> authRouterProvider;
+            private Provider<CredentialsApiRxWrapper> credentialsApiRxWrapperProvider;
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<UpfrontKycIdentityProcessingScreen> providesScreenProvider;
+            private Provider<SignInRouter> signInRouterProvider;
+            private UpfrontKycIdentityProcessingPresenterModule upfrontKycIdentityProcessingPresenterModule;
+            private Provider<UpfrontKycIdentityProcessingPresenter> upfrontKycIdentityProcessingPresenterProvider;
+            private Provider<UpfrontKycIdentityProcessingRouter> upfrontKycIdentityProcessingRouterProvider;
+
+            private UpfrontKycIdentityProcessingControllerSubcomponentImpl(UpfrontKycIdentityProcessingPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(UpfrontKycIdentityProcessingPresenterModule module) {
+                this.upfrontKycIdentityProcessingPresenterModule = (UpfrontKycIdentityProcessingPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(UpfrontKycIdentityProcessingPresenterModule_ProvidesScreenFactory.create(this.upfrontKycIdentityProcessingPresenterModule));
+                this.providesControllerProvider = DoubleCheck.provider(UpfrontKycIdentityProcessingPresenterModule_ProvidesControllerFactory.create(this.upfrontKycIdentityProcessingPresenterModule));
+                this.credentialsApiRxWrapperProvider = DoubleCheck.provider(CredentialsApiRxWrapper_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.authCompletionFactoryProvider = AuthCompletionFactory_Factory.create(this.providesControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesDefaultSharedPreferencesProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.credentialsApiRxWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider);
+                this.authRouterProvider = DoubleCheck.provider(AuthRouter_Factory.create(this.providesControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider, DaggerMainCoinbaseApplicationComponent.this.activityPermissionCheckUtilsProvider, MainActivitySubcomponentImpl.this.providesActivityProvider, this.authCompletionFactoryProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+                this.signInRouterProvider = DoubleCheck.provider(SignInRouter_Factory.create(MainActivitySubcomponentImpl.this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.providesControllerProvider));
+                this.upfrontKycIdentityProcessingRouterProvider = DoubleCheck.provider(UpfrontKycIdentityProcessingRouter_Factory.create(this.providesControllerProvider));
+                this.upfrontKycIdentityProcessingPresenterProvider = DoubleCheck.provider(UpfrontKycIdentityProcessingPresenter_Factory.create(this.providesScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, this.authRouterProvider, this.signInRouterProvider, this.upfrontKycIdentityProcessingRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(UpfrontKycIdentityProcessingController controller) {
+                injectUpfrontKycIdentityProcessingController(controller);
+            }
+
+            private UpfrontKycIdentityProcessingController injectUpfrontKycIdentityProcessingController(UpfrontKycIdentityProcessingController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                UpfrontKycIdentityProcessingController_MembersInjector.injectMPresenter(instance, (UpfrontKycIdentityProcessingPresenter) this.upfrontKycIdentityProcessingPresenterProvider.get());
+                UpfrontKycIdentityProcessingController_MembersInjector.injectMAnimationUtilsWrapper(instance, (AnimationUtilsWrapper) DaggerMainCoinbaseApplicationComponent.this.providesAnimationUtilsWrapperProvider.get());
+                return instance;
+            }
+        }
+
+        private final class UpfrontKycTakeDocumentPhotoControllerSubcomponentImpl implements UpfrontKycTakeDocumentPhotoControllerSubcomponent {
+            private Provider<ActionBarController> providesControllerProvider;
+            private Provider<UpfrontKycTakeDocumentPhotoScreen> providesTakeDocumentPhotoScreenProvider;
+            private UpfrontKycTakeDocumentPhotoPresenterModule upfrontKycTakeDocumentPhotoPresenterModule;
+            private Provider<UpfrontKycTakeDocumentPhotoPresenter> upfrontKycTakeDocumentPhotoPresenterProvider;
+            private Provider<UpfrontKycTakeDocumentPhotoRouter> upfrontKycTakeDocumentPhotoRouterProvider;
+
+            private UpfrontKycTakeDocumentPhotoControllerSubcomponentImpl(UpfrontKycTakeDocumentPhotoPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(UpfrontKycTakeDocumentPhotoPresenterModule module) {
+                this.upfrontKycTakeDocumentPhotoPresenterModule = (UpfrontKycTakeDocumentPhotoPresenterModule) Preconditions.checkNotNull(module);
+                this.providesTakeDocumentPhotoScreenProvider = DoubleCheck.provider(UpfrontKycTakeDocumentPhotoPresenterModule_ProvidesTakeDocumentPhotoScreenFactory.create(this.upfrontKycTakeDocumentPhotoPresenterModule));
+                this.providesControllerProvider = DoubleCheck.provider(UpfrontKycTakeDocumentPhotoPresenterModule_ProvidesControllerFactory.create(this.upfrontKycTakeDocumentPhotoPresenterModule));
+                this.upfrontKycTakeDocumentPhotoRouterProvider = DoubleCheck.provider(UpfrontKycTakeDocumentPhotoRouter_Factory.create(this.providesControllerProvider));
+                this.upfrontKycTakeDocumentPhotoPresenterProvider = DoubleCheck.provider(UpfrontKycTakeDocumentPhotoPresenter_Factory.create(this.providesTakeDocumentPhotoScreenProvider, this.upfrontKycTakeDocumentPhotoRouterProvider, DaggerMainCoinbaseApplicationComponent.this.providesIdentityVerificationBitmapConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesPhotoTakenConnectorProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, MainActivitySubcomponentImpl.this.providesWindowProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+            }
+
+            public void inject(UpfrontKycTakeDocumentPhotoController controller) {
+                injectUpfrontKycTakeDocumentPhotoController(controller);
+            }
+
+            private UpfrontKycTakeDocumentPhotoController injectUpfrontKycTakeDocumentPhotoController(UpfrontKycTakeDocumentPhotoController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                UpfrontKycTakeDocumentPhotoController_MembersInjector.injectMPresenter(instance, (UpfrontKycTakeDocumentPhotoPresenter) this.upfrontKycTakeDocumentPhotoPresenterProvider.get());
+                UpfrontKycTakeDocumentPhotoController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                return instance;
+            }
+        }
+
+        private final class WithdrawDepositSuccessControllerSubcomponentImpl implements WithdrawDepositSuccessControllerSubcomponent {
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider providesWithdrawDepositSuccessScreenProvider;
+            private WithdrawDepositSuccessPresenterModule withdrawDepositSuccessPresenterModule;
+            private Provider<WithdrawDepositSuccessPresenter> withdrawDepositSuccessPresenterProvider;
+            private Provider<WithdrawDepositSuccessRouter> withdrawDepositSuccessRouterProvider;
+
+            private WithdrawDepositSuccessControllerSubcomponentImpl(WithdrawDepositSuccessPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(WithdrawDepositSuccessPresenterModule module) {
+                this.withdrawDepositSuccessPresenterModule = (WithdrawDepositSuccessPresenterModule) Preconditions.checkNotNull(module);
+                this.providesWithdrawDepositSuccessScreenProvider = DoubleCheck.provider(WithdrawDepositSuccessPresenterModule_ProvidesWithdrawDepositSuccessScreenFactory.create(this.withdrawDepositSuccessPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(WithdrawDepositSuccessPresenterModule_ProvidesActionBarControllerFactory.create(this.withdrawDepositSuccessPresenterModule));
+                this.withdrawDepositSuccessRouterProvider = DoubleCheck.provider(WithdrawDepositSuccessRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesBottomNavigationConnectorProvider));
+                this.withdrawDepositSuccessPresenterProvider = DoubleCheck.provider(WithdrawDepositSuccessPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesWithdrawDepositSuccessScreenProvider, this.withdrawDepositSuccessRouterProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.transferUtilsProvider));
+            }
+
+            public void inject(WithdrawDepositSuccessController controller) {
+                injectWithdrawDepositSuccessController(controller);
+            }
+
+            private WithdrawDepositSuccessController injectWithdrawDepositSuccessController(WithdrawDepositSuccessController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                WithdrawDepositSuccessController_MembersInjector.injectMBottomNavigationConnector(instance, (BottomNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBottomNavigationConnectorProvider.get());
+                WithdrawDepositSuccessController_MembersInjector.injectMPresenter(instance, (WithdrawDepositSuccessPresenter) this.withdrawDepositSuccessPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class WithdrawFiatConfirmationControllerSubcomponentImpl implements WithdrawFiatConfirmationControllerSubcomponent {
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider providesWithdrawFiatConfirmationScreenProvider;
+            private Provider<WithdrawConfirmationPresenter> withdrawConfirmationPresenterProvider;
+            private WithdrawFiatConfirmationPresenterModule withdrawFiatConfirmationPresenterModule;
+            private Provider<WithdrawFiatConfirmationRouter> withdrawFiatConfirmationRouterProvider;
+
+            private WithdrawFiatConfirmationControllerSubcomponentImpl(WithdrawFiatConfirmationPresenterModule withdrawFiatPresenterModule) {
+                initialize(withdrawFiatPresenterModule);
+            }
+
+            private void initialize(WithdrawFiatConfirmationPresenterModule withdrawFiatPresenterModule) {
+                this.withdrawFiatConfirmationPresenterModule = (WithdrawFiatConfirmationPresenterModule) Preconditions.checkNotNull(withdrawFiatPresenterModule);
+                this.providesActionBarControllerProvider = DoubleCheck.provider(WithdrawFiatConfirmationPresenterModule_ProvidesActionBarControllerFactory.create(this.withdrawFiatConfirmationPresenterModule));
+                this.withdrawFiatConfirmationRouterProvider = DoubleCheck.provider(WithdrawFiatConfirmationRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.providesWithdrawFiatConfirmationScreenProvider = DoubleCheck.provider(WithdrawFiatConfirmationPresenterModule_ProvidesWithdrawFiatConfirmationScreenFactory.create(this.withdrawFiatConfirmationPresenterModule));
+                this.withdrawConfirmationPresenterProvider = DoubleCheck.provider(WithdrawConfirmationPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.paymentMethodUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.transferUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, this.withdrawFiatConfirmationRouterProvider, this.providesWithdrawFiatConfirmationScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(WithdrawFiatConfirmationController controller) {
+                injectWithdrawFiatConfirmationController(controller);
+            }
+
+            private WithdrawFiatConfirmationController injectWithdrawFiatConfirmationController(WithdrawFiatConfirmationController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                WithdrawFiatConfirmationController_MembersInjector.injectMPresenter(instance, (WithdrawConfirmationPresenter) this.withdrawConfirmationPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private final class WithdrawFiatControllerSubcomponentImpl implements WithdrawFiatControllerSubcomponent {
+            private Provider<AvailableBalanceAppBarPresenter> availableBalanceAppBarPresenterProvider;
+            private Provider<AvailableBalanceCalculator> availableBalanceCalculatorProvider;
+            private Provider<AvailableBalanceRouter> availableBalanceRouterProvider;
+            private Provider<KeypadAmountFormatter> keypadAmountFormatterProvider;
+            private Provider<KeypadAmountValidator> keypadAmountValidatorProvider;
+            private Provider<ActionBarController> providesActionBarControllerProvider;
+            private Provider<AvailableBalanceAppBarScreen> providesAvailableBalanceAppBarScreenProvider;
+            private Provider<QuickstartManager> providesQuickStartManagerProvider;
+            private Provider<LimitExceededTrackingContext> providesSendExceededTrackingContextProvider;
+            private Provider<SyncAccountsTask> providesSyncAccountsTaskProvider;
+            private Provider<WithdrawFiatScreen> providesWithdrawFiatScreenProvider;
+            private Provider<WithdrawalBasedLimitsErrorRouter> providesWithdrawalBasedLimitsErrorRouterProvider;
+            private QuickstartModule quickstartModule;
+            private WithdrawFiatPresenterModule withdrawFiatPresenterModule;
+            private Provider<WithdrawFiatPresenter> withdrawFiatPresenterProvider;
+            private Provider<WithdrawFiatRouter> withdrawFiatRouterProvider;
+            private Provider<WithdrawalBasedLimitsApiErrorHandler> withdrawalBasedLimitsApiErrorHandlerProvider;
+            private Provider<WithdrawalBasedLimitsErrorControllerRouter> withdrawalBasedLimitsErrorControllerRouterProvider;
+
+            private WithdrawFiatControllerSubcomponentImpl(QuickstartModule quickstartModule, WithdrawFiatPresenterModule withdrawFiatPresenterModule) {
+                initialize(quickstartModule, withdrawFiatPresenterModule);
+            }
+
+            private void initialize(QuickstartModule quickstartModule, WithdrawFiatPresenterModule withdrawFiatPresenterModule) {
+                this.withdrawFiatPresenterModule = (WithdrawFiatPresenterModule) Preconditions.checkNotNull(withdrawFiatPresenterModule);
+                this.providesAvailableBalanceAppBarScreenProvider = DoubleCheck.provider(WithdrawFiatPresenterModule_ProvidesAvailableBalanceAppBarScreenFactory.create(withdrawFiatPresenterModule));
+                this.providesActionBarControllerProvider = DoubleCheck.provider(WithdrawFiatPresenterModule_ProvidesActionBarControllerFactory.create(withdrawFiatPresenterModule));
+                this.availableBalanceRouterProvider = DoubleCheck.provider(AvailableBalanceRouter_Factory.create(this.providesActionBarControllerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider));
+                this.providesSyncAccountsTaskProvider = DoubleCheck.provider(WithdrawFiatPresenterModule_ProvidesSyncAccountsTaskFactory.create(withdrawFiatPresenterModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider));
+                this.availableBalanceCalculatorProvider = DoubleCheck.provider(AvailableBalanceCalculator_Factory.create(this.providesSyncAccountsTaskProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesAccountsUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider, DaggerMainCoinbaseApplicationComponent.this.providesAdditionalPendingHoldsProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider));
+                this.availableBalanceAppBarPresenterProvider = DoubleCheck.provider(AvailableBalanceAppBarPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesAvailableBalanceAppBarScreenProvider, this.availableBalanceRouterProvider, this.availableBalanceCalculatorProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider));
+                this.keypadAmountFormatterProvider = DoubleCheck.provider(KeypadAmountFormatter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, DaggerMainCoinbaseApplicationComponent.this.providesCurrenciesUpdatedConnectorProvider));
+                this.keypadAmountValidatorProvider = DoubleCheck.provider(KeypadAmountValidator_Factory.create());
+                this.quickstartModule = (QuickstartModule) Preconditions.checkNotNull(quickstartModule);
+                this.providesQuickStartManagerProvider = DoubleCheck.provider(QuickstartModule_ProvidesQuickStartManagerFactory.create(quickstartModule, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesPhoneNumbersUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesGetPaymentMethodsRxProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider, DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider));
+                this.withdrawFiatRouterProvider = DoubleCheck.provider(WithdrawFiatRouter_Factory.create(this.providesActionBarControllerProvider));
+                this.providesWithdrawFiatScreenProvider = DoubleCheck.provider(WithdrawFiatPresenterModule_ProvidesWithdrawFiatScreenFactory.create(withdrawFiatPresenterModule));
+                this.providesSendExceededTrackingContextProvider = DoubleCheck.provider(WithdrawFiatPresenterModule_ProvidesSendExceededTrackingContextFactory.create(withdrawFiatPresenterModule));
+                this.withdrawalBasedLimitsErrorControllerRouterProvider = DoubleCheck.provider(WithdrawalBasedLimitsErrorControllerRouter_Factory.create(this.providesActionBarControllerProvider, this.providesSendExceededTrackingContextProvider));
+                this.providesWithdrawalBasedLimitsErrorRouterProvider = DoubleCheck.provider(WithdrawFiatPresenterModule_ProvidesWithdrawalBasedLimitsErrorRouterFactory.create(withdrawFiatPresenterModule, this.withdrawalBasedLimitsErrorControllerRouterProvider));
+                this.withdrawalBasedLimitsApiErrorHandlerProvider = DoubleCheck.provider(WithdrawalBasedLimitsApiErrorHandler_Factory.create(this.providesWithdrawalBasedLimitsErrorRouterProvider));
+                this.withdrawFiatPresenterProvider = DoubleCheck.provider(WithdrawFiatPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.availableBalanceAppBarPresenterProvider, DaggerMainCoinbaseApplicationComponent.this.providesBankAccountsUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesGetPaymentMethodsRxProvider, DaggerMainCoinbaseApplicationComponent.this.providesBuySellSettingsConnectorProvider, this.keypadAmountFormatterProvider, this.keypadAmountValidatorProvider, DaggerMainCoinbaseApplicationComponent.this.providesLinkedAccountConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider, DaggerMainCoinbaseApplicationComponent.this.providesNumericKeypadConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesPaymentMethodsUpdatedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.paymentMethodUtilsProvider, DaggerMainCoinbaseApplicationComponent.this.providesPhoneNumbersUpdatedConnectorProvider, this.providesQuickStartManagerProvider, MainActivitySubcomponentImpl.this.providesSnackBarWrapperProvider, this.withdrawFiatRouterProvider, this.providesWithdrawFiatScreenProvider, this.withdrawalBasedLimitsApiErrorHandlerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            }
+
+            public void inject(WithdrawFiatController withdrawFiatController) {
+                injectWithdrawFiatController(withdrawFiatController);
+            }
+
+            private WithdrawFiatController injectWithdrawFiatController(WithdrawFiatController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                WithdrawFiatController_MembersInjector.injectMWithdrawFiatPresenter(instance, (WithdrawFiatPresenter) this.withdrawFiatPresenterProvider.get());
+                WithdrawFiatController_MembersInjector.injectMCallingActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                return instance;
+            }
+        }
+
+        private final class WithdrawalBasedLimitsDialogControllerSubcomponentImpl implements WithdrawalBasedLimitsDialogControllerSubcomponent {
+            private Provider<WithdrawalBasedLimitsDialogScreen> providesScreenProvider;
+            private WithdrawalBasedLimitsDialogPresenterModule withdrawalBasedLimitsDialogPresenterModule;
+            private Provider<WithdrawalBasedLimitsDialogPresenter> withdrawalBasedLimitsDialogPresenterProvider;
+
+            private WithdrawalBasedLimitsDialogControllerSubcomponentImpl(WithdrawalBasedLimitsDialogPresenterModule module) {
+                initialize(module);
+            }
+
+            private void initialize(WithdrawalBasedLimitsDialogPresenterModule module) {
+                this.withdrawalBasedLimitsDialogPresenterModule = (WithdrawalBasedLimitsDialogPresenterModule) Preconditions.checkNotNull(module);
+                this.providesScreenProvider = DoubleCheck.provider(WithdrawalBasedLimitsDialogPresenterModule_ProvidesScreenFactory.create(this.withdrawalBasedLimitsDialogPresenterModule));
+                this.withdrawalBasedLimitsDialogPresenterProvider = DoubleCheck.provider(WithdrawalBasedLimitsDialogPresenter_Factory.create(this.providesScreenProvider, DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider));
+            }
+
+            public void inject(WithdrawalBasedLimitsDialogController controller) {
+                injectWithdrawalBasedLimitsDialogController(controller);
+            }
+
+            private WithdrawalBasedLimitsDialogController injectWithdrawalBasedLimitsDialogController(WithdrawalBasedLimitsDialogController instance) {
+                ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) MainActivitySubcomponentImpl.this.providesActivityProvider.get());
+                ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+                ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+                ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) MainActivitySubcomponentImpl.this.statusBarUpdaterProvider.get());
+                ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) MainActivitySubcomponentImpl.this.providesDefaultControllerTransitionContainerProvider.get());
+                ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+                ActionBarController_MembersInjector.injectMModalView(instance, (Func0) MainActivitySubcomponentImpl.this.providesModalViewProvider.get());
+                DialogController_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) MainActivitySubcomponentImpl.this.backgroundDimmerProvider.get());
+                WithdrawalBasedLimitsDialogController_MembersInjector.injectMPresenter(instance, (WithdrawalBasedLimitsDialogPresenter) this.withdrawalBasedLimitsDialogPresenterProvider.get());
+                return instance;
+            }
+        }
+
+        private MainActivitySubcomponentImpl(BaseActivityModule baseModule, BaseViewModule viewModule, BottomNavActivityModule module) {
+            initialize(baseModule, viewModule, module);
+        }
+
+        private void initialize(BaseActivityModule baseModule, BaseViewModule viewModule, BottomNavActivityModule module) {
+            this.baseActivityModule = (BaseActivityModule) Preconditions.checkNotNull(baseModule);
+            this.providesWindowProvider = DoubleCheck.provider(BaseActivityModule_ProvidesWindowFactory.create(this.baseActivityModule));
+            this.screenProtectorProvider = DoubleCheck.provider(ScreenProtector_Factory.create(this.providesWindowProvider));
+            this.providesActivityProvider = DoubleCheck.provider(BaseActivityModule_ProvidesActivityFactory.create(this.baseActivityModule));
+            this.launchMessageModalRouterProvider = DoubleCheck.provider(LaunchMessageModalRouter_Factory.create(this.providesActivityProvider, DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider));
+            this.bottomNavActivityModule = (BottomNavActivityModule) Preconditions.checkNotNull(module);
+            this.baseViewModule = (BaseViewModule) Preconditions.checkNotNull(viewModule);
+            this.providesGenericErrorResProvider = DoubleCheck.provider(BaseViewModule_ProvidesGenericErrorResFactory.create(this.baseViewModule));
+            this.providesGenericErrorTryAgainResProvider = DoubleCheck.provider(BaseViewModule_ProvidesGenericErrorTryAgainResFactory.create(this.baseViewModule));
+            this.providesSnackBarRootViewFuncProvider = DoubleCheck.provider(BaseViewModule_ProvidesSnackBarRootViewFuncFactory.create(this.baseViewModule));
+            this.providesBottomNavigationViewFuncProvider = DoubleCheck.provider(BottomNavActivityModule_ProvidesBottomNavigationViewFuncFactory.create(this.bottomNavActivityModule));
+            this.providesBlockingOverlayViewFuncProvider = DoubleCheck.provider(BaseViewModule_ProvidesBlockingOverlayViewFuncFactory.create(this.baseViewModule));
+            this.providesModalViewProvider = DoubleCheck.provider(BottomNavActivityModule_ProvidesModalViewFactory.create(this.bottomNavActivityModule));
+            this.providesRootViewWrapperProvider = DoubleCheck.provider(BottomNavActivityModule_ProvidesRootViewWrapperFactory.create(this.bottomNavActivityModule, this.providesSnackBarRootViewFuncProvider, this.providesBottomNavigationViewFuncProvider, this.providesBlockingOverlayViewFuncProvider, this.providesModalViewProvider));
+            this.providesSnackBarWrapperProvider = DoubleCheck.provider(BottomNavActivityModule_ProvidesSnackBarWrapperFactory.create(this.bottomNavActivityModule, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesGenericErrorResProvider, this.providesGenericErrorTryAgainResProvider, this.providesRootViewWrapperProvider));
+            this.transactionDetailPresenterProvider = DoubleCheck.provider(TransactionDetailPresenter_Factory.create(DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider, DaggerMainCoinbaseApplicationComponent.this.providesApplicationProvider, this.providesSnackBarWrapperProvider, DaggerMainCoinbaseApplicationComponent.this.providesTransactionDetailButtonConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.providesRefreshRequestedConnectorProvider, DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+            this.statusBarUpdaterProvider = DoubleCheck.provider(StatusBarUpdater_Factory.create(this.providesWindowProvider));
+            this.providesDefaultControllerTransitionContainerProvider = DoubleCheck.provider(BottomNavActivityModule_ProvidesDefaultControllerTransitionContainerFactory.create(this.bottomNavActivityModule));
+            this.providesBlockingOverlayViewProvider = DoubleCheck.provider(BaseViewModule_ProvidesBlockingOverlayViewFactory.create(this.baseViewModule, this.providesBlockingOverlayViewFuncProvider));
+            this.backgroundDimmerProvider = DoubleCheck.provider(BackgroundDimmer_Factory.create(this.providesBlockingOverlayViewProvider, this.providesWindowProvider, DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider, this.statusBarUpdaterProvider));
+            this.keyboardListenerProvider = DoubleCheck.provider(KeyboardListener_Factory.create(this.providesRootViewWrapperProvider));
+            this.providesPageControllerPairsProvider = DoubleCheck.provider(BottomNavActivityModule_ProvidesPageControllerPairsFactory.create(this.bottomNavActivityModule));
+            this.providesPageControllersProvider = DoubleCheck.provider(BottomNavActivityModule_ProvidesPageControllersFactory.create(this.bottomNavActivityModule, this.providesPageControllerPairsProvider));
+            this.providesModalControllerFuncsProvider = DoubleCheck.provider(BottomNavActivityModule_ProvidesModalControllerFuncsFactory.create(this.bottomNavActivityModule));
+            this.providesModalControllerMapProvider = DoubleCheck.provider(BottomNavActivityModule_ProvidesModalControllerMapFactory.create(this.bottomNavActivityModule, this.providesModalControllerFuncsProvider));
+            this.providesPageControllerMapProvider = DoubleCheck.provider(BottomNavActivityModule_ProvidesPageControllerMapFactory.create(this.bottomNavActivityModule, this.providesPageControllerPairsProvider));
+            this.providesLayoutInflaterProvider = DoubleCheck.provider(BaseActivityModule_ProvidesLayoutInflaterFactory.create(this.baseActivityModule));
+            this.optionalViewHiderProvider = DoubleCheck.provider(OptionalViewHider_Factory.create(this.keyboardListenerProvider, DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider));
+        }
+
+        public void inject(IntroActivity activity) {
+            injectIntroActivity(activity);
+        }
+
+        public void inject(IdentityVerificationActivity activity) {
+            injectIdentityVerificationActivity(activity);
+        }
+
+        public void inject(RegistrationControllerActivity activity) {
+            injectRegistrationControllerActivity(activity);
+        }
+
+        public void inject(TransactionDetailLayout layout) {
+            injectTransactionDetailLayout(layout);
+        }
+
+        public void inject(ActionBarController controller) {
+            injectActionBarController(controller);
+        }
+
+        public void inject(PageControllerLifeCycle controller) {
+            injectPageControllerLifeCycle(controller);
+        }
+
+        public void inject(ModalControllerLifeCycle controller) {
+            injectModalControllerLifeCycle(controller);
+        }
+
+        public void inject(PaymentMethodVerificationController paymentMethodVerificationController) {
+            injectPaymentMethodVerificationController(paymentMethodVerificationController);
+        }
+
+        public void inject(DatePickerSpinnerLayout layout) {
+            injectDatePickerSpinnerLayout(layout);
+        }
+
+        public void inject(NumericKeyboardLayout layout) {
+            injectNumericKeyboardLayout(layout);
+        }
+
+        public void inject(LinkedAccountItemLayout layout) {
+            injectLinkedAccountItemLayout(layout);
+        }
+
+        public void inject(CenteredAppBarLayout layout) {
+        }
+
+        public void inject(QuickBuyListLayout layout) {
+            injectQuickBuyListLayout(layout);
+        }
+
+        public void inject(IdentityVerificationController controller) {
+            injectIdentityVerificationController(controller);
+        }
+
+        public void inject(AddPhoneDialogController controller) {
+            injectAddPhoneDialogController(controller);
+        }
+
+        public void inject(DialogController controller) {
+            injectDialogController(controller);
+        }
+
+        public void inject(ConfirmationDialogController controller) {
+            injectConfirmationDialogController(controller);
+        }
+
+        public void inject(AlertDialogController controller) {
+            injectAlertDialogController(controller);
+        }
+
+        public void inject(RetakePhotoDialogController controller) {
+            injectRetakePhotoDialogController(controller);
+        }
+
+        public void inject(GoToSettingsDialogController controller) {
+            injectGoToSettingsDialogController(controller);
+        }
+
+        public MainControllerSubcomponent mainControllerSubcomponent(MainControllerPresenterModule module) {
+            return new MainControllerSubcomponentImpl(module);
+        }
+
+        public FiatTransactionsControllerSubcomponent fiatTransactionsControllerSubcomponent(QuickstartModule module, FiatTransactionsControllerModule controllerModule) {
+            return new FiatTransactionsControllerSubcomponentImpl(module, controllerModule);
+        }
+
+        public DepositFiatControllerSubcomponent depositFiatControllerSubcomponent(QuickstartModule quickstartModule, DepositFiatPresenterModule depositFiatPresenterModule) {
+            return new DepositFiatControllerSubcomponentImpl(quickstartModule, depositFiatPresenterModule);
+        }
+
+        public DepositFiatConfirmationControllerSubcomponent depositFiatConfirmationControllerSubcomponent(DepositFiatConfirmationPresenterModule depositFiatPresenterModule) {
+            return new DepositFiatConfirmationControllerSubcomponentImpl(depositFiatPresenterModule);
+        }
+
+        public WithdrawFiatControllerSubcomponent withdrawFiatControllerSubcomponent(QuickstartModule quickstartModule, WithdrawFiatPresenterModule withdrawFiatPresenterModule) {
+            return new WithdrawFiatControllerSubcomponentImpl(quickstartModule, withdrawFiatPresenterModule);
+        }
+
+        public WithdrawFiatConfirmationControllerSubcomponent withdrawFiatConfirmationControllerSubcomponent(WithdrawFiatConfirmationPresenterModule withdrawFiatPresenterModule) {
+            return new WithdrawFiatConfirmationControllerSubcomponentImpl(withdrawFiatPresenterModule);
+        }
+
+        public WithdrawDepositSuccessControllerSubcomponent addWithdrawDepositSuccessControllerSubcomponent(WithdrawDepositSuccessPresenterModule module) {
+            return new WithdrawDepositSuccessControllerSubcomponentImpl(module);
+        }
+
+        public AccountMainControllerSubcomponent addAccountListControllerSubcomponent(AccountMainPresenterModule module) {
+            return new AccountMainControllerSubcomponentImpl(module);
+        }
+
+        public AccountTransactionsControllerSubcomponent addAccountDetailsControllerSubcomponent(AccountTransactionsPresenterModule module) {
+            return new AccountTransactionsControllerSubcomponentImpl(module);
+        }
+
+        public TransactionListLayoutSubcomponent addTransactionListLayoutSubcomponent(TransactionListPresenterModule module) {
+            return new TransactionListLayoutSubcomponentImpl(module);
+        }
+
+        public MystiqueBottomNavigationLayoutSubcomponent mystiqueBottomNavigationLayoutSubcomponent(MystiqueBottomNavigationPresenterModule module) {
+            return new MystiqueBottomNavigationLayoutSubcomponentImpl(module);
+        }
+
+        public PriceAlertsControllerSubcomponent priceAlertsControllerSubcomponent(PriceAlertsPresenterModule module) {
+            return new PriceAlertsControllerSubcomponentImpl(module);
+        }
+
+        public AccountCryptoAddressLayoutSubcomponent addAccountAddressLayoutSubcomponent(AccountCryptoAddressPresenterModule module) {
+            return new AccountCryptoAddressLayoutSubcomponentImpl(module);
+        }
+
+        public DashboardCurrencyControllerSubcomponent addDashboardCurrencySubcomponent(DashboardCurrencyPresenterModule module) {
+            return new DashboardCurrencyControllerSubcomponentImpl(module);
+        }
+
+        public DashboardMainControllerSubcomponent addDashboardMainControllerSubcomponent(QuickstartModule module, DashboardMainPresenterModule presenterModule) {
+            return new DashboardMainControllerSubcomponentImpl(module, presenterModule);
+        }
+
+        public PriceChartLayoutSubcomponent addPriceChartLayoutSubcomponent(PriceChartPresenterModule module) {
+            return new PriceChartLayoutSubcomponentImpl(module);
+        }
+
+        public DashboardPriceChartListLayoutSubcomponent addDashboardPriceChartListLayoutSubcomponent(DashboardPriceChartListPresenterModule module) {
+            return new DashboardPriceChartListLayoutSubcomponentImpl(module);
+        }
+
+        public DashboardTabPeriodLayoutSubcomponent addDashboardTabPeriodLayoutSubcomponent(DashboardTabPeriodPresenterModule module) {
+            return new DashboardTabPeriodLayoutSubcomponentImpl(module);
+        }
+
+        public AccountFilteredListLayoutSubcomponent addAccountListLayoutSubcomponent(AccountFilteredListPresenterModule module) {
+            return new AccountFilteredListLayoutSubcomponentImpl(module);
+        }
+
+        public AccountRefreshListLayoutSubcomponent addAccountRefreshListLayoutSubcomponent(AccountRefreshListPresenterModule module) {
+            return new AccountRefreshListLayoutSubcomponentImpl(module);
+        }
+
+        public AccountSettingsControllerSubcomponent addAccountSettingsControllerSubcomponent(AccountSettingsPresenterModule module) {
+            return new AccountSettingsControllerSubcomponentImpl(module);
+        }
+
+        public PhoneNumberControllerSubcomponent addPhoneNumberControllerSubcomponent(PhoneNumberPresenterModule module) {
+            return new PhoneNumberControllerSubcomponentImpl(module);
+        }
+
+        public CurrencyTabLayoutSubcomponent addCurrencyTabLayoutSubcomponent(CurrencyTabPresenterModule module) {
+            return new CurrencyTabLayoutSubcomponentImpl(module);
+        }
+
+        public TakeDocumentPhotoControllerSubcomponent addTakeDocumentPhotoControllerSubcomponent(TakeDocumentPhotoPresenterModule module) {
+            return new TakeDocumentPhotoControllerSubcomponentImpl(module);
+        }
+
+        public JumioDocumentScanControllerSubcomponent addInAppIdentityDocumentScanControllerSubcomponent(InAppIdentityDocumentScanPresenterModule module) {
+            return new JumioDocumentScanControllerSubcomponentImpl(module);
+        }
+
+        public PaymentMethodsControllerSubcomponent paymentMethodsControllerSubcomponent(PaymentMethodsPresenterModule module) {
+            return new PaymentMethodsControllerSubcomponentImpl(module);
+        }
+
+        public CardFormControllerSubcomponent cardFormControllerSubcomponent(CardFormPresenterModule module) {
+            return new CardFormControllerSubcomponentImpl(module);
+        }
+
+        public AddPlaidAccountControllerSubcomponent addPlaidAccountControllerSubcomponent(AddPlaidAccountPresenterModule module) {
+            return new AddPlaidAccountControllerSubcomponentImpl(module);
+        }
+
+        public AlertsListLayoutSubcomponent addAlertsListLayoutSubcomponent(AlertsListPresenterModule module) {
+            return new AlertsListLayoutSubcomponentImpl(module);
+        }
+
+        public BuySellSuccessControllerSubcomponent addBuySellSuccessControllerSubcomponent(BuySellSuccessPresenterModule module) {
+            return new BuySellSuccessControllerSubcomponentImpl(module);
+        }
+
+        public IdologyFormLayoutSubcomponent addIdologyFormLayoutSubcomponent(IdologyFormPresenterModule module) {
+            return new IdologyFormLayoutSubcomponentImpl(module);
+        }
+
+        public IdologyNameFormLayoutSubcomponent addIdologyNameFormLayoutSubcomponent(IdologyNameFormPresenterModule module) {
+            return new IdologyNameFormLayoutSubcomponentImpl(module);
+        }
+
+        public IdologyAddressFormLayoutSubcomponent addIdologyAddressFormLayoutSubcomponent(IdologyAddressFormPresenterModule module) {
+            return new IdologyAddressFormLayoutSubcomponentImpl(module);
+        }
+
+        public IdologySourceOfFundsFormLayoutSubcomponent addIdologySourceOfFundsFormLayoutSubcomponent(IdologySourceOfFundsFormPresenterModule module) {
+            return new IdologySourceOfFundsFormLayoutSubcomponentImpl(module);
+        }
+
+        public IdologySettingsControllerSubcomponent addIdologySettingsControllerSubcomponent(IdologySettingsPresenterModule module) {
+            return new IdologySettingsControllerSubcomponentImpl(module);
+        }
+
+        public IdologySuccessControllerSubcomponent addIdologySuccessControllerSubcomponent(IdologySuccessPresenterModule module) {
+            return new IdologySuccessControllerSubcomponentImpl(module);
+        }
+
+        public IdologyFailureControllerSubcomponent addIdologyFailureControllerSubcomponent(IdologyFailurePresenterModule module) {
+            return new IdologyFailureControllerSubcomponentImpl(module);
+        }
+
+        public IdologyQuestionsLayoutSubcomponent addIdologyQuestionsLayoutSubcomponent(IdologyQuestionsPresenterModule module) {
+            return new IdologyQuestionsLayoutSubcomponentImpl(module);
+        }
+
+        public IdologySettingsQuestionsControllerSubcomponent addIdologyQuestionsControllerSubcomponent(IdologySettingsQuestionsPresenterModule module) {
+            return new IdologySettingsQuestionsControllerSubcomponentImpl(module);
+        }
+
+        public InvestmentTiersSettingsControllerSubcomponent addInvestmentTiersSettingsControllerSubcomponent(InvestmentTiersSettingsPresenterModule module) {
+            return new InvestmentTiersSettingsControllerSubcomponentImpl(module);
+        }
+
+        public InvestmentTiersRequirementsControllerSubcomponent addInvestmentTiersRequirementsControllerSubcomponent(InvestmentTiersRequirementsPresenterModule module) {
+            return new InvestmentTiersRequirementsControllerSubcomponentImpl(module);
+        }
+
+        public StateSelectorControllerSubcomponent addStateSelectorControllerSubcomponent(StateSelectorPresenterModule module) {
+            return new StateSelectorControllerSubcomponentImpl(module);
+        }
+
+        public StateSuspendedControllerSubcomponent addStateSuspendedControllerSubcomponent(StateSuspendedPresenterModule module) {
+            return new StateSuspendedControllerSubcomponentImpl(module);
+        }
+
+        public StateLockedControllerSubcomponent addStateLockedControllerSubcomponent(StateLockedPresenterModule module) {
+            return new StateLockedControllerSubcomponentImpl(module);
+        }
+
+        public StateIdologyNameFormControllerSubcomponent addStateIdologyNameFormControllerSubcomponent(StateIdologyNameFormPresenterModule module) {
+            return new StateIdologyNameFormControllerSubcomponentImpl(module);
+        }
+
+        public StateIdologyAddressFormControllerSubcomponent addStateIdologyAddressFormControllerSubcomponent(StateIdologyAddressFormPresenterModule module) {
+            return new StateIdologyAddressFormControllerSubcomponentImpl(module);
+        }
+
+        public StateIdologySourceOfFundsFormControllerSubcomponent addStateIdologySourceOfFundsFormControllerSubcomponent(StateIdologySourceOfFundsFormPresenterModule module) {
+            return new StateIdologySourceOfFundsFormControllerSubcomponentImpl(module);
+        }
+
+        public StateIdologyRetryFormControllerSubcomponent addStateIdologyRetryFormControllerSubcomponent(StateIdologyRetryFormPresenterModule module) {
+            return new StateIdologyRetryFormControllerSubcomponentImpl(module);
+        }
+
+        public StateIdologyQuestionsControllerSubcomponent addStateIdologyQuestionsControllerSubcomponent(StateIdologySettingsQuestionsPresenterModule module) {
+            return new StateIdologyQuestionsControllerSubcomponentImpl(module);
+        }
+
+        public StateIdologyFailureControllerSubcomponent addStateIdologyFailureControllerSubcomponent(StateIdologyFailurePresenterModule module) {
+            return new StateIdologyFailureControllerSubcomponentImpl(module);
+        }
+
+        public ConnectedAccountsLayoutSubcomponent addConnectedAccountsLayoutSubcomponent(ConnectedAccountsPresenterModule module) {
+            return new ConnectedAccountsLayoutSubcomponentImpl(module);
+        }
+
+        public SignInPhoneNumberControllerSubcomponent addSignInPhoneNumberControllerSubcomponent(SignInPhoneNumberPresenterModule module) {
+            return new SignInPhoneNumberControllerSubcomponentImpl(module);
+        }
+
+        public SignInVerifyPhoneNumberControllerSubcomponent addSignInVerifyPhoneNumberControllerSubcomponent(SignInVerifyPhoneNumberPresenterModule module) {
+            return new SignInVerifyPhoneNumberControllerSubcomponentImpl(module);
+        }
+
+        public AddBankPickerControllerSubcomponent addBankPickerControllerSubcomponent(AddBankPickerPresenterModule module) {
+            return new AddBankPickerControllerSubcomponentImpl(module);
+        }
+
+        public PlaidControllerSubcomponent addPlaidControllerSubcomponent(PlaidPresenterModule module) {
+            return new PlaidControllerSubcomponentImpl(module);
+        }
+
+        public BuyControllerSubcomponent addBuyControllerSubcomponent(QuickstartModule quickstartModule, BuyPresenterModule module) {
+            return new BuyControllerSubcomponentImpl(quickstartModule, module);
+        }
+
+        public BuyConfirmationControllerSubcomponent addBuyConfirmationControllerSubcomponent(BuyConfirmationPresenterModule module) {
+            return new BuyConfirmationControllerSubcomponentImpl(module);
+        }
+
+        public AvailableBalanceControllerSubcomponent addAvailableBalanceControllerSubcomponent(AvailableBalancePresenterModule module) {
+            return new AvailableBalanceControllerSubcomponentImpl(module);
+        }
+
+        public LinkedAccountsPickerControllerSubcomponent addLinkedAccountsPickerControllerSubcomponent(LinkedAccountsPickerPresenterModule module) {
+            return new LinkedAccountsPickerControllerSubcomponentImpl(module);
+        }
+
+        public SellControllerSubcomponent addSellControllerSubcomponent(QuickstartModule quickstartModule, SellPresenterModule module) {
+            return new SellControllerSubcomponentImpl(quickstartModule, module);
+        }
+
+        public SellConfirmationControllerSubcomponent addSellConfirmationControllerSubcomponent(SellConfirmationPresenterModule module) {
+            return new SellConfirmationControllerSubcomponentImpl(module);
+        }
+
+        public AddBankErrorControllerSubcomponent addBankErrorControllerSubcomponent(AddBankErrorPresenterModule module) {
+            return new AddBankErrorControllerSubcomponentImpl(module);
+        }
+
+        public WithdrawalBasedLimitsDialogControllerSubcomponent addWithdrawalBasedLimitsDialogControllerSubcomponent(WithdrawalBasedLimitsDialogPresenterModule module) {
+            return new WithdrawalBasedLimitsDialogControllerSubcomponentImpl(module);
+        }
+
+        public ExistingUserDialogControllerSubcomponent addExistingUserDialogControllerSubcomponent(ExistingUserDialogPresenterModule module) {
+            return new ExistingUserDialogControllerSubcomponentImpl(module);
+        }
+
+        public SendControllerSubcomponent addSendControllerSubcomponent(SendPresenterModule module) {
+            return new SendControllerSubcomponentImpl(module);
+        }
+
+        public TransferSendControllerSubcomponent addTransferSendControllerSubcomponent(TransferSendPresenterModule module, TransferSendControllerModule module2) {
+            return new TransferSendControllerSubcomponentImpl(module, module2);
+        }
+
+        public ConfirmSendTransferControllerSubcomponent addConfirmSendTransferControllerSubcomponent(ConfirmSendTransferPresenterModule module) {
+            return new ConfirmSendTransferControllerSubcomponentImpl(module);
+        }
+
+        public DelayedTransactionDialogControllerSubcomponent addDelayedTransactionDialogControllerSubcomponent(DelayedTransactionsControllerModule module) {
+            return new DelayedTransactionDialogControllerSubcomponentImpl(module);
+        }
+
+        public AcceptTermsControllerSubcomponent addAcceptTermsControllerSubcomponent(AcceptTermsPresenterModule module) {
+            return new AcceptTermsControllerSubcomponentImpl(module);
+        }
+
+        public EmailVerifyControllerSubcomponent addEmailVerifyControllerSubcomponent(EmailVerifyPresenterModule module) {
+            return new EmailVerifyControllerSubcomponentImpl(module);
+        }
+
+        public TwoFactorControllerSubcomponent addTwoFactorControllerSubcomponent(TwoFactorPresenterModule module) {
+            return new TwoFactorControllerSubcomponentImpl(module);
+        }
+
+        public DeviceVerifyControllerSubcomponent addDeviceVerifyControllerSubcomponent(DeviceVerifyPresenterModule module) {
+            return new DeviceVerifyControllerSubcomponentImpl(module);
+        }
+
+        public LoginControllerSubcomponent addLoginControllerSubcomponent(LoginControllerSubcomponentModule module) {
+            return new LoginControllerSubcomponentImpl(module);
+        }
+
+        public SignUpControllerSubcomponent addSignUpControllerSubcomponent(SignUpControllerSubcomponentModule module) {
+            return new SignUpControllerSubcomponentImpl(module);
+        }
+
+        public GdprIntroControllerSubcomponent addGdprIntroControllerSubcomponent(GdprIntroPresenterModule module) {
+            return new GdprIntroControllerSubcomponentImpl(module);
+        }
+
+        public GdprPrivacyPolicyControllerSubcomponent addGdprPrivacyPolicyControllerSubcomponent(GdprPrivacyPolicyPresenterModule module) {
+            return new GdprPrivacyPolicyControllerSubcomponentImpl(module);
+        }
+
+        public GdprMarketingEmailControllerSubcomponent addGdprMarketingEmailControllerSubcomponent(GdprMarketingEmailPresenterModule module) {
+            return new GdprMarketingEmailControllerSubcomponentImpl(module);
+        }
+
+        public PrivacyRightsControllerSubcomponent addPrivacyRightsControllerSubcomponent(PrivacyRightsPresenterModule module) {
+            return new PrivacyRightsControllerSubcomponentImpl(module);
+        }
+
+        public EmailSettingsControllerSubcomponent addEmailSettingsControllerSubcomponent(EmailSettingsPresenterModule module) {
+            return new EmailSettingsControllerSubcomponentImpl(module);
+        }
+
+        public GdprPrivacyRequestControllerSubcomponent addRequestDataControllerSubcomponent(GdprPrivacyRequestPresenterModule module) {
+            return new GdprPrivacyRequestControllerSubcomponentImpl(module);
+        }
+
+        public GdprRequestSentControllerSubcomponent addGdprRequestSentControllerSubcomponent(GdprRequestSentPresenterModule module) {
+            return new GdprRequestSentControllerSubcomponentImpl(module);
+        }
+
+        public InAppIdentityAcceptableDocumentsControllerSubcomponent addInAppAcceptableDocumentsControllerSubcomponent(InAppIdentityAcceptableDocumentsPresenterModule module) {
+            return new InAppIdentityAcceptableDocumentsControllerSubcomponentImpl(module);
+        }
+
+        public UpfrontKycIdentityAcceptableDocumentsControllerSubcomponent addUpfrontKycIdentityAcceptableDocumentsControllerSubcomponent(UpfrontKycIdentityAcceptableDocumentsPresenterModule module) {
+            return new UpfrontKycIdentityAcceptableDocumentsControllerSubcomponentImpl(module);
+        }
+
+        public UpfrontKycIdentityDocumentScanControllerSubcomponent addUpfrontKycIdentityDocumentScanControllerSubcomponent(UpfrontKycIdentityDocumentScanPresenterModule module) {
+            return new UpfrontKycIdentityDocumentScanControllerSubcomponentImpl(module);
+        }
+
+        public UpfrontKycIdentityProcessingControllerSubcomponent addUpfrontKycIdentityProcessingControllerSubcomponent(UpfrontKycIdentityProcessingPresenterModule module) {
+            return new UpfrontKycIdentityProcessingControllerSubcomponentImpl(module);
+        }
+
+        public UpfrontKycIdentityFailedControllerSubcomponent addUpfrontKycIdentityFailedControllerSubcomponent(UpfrontKycIdentityFailedPresenterModule module) {
+            return new UpfrontKycIdentityFailedControllerSubcomponentImpl(module);
+        }
+
+        public UpfrontKycTakeDocumentPhotoControllerSubcomponent addUpfrontKycTakeDocumentPhotoControllerSubcomponent(UpfrontKycTakeDocumentPhotoPresenterModule module) {
+            return new UpfrontKycTakeDocumentPhotoControllerSubcomponentImpl(module);
+        }
+
+        private IntroActivity injectIntroActivity(IntroActivity instance) {
+            IntroActivity_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            IntroActivity_MembersInjector.injectAuthManager(instance, (AuthManager) DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider.get());
+            IntroActivity_MembersInjector.injectAuthIntentManager(instance, (AuthIntentManager) DaggerMainCoinbaseApplicationComponent.this.authIntentManagerProvider.get());
+            IntroActivity_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            IntroActivity_MembersInjector.injectMScreenProtector(instance, (ScreenProtector) this.screenProtectorProvider.get());
+            IntroActivity_MembersInjector.injectMLaunchMessageModalRouter(instance, (LaunchMessageModalRouter) this.launchMessageModalRouterProvider.get());
+            IntroActivity_MembersInjector.injectMAuthManager(instance, (AuthManager) DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider.get());
+            return instance;
+        }
+
+        private IdentityVerificationActivity injectIdentityVerificationActivity(IdentityVerificationActivity instance) {
+            CoinbaseActivity_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            CoinbaseActivity_MembersInjector.injectMPinManager(instance, (PINManager) DaggerMainCoinbaseApplicationComponent.this.providesPINManagerProvider.get());
+            CoinbaseActivity_MembersInjector.injectMScreenProtector(instance, (ScreenProtector) this.screenProtectorProvider.get());
+            IdentityVerificationActivity_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+            return instance;
+        }
+
+        private RegistrationControllerActivity injectRegistrationControllerActivity(RegistrationControllerActivity instance) {
+            RegistrationControllerActivity_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+            RegistrationControllerActivity_MembersInjector.injectMSplitTesting(instance, (SplitTesting) DaggerMainCoinbaseApplicationComponent.this.splitTestingProvider.get());
+            RegistrationControllerActivity_MembersInjector.injectMAuthManager(instance, (AuthManager) DaggerMainCoinbaseApplicationComponent.this.providesAuthManagerProvider.get());
+            return instance;
+        }
+
+        private TransactionDetailLayout injectTransactionDetailLayout(TransactionDetailLayout instance) {
+            TransactionDetailLayout_MembersInjector.injectMPresenter(instance, (TransactionDetailPresenter) this.transactionDetailPresenterProvider.get());
+            TransactionDetailLayout_MembersInjector.injectMMoneyFormatterUtil(instance, (MoneyFormatterUtil) DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider.get());
+            return instance;
+        }
+
+        private ActionBarController injectActionBarController(ActionBarController instance) {
+            ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) this.providesActivityProvider.get());
+            ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+            ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) this.statusBarUpdaterProvider.get());
+            ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) this.providesDefaultControllerTransitionContainerProvider.get());
+            ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+            ActionBarController_MembersInjector.injectMModalView(instance, (Func0) this.providesModalViewProvider.get());
+            return instance;
+        }
+
+        private PageControllerLifeCycle injectPageControllerLifeCycle(PageControllerLifeCycle instance) {
+            PageControllerLifeCycle_MembersInjector.injectMBottomNavigationConnector(instance, (BottomNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBottomNavigationConnectorProvider.get());
+            PageControllerLifeCycle_MembersInjector.injectMScreenProtector(instance, (ScreenProtector) this.screenProtectorProvider.get());
+            PageControllerLifeCycle_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            PageControllerLifeCycle_MembersInjector.injectMModalView(instance, (Func0) this.providesModalViewProvider.get());
+            PageControllerLifeCycle_MembersInjector.injectMWindow(instance, (Window) this.providesWindowProvider.get());
+            return instance;
+        }
+
+        private ModalControllerLifeCycle injectModalControllerLifeCycle(ModalControllerLifeCycle instance) {
+            ModalControllerLifeCycle_MembersInjector.injectMScreenProtector(instance, (ScreenProtector) this.screenProtectorProvider.get());
+            ModalControllerLifeCycle_MembersInjector.injectMModalView(instance, (Func0) this.providesModalViewProvider.get());
+            return instance;
+        }
+
+        private PaymentMethodVerificationController injectPaymentMethodVerificationController(PaymentMethodVerificationController instance) {
+            ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) this.providesActivityProvider.get());
+            ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+            ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) this.statusBarUpdaterProvider.get());
+            ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) this.providesDefaultControllerTransitionContainerProvider.get());
+            ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+            ActionBarController_MembersInjector.injectMModalView(instance, (Func0) this.providesModalViewProvider.get());
+            PaymentMethodVerificationController_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            return instance;
+        }
+
+        private DatePickerSpinnerLayout injectDatePickerSpinnerLayout(DatePickerSpinnerLayout instance) {
+            DatePickerSpinnerLayout_MembersInjector.injectMDatePickerConnector(instance, (DatePickerConnector) DaggerMainCoinbaseApplicationComponent.this.providesDatePickerButtonConnectorProvider.get());
+            return instance;
+        }
+
+        private NumericKeyboardLayout injectNumericKeyboardLayout(NumericKeyboardLayout instance) {
+            NumericKeyboardLayout_MembersInjector.injectMNumericKeypadConnector(instance, (NumericKeypadConnector) DaggerMainCoinbaseApplicationComponent.this.providesNumericKeypadConnectorProvider.get());
+            return instance;
+        }
+
+        private LinkedAccountItemLayout injectLinkedAccountItemLayout(LinkedAccountItemLayout instance) {
+            LinkedAccountItemLayout_MembersInjector.injectMConnector(instance, (LinkedAccountConnector) DaggerMainCoinbaseApplicationComponent.this.providesLinkedAccountConnectorProvider.get());
+            LinkedAccountItemLayout_MembersInjector.injectMPaymentMethodUtils(instance, (PaymentMethodUtils) DaggerMainCoinbaseApplicationComponent.this.paymentMethodUtilsProvider.get());
+            return instance;
+        }
+
+        private QuickBuyListLayout injectQuickBuyListLayout(QuickBuyListLayout instance) {
+            QuickBuyListLayout_MembersInjector.injectMMoneyFormatterUtil(instance, (MoneyFormatterUtil) DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider.get());
+            QuickBuyListLayout_MembersInjector.injectMQuickBuyConnector(instance, (QuickBuyConnector) DaggerMainCoinbaseApplicationComponent.this.providesQuickBuyConnectorProvider.get());
+            return instance;
+        }
+
+        private IdentityVerificationController injectIdentityVerificationController(IdentityVerificationController instance) {
+            ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) this.providesActivityProvider.get());
+            ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+            ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) this.statusBarUpdaterProvider.get());
+            ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) this.providesDefaultControllerTransitionContainerProvider.get());
+            ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+            ActionBarController_MembersInjector.injectMModalView(instance, (Func0) this.providesModalViewProvider.get());
+            IdentityVerificationController_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            IdentityVerificationController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            return instance;
+        }
+
+        private AddPhoneDialogController injectAddPhoneDialogController(AddPhoneDialogController instance) {
+            ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) this.providesActivityProvider.get());
+            ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+            ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) this.statusBarUpdaterProvider.get());
+            ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) this.providesDefaultControllerTransitionContainerProvider.get());
+            ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+            ActionBarController_MembersInjector.injectMModalView(instance, (Func0) this.providesModalViewProvider.get());
+            DialogController_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) this.backgroundDimmerProvider.get());
+            AddPhoneDialogController_MembersInjector.injectMSnackBarWrapper(instance, (SnackBarWrapper) this.providesSnackBarWrapperProvider.get());
+            AddPhoneDialogController_MembersInjector.injectMMixpanelTracking(instance, (MixpanelTracking) DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider.get());
+            return instance;
+        }
+
+        private DialogController injectDialogController(DialogController instance) {
+            ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) this.providesActivityProvider.get());
+            ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+            ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) this.statusBarUpdaterProvider.get());
+            ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) this.providesDefaultControllerTransitionContainerProvider.get());
+            ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+            ActionBarController_MembersInjector.injectMModalView(instance, (Func0) this.providesModalViewProvider.get());
+            DialogController_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) this.backgroundDimmerProvider.get());
+            return instance;
+        }
+
+        private ConfirmationDialogController injectConfirmationDialogController(ConfirmationDialogController instance) {
+            ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) this.providesActivityProvider.get());
+            ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+            ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) this.statusBarUpdaterProvider.get());
+            ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) this.providesDefaultControllerTransitionContainerProvider.get());
+            ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+            ActionBarController_MembersInjector.injectMModalView(instance, (Func0) this.providesModalViewProvider.get());
+            DialogController_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) this.backgroundDimmerProvider.get());
+            return instance;
+        }
+
+        private AlertDialogController injectAlertDialogController(AlertDialogController instance) {
+            ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) this.providesActivityProvider.get());
+            ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+            ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) this.statusBarUpdaterProvider.get());
+            ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) this.providesDefaultControllerTransitionContainerProvider.get());
+            ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+            ActionBarController_MembersInjector.injectMModalView(instance, (Func0) this.providesModalViewProvider.get());
+            DialogController_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) this.backgroundDimmerProvider.get());
+            return instance;
+        }
+
+        private RetakePhotoDialogController injectRetakePhotoDialogController(RetakePhotoDialogController instance) {
+            ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) this.providesActivityProvider.get());
+            ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+            ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) this.statusBarUpdaterProvider.get());
+            ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) this.providesDefaultControllerTransitionContainerProvider.get());
+            ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+            ActionBarController_MembersInjector.injectMModalView(instance, (Func0) this.providesModalViewProvider.get());
+            DialogController_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) this.backgroundDimmerProvider.get());
+            InAppIdentityDocumentScanController_RetakePhotoDialogController_MembersInjector.injectMConnector(instance, (RetakeAndContinueConnector) DaggerMainCoinbaseApplicationComponent.this.providesRetakeAndContinueConnectorProvider.get());
+            return instance;
+        }
+
+        private GoToSettingsDialogController injectGoToSettingsDialogController(GoToSettingsDialogController instance) {
+            ActionBarController_MembersInjector.injectMAppCompatActivity(instance, (AppCompatActivity) this.providesActivityProvider.get());
+            ActionBarController_MembersInjector.injectMBackNavigationConnector(instance, (BackNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBackNavigationConnectorProvider.get());
+            ActionBarController_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            ActionBarController_MembersInjector.injectMStatusBarUpdater(instance, (StatusBarUpdater) this.statusBarUpdaterProvider.get());
+            ActionBarController_MembersInjector.injectMChildTransitionBehavior(instance, (ControllerTransitionContainer) this.providesDefaultControllerTransitionContainerProvider.get());
+            ActionBarController_MembersInjector.injectMLifeCycleFactory(instance, (ControllerLifeCycleFactory) DaggerMainCoinbaseApplicationComponent.this.controllerLifeCycleFactoryProvider.get());
+            ActionBarController_MembersInjector.injectMModalView(instance, (Func0) this.providesModalViewProvider.get());
+            DialogController_MembersInjector.injectMBackgroundDimmer(instance, (BackgroundDimmer) this.backgroundDimmerProvider.get());
+            GoToSettingsDialogController_MembersInjector.injectMBottomNavigationConnector(instance, (BottomNavigationConnector) DaggerMainCoinbaseApplicationComponent.this.providesBottomNavigationConnectorProvider.get());
+            GoToSettingsDialogController_MembersInjector.injectMGoToSettingsConnector(instance, (GoToSettingsConnector) DaggerMainCoinbaseApplicationComponent.this.providesBuySellSettingsConnectorProvider.get());
+            GoToSettingsDialogController_MembersInjector.injectMMixpanelTracking(instance, (MixpanelTracking) DaggerMainCoinbaseApplicationComponent.this.providesMixpanelTrackingProvider.get());
+            return instance;
+        }
+    }
+
+    private final class TasksSubcomponentImpl implements TasksSubcomponent {
+        private TasksSubcomponentImpl() {
+        }
+
+        public void inject(CreateAccountTask task) {
+            injectCreateAccountTask(task);
+        }
+
+        public void inject(DeletePaymentMethodTask task) {
+            injectDeletePaymentMethodTask(task);
+        }
+
+        public void inject(DeletePhoneTask task) {
+            injectDeletePhoneTask(task);
+        }
+
+        public void inject(UpdateUserTask task) {
+            injectUpdateUserTask(task);
+        }
+
+        public void inject(OAuthTask task) {
+            injectOAuthTask(task);
+        }
+
+        public void inject(GetUserTask task) {
+            injectGetUserTask(task);
+        }
+
+        public void inject(SyncAccountsTask task) {
+            injectSyncAccountsTask(task);
+        }
+
+        public void inject(RequestMoneyTask task) {
+            injectRequestMoneyTask(task);
+        }
+
+        public void inject(FetchAccountTask task) {
+            injectFetchAccountTask(task);
+        }
+
+        private CreateAccountTask injectCreateAccountTask(CreateAccountTask instance) {
+            CreateAccountTask_MembersInjector.injectLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            CreateAccountTask_MembersInjector.injectMRefreshRequestedConnector(instance, (RefreshRequestedConnector) DaggerMainCoinbaseApplicationComponent.this.providesRefreshRequestedConnectorProvider.get());
+            return instance;
+        }
+
+        private DeletePaymentMethodTask injectDeletePaymentMethodTask(DeletePaymentMethodTask instance) {
+            DeletePaymentMethodTask_MembersInjector.injectLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            DeletePaymentMethodTask_MembersInjector.injectMConnector(instance, (PaymentMethodsUpdatedConnector) DaggerMainCoinbaseApplicationComponent.this.providesPaymentMethodsUpdatedConnectorProvider.get());
+            return instance;
+        }
+
+        private DeletePhoneTask injectDeletePhoneTask(DeletePhoneTask instance) {
+            DeletePhoneTask_MembersInjector.injectMPhoneNumbersUpdatedConnector(instance, (PhoneNumbersUpdatedConnector) DaggerMainCoinbaseApplicationComponent.this.providesPhoneNumbersUpdatedConnectorProvider.get());
+            DeletePhoneTask_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            return instance;
+        }
+
+        private UpdateUserTask injectUpdateUserTask(UpdateUserTask instance) {
+            UpdateUserTask_MembersInjector.injectLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            UpdateUserTask_MembersInjector.injectMLocalUserDataUpdatedConnector(instance, (LocalUserDataUpdatedConnector) DaggerMainCoinbaseApplicationComponent.this.providesUserDataUpdatedConnectorProvider.get());
+            UpdateUserTask_MembersInjector.injectMUserUpdatedConnector(instance, (UserUpdatedConnector) DaggerMainCoinbaseApplicationComponent.this.providesUserUpdatedConnectorProvider.get());
+            return instance;
+        }
+
+        private OAuthTask injectOAuthTask(OAuthTask instance) {
+            OAuthTask_MembersInjector.injectLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            OAuthTask_MembersInjector.injectMBackgroundScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider.get());
+            return instance;
+        }
+
+        private GetUserTask injectGetUserTask(GetUserTask instance) {
+            GetUserTask_MembersInjector.injectLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            GetUserTask_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            GetUserTask_MembersInjector.injectMUserUpdatedConnector(instance, (UserUpdatedConnector) DaggerMainCoinbaseApplicationComponent.this.providesUserUpdatedConnectorProvider.get());
+            return instance;
+        }
+
+        private SyncAccountsTask injectSyncAccountsTask(SyncAccountsTask instance) {
+            SyncAccountsTask_MembersInjector.injectDbManager(instance, (DatabaseManager) DaggerMainCoinbaseApplicationComponent.this.providesDatabaseManagerProvider.get());
+            SyncAccountsTask_MembersInjector.injectMAccountsUpdatedConnector(instance, (AccountsUpdatedConnector) DaggerMainCoinbaseApplicationComponent.this.providesAccountsUpdatedConnectorProvider.get());
+            SyncAccountsTask_MembersInjector.injectLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            SyncAccountsTask_MembersInjector.injectMMoneyFormatterUtil(instance, (MoneyFormatterUtil) DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider.get());
+            SyncAccountsTask_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            SyncAccountsTask_MembersInjector.injectMBackgroundScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider.get());
+            return instance;
+        }
+
+        private RequestMoneyTask injectRequestMoneyTask(RequestMoneyTask instance) {
+            RequestMoneyTask_MembersInjector.injectMTransferMadeConnector(instance, (TransferMadeConnector) DaggerMainCoinbaseApplicationComponent.this.providesTransferMadeConnectorProvider.get());
+            RequestMoneyTask_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            RequestMoneyTask_MembersInjector.injectMMoneyFormatterUtil(instance, (MoneyFormatterUtil) DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider.get());
+            return instance;
+        }
+
+        private FetchAccountTask injectFetchAccountTask(FetchAccountTask instance) {
+            FetchAccountTask_MembersInjector.injectMDbManager(instance, (DatabaseManager) DaggerMainCoinbaseApplicationComponent.this.providesDatabaseManagerProvider.get());
+            FetchAccountTask_MembersInjector.injectMLoginManager(instance, (LoginManager) DaggerMainCoinbaseApplicationComponent.this.providesLoginManagerProvider.get());
+            FetchAccountTask_MembersInjector.injectMMoneyFormatterUtil(instance, (MoneyFormatterUtil) DaggerMainCoinbaseApplicationComponent.this.moneyFormatterUtilProvider.get());
+            FetchAccountTask_MembersInjector.injectMMainScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesMainSchedulerProvider.get());
+            FetchAccountTask_MembersInjector.injectMBackgroundScheduler(instance, (Scheduler) DaggerMainCoinbaseApplicationComponent.this.providesBackgroundSchedulerProvider.get());
+            FetchAccountTask_MembersInjector.injectMAccountUpdatedConnector(instance, (AccountUpdatedConnector) DaggerMainCoinbaseApplicationComponent.this.providesAccountUpdatedConnectorProvider.get());
+            return instance;
+        }
+    }
+
+    private DaggerMainCoinbaseApplicationComponent(Builder builder) {
+        initialize(builder);
+        initialize2(builder);
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    private void initialize(Builder builder) {
+        this.providesUserDataUpdatedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesUserDataUpdatedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesPINManagerProvider = DoubleCheck.provider(CoinbaseApplicationModule_ProvidesPINManagerFactory.create(builder.coinbaseApplicationModule, this.providesUserDataUpdatedConnectorProvider));
+        this.providesConfigUtilsProvider = DoubleCheck.provider(CoinbaseApplicationModule_ProvidesConfigUtilsFactory.create(builder.coinbaseApplicationModule));
+        this.providesRefWatcherWrapperProvider = DoubleCheck.provider(CoinbaseApplicationModule_ProvidesRefWatcherWrapperFactory.create(builder.coinbaseApplicationModule, this.providesConfigUtilsProvider));
+        this.providesApplicationProvider = DoubleCheck.provider(CoinbaseApplicationModule_ProvidesApplicationFactory.create(builder.coinbaseApplicationModule));
+        this.providesDatabaseManagerProvider = DoubleCheck.provider(CoinbaseApplicationModule_ProvidesDatabaseManagerFactory.create(builder.coinbaseApplicationModule, this.providesApplicationProvider));
+        this.providesMainSchedulerProvider = DoubleCheck.provider(CoinbaseApplicationModule_ProvidesMainSchedulerFactory.create(builder.coinbaseApplicationModule));
+        this.providesUserUpdatedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesUserUpdatedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesDefaultSharedPreferencesProvider = DoubleCheck.provider(CoinbaseApplicationModule_ProvidesDefaultSharedPreferencesFactory.create(builder.coinbaseApplicationModule));
+        this.providesSignOutConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesSignOutConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesLoginManagerProvider = DoubleCheck.provider(CoinbaseNetworkModule_ProvidesLoginManagerFactory.create(builder.coinbaseNetworkModule, this.providesApplicationProvider, this.providesDatabaseManagerProvider, this.providesMainSchedulerProvider, this.providesUserUpdatedConnectorProvider, this.providesDefaultSharedPreferencesProvider, this.providesSignOutConnectorProvider));
+        this.providesCurrenciesUpdatedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesCurrenciesUpdatedConnectorFactory.create(builder.coinbaseEventsModule, this.providesApplicationProvider));
+        this.providesBackgroundSchedulerProvider = DoubleCheck.provider(CoinbaseApplicationModule_ProvidesBackgroundSchedulerFactory.create(builder.coinbaseApplicationModule));
+        this.providesDashboardBalanceUpdatedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesDashboardBalanceUpdatedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesDashboardDataConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesDashboardDataConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesBottomNavigationConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesBottomNavigationConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesAccountListConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesAccountListConnectorFactory.create(builder.coinbaseEventsModule));
+        this.spotPriceUpdatedConnectorProvider = DoubleCheck.provider(SpotPriceUpdatedConnector_Factory.create(this.providesLoginManagerProvider));
+        this.alertsUtilsProvider = DoubleCheck.provider(AlertsUtils_Factory.create(this.providesDefaultSharedPreferencesProvider));
+        this.alertsSignOutListenerProvider = DoubleCheck.provider(AlertsSignOutListener_Factory.create(this.alertsUtilsProvider));
+        this.providesDashboardAlertsConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesDashboardAlertsConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesBankAccountsUpdatedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesBankAccountsUpdatedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesMixpanelTrackingProvider = DoubleCheck.provider(CoinbaseApplicationModule_ProvidesMixpanelTrackingFactory.create(builder.coinbaseApplicationModule));
+        this.splitTestingProvider = DoubleCheck.provider(SplitTesting_Factory.create(this.providesDefaultSharedPreferencesProvider, this.providesUserUpdatedConnectorProvider, this.providesMixpanelTrackingProvider, this.providesBackgroundSchedulerProvider));
+        this.appRateOnCreateListenerProvider = DoubleCheck.provider(AppRateOnCreateListener_Factory.create(this.providesApplicationProvider, this.providesMixpanelTrackingProvider, this.providesDefaultSharedPreferencesProvider));
+        this.featureFlagsProvider = DoubleCheck.provider(FeatureFlags_Factory.create(this.providesDefaultSharedPreferencesProvider, this.providesUserUpdatedConnectorProvider, this.providesBackgroundSchedulerProvider));
+        this.idologyUtilsProvider = DoubleCheck.provider(IdologyUtils_Factory.create(this.providesLoginManagerProvider, this.providesDefaultSharedPreferencesProvider, this.featureFlagsProvider, this.providesBackgroundSchedulerProvider));
+        this.idologySignOutListenerProvider = DoubleCheck.provider(IdologySignOutListener_Factory.create(this.idologyUtilsProvider));
+        this.providesPaymentMethodsRefreshedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesPaymentMethodsRefreshedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesOnboardingUpdatedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesOnboardingUpdatedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesCoinbaseInternalProvider = DoubleCheck.provider(CoinbaseNetworkModule_ProvidesCoinbaseInternalFactory.create(builder.coinbaseNetworkModule));
+        this.cacheFeatureFlagInitializerProvider = DoubleCheck.provider(CacheFeatureFlagInitializer_Factory.create(this.featureFlagsProvider, this.providesCoinbaseInternalProvider, this.providesBackgroundSchedulerProvider));
+        this.providesApplicationSignOutListenersProvider = DoubleCheck.provider(CoinbaseApplicationModule_ProvidesApplicationSignOutListenersFactory.create(builder.coinbaseApplicationModule, this.providesDashboardBalanceUpdatedConnectorProvider, this.providesDashboardDataConnectorProvider, this.providesBottomNavigationConnectorProvider, this.providesAccountListConnectorProvider, this.spotPriceUpdatedConnectorProvider, this.alertsSignOutListenerProvider, this.providesDashboardAlertsConnectorProvider, this.providesBankAccountsUpdatedConnectorProvider, this.splitTestingProvider, this.appRateOnCreateListenerProvider, this.idologySignOutListenerProvider, this.providesPaymentMethodsRefreshedConnectorProvider, this.providesOnboardingUpdatedConnectorProvider, this.featureFlagsProvider, this.cacheFeatureFlagInitializerProvider));
+        this.setOfApplicationSignOutListenerProvider = SetFactory.builder(0, 1).addCollectionProvider(this.providesApplicationSignOutListenersProvider).build();
+        this.fetchAdvertisingIdOnCreateListenerProvider = DoubleCheck.provider(FetchAdvertisingIdOnCreateListener_Factory.create(this.providesApplicationProvider, this.providesBackgroundSchedulerProvider, this.providesCoinbaseInternalProvider));
+        this.gdprInitializerProvider = DoubleCheck.provider(GdprInitializer_Factory.create(this.featureFlagsProvider, this.providesUserUpdatedConnectorProvider, this.providesOnboardingUpdatedConnectorProvider, this.providesBackgroundSchedulerProvider));
+        this.providesApplicationOnCreateListenersProvider = DoubleCheck.provider(CoinbaseApplicationModule_ProvidesApplicationOnCreateListenersFactory.create(builder.coinbaseApplicationModule, this.providesLoginManagerProvider, this.providesCurrenciesUpdatedConnectorProvider, this.providesBackgroundSchedulerProvider, this.providesSignOutConnectorProvider, this.setOfApplicationSignOutListenerProvider, this.fetchAdvertisingIdOnCreateListenerProvider, this.splitTestingProvider, this.featureFlagsProvider, this.appRateOnCreateListenerProvider, this.cacheFeatureFlagInitializerProvider, this.idologyUtilsProvider, this.gdprInitializerProvider));
+        this.providesAnimationUtilsWrapperProvider = DoubleCheck.provider(AnimationModule_ProvidesAnimationUtilsWrapperFactory.create(builder.animationModule, this.providesApplicationProvider));
+        this.providesPriceChartPeriodUpdatedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesPriceChartPeriodUpdatedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.moneyFormatterUtilProvider = DoubleCheck.provider(MoneyFormatterUtil_Factory.create(this.providesCurrenciesUpdatedConnectorProvider));
+        this.providesStateListSelectorConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesStateListSelectorConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesBackNavigationConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesBackNavigationConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesAuthManagerProvider = DoubleCheck.provider(CoinbaseApplicationModule_ProvidesAuthManagerFactory.create(builder.coinbaseApplicationModule, this.providesLoginManagerProvider, this.providesDefaultSharedPreferencesProvider, this.providesMainSchedulerProvider, this.splitTestingProvider));
+        this.authIntentManagerProvider = DoubleCheck.provider(AuthIntentManager_Factory.create(this.providesApplicationProvider));
+        this.providesTransactionDetailButtonConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesTransactionDetailButtonConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesRefreshRequestedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesRefreshRequestedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.controllerLifeCycleFactoryProvider = DoubleCheck.provider(ControllerLifeCycleFactory_Factory.create());
+        this.providesDatePickerButtonConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesDatePickerButtonConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesNumericKeypadConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesNumericKeypadConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesLinkedAccountConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesLinkedAccountConnectorFactory.create(builder.coinbaseEventsModule));
+        this.paymentMethodUtilsProvider = DoubleCheck.provider(PaymentMethodUtils_Factory.create(this.providesLoginManagerProvider, this.moneyFormatterUtilProvider));
+        this.providesQuickBuyConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesQuickBuyConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesRetakeAndContinueConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesRetakeAndContinueConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesBuySellSettingsConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesBuySellSettingsConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesPhoneNumbersUpdatedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesPhoneNumbersUpdatedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesGetPaymentMethodsRxProvider = DoubleCheck.provider(CoinbaseApplicationModule_ProvidesGetPaymentMethodsRxFactory.create(builder.coinbaseApplicationModule, this.providesLoginManagerProvider));
+        this.providesBuySellMadeConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesBuySellMadeConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesPaymentMethodsUpdatedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesPaymentMethodsUpdatedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.fiatTransactionsConnectorProvider = DoubleCheck.provider(FiatTransactionsConnector_Factory.create());
+        this.transferUtilsProvider = DoubleCheck.provider(TransferUtils_Factory.create(this.moneyFormatterUtilProvider));
+        this.providesAccountsUpdatedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesAccountsUpdatedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesAdditionalPendingHoldsProvider = DoubleCheck.provider(NoOpDebugModule_ProvidesAdditionalPendingHoldsFactory.create(builder.noOpDebugModule));
+        this.providesAccountItemClickedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesAccountItemClickedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesAccountUpdatedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesAccountUpdatedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesAccountAddressButtonConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesAccountAddressButtonConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesTransferMadeConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesTransferMadeConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesBuy3dsVerificationConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesBuy3dsVerificationConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesCurrencyTabSelectorConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesCurrencyTabSelectorConnectorFactory.create(builder.coinbaseEventsModule, this.providesCurrenciesUpdatedConnectorProvider));
+        this.providesPriceAlertsConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesPriceAlertsConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesAccountORMProvider = DoubleCheck.provider(CoinbaseApplicationModule_ProvidesAccountORMFactory.create(builder.coinbaseApplicationModule));
+        this.providesAccountCryptoAddressUpdatedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesAccountCryptoAddressUpdatedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesDashboardTabPeriodSelectionConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesDashboardTabPeriodSelectionConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesDashboardPriceChartItemClickedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesDashboardPriceChartItemClickedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesDashboardRefreshConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesDashboardRefreshConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesPriceChartDataUpdatedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesPriceChartDataUpdatedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesCurrencySelectorConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesCurrencySelectorConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesIdologyVerificationConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesIdologyVerificationConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesAddPaymentMethodConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesAddPaymentMethodConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesVerifyPaymentMethodConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesVerifyPaymentMethodConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesAccountSettingsPreferenceItemListProvider = DoubleCheck.provider(NoOpDebugModule_ProvidesAccountSettingsPreferenceItemListFactory.create(builder.noOpDebugModule));
+        this.providesIdentityVerificationBitmapConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesIdentityVerificationBitmapConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesPhotoTakenConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesPhotoTakenConnectorFactory.create(builder.coinbaseEventsModule));
+        this.faceDetectionUtilsProvider = DoubleCheck.provider(FaceDetectionUtils_Factory.create());
+        this.providesMystiqueListSelectorConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesMystiqueListSelectorConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesMystiqueListButtonConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesMystiqueListButtonConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesBillingAddressDeletedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesBillingAddressDeletedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.worldPayValidatorProvider = DoubleCheck.provider(WorldPayValidator_Factory.create());
+        this.providesWorldPayPollingWrapperProvider = DoubleCheck.provider(CoinbaseNetworkModule_ProvidesWorldPayPollingWrapperFactory.create(builder.coinbaseNetworkModule));
+        this.providesIdologyOptionSelectedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesIdologyOptionSelectedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesIdologyFormValidConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesIdologyFormValidConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesIdologyRetryConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesIdologyRetryConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesProgressConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesProgressConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesIdologyAutoCompleteShownConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesIdologyAutoCompleteShownConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesGoogleApiClientProvider = DoubleCheck.provider(GoogleClientApiModule_ProvidesGoogleApiClientFactory.create(builder.googleClientApiModule, this.providesApplicationProvider));
+        this.providesIdologyAnswerListValidConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesIdologyAnswerListValidConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesStateDisclosureFinishedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesStateDisclosureFinishedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.activityPermissionCheckUtilsProvider = DoubleCheck.provider(ActivityPermissionCheckUtils_Factory.create());
+        this.providesPlaidOnExitConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesPlaidOnExitConnectorFactory.create(builder.coinbaseEventsModule));
+        this.analyticsProvider = DoubleCheck.provider(Analytics_Factory.create(this.providesApplicationProvider));
+        this.currencyUtilsProvider = DoubleCheck.provider(CurrencyUtils_Factory.create());
+    }
+
+    private void initialize2(Builder builder) {
+        this.cryptoUriParserProvider = DoubleCheck.provider(CryptoUriParser_Factory.create(this.providesCurrenciesUpdatedConnectorProvider));
+        this.providesEmailVerifiedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesEmailVerifiedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesDeviceVerifyConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesDeviceVerifyConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesPrivacyRightsSettingsClickedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesPrivacyRightsSettingsClickedConnectorFactory.create(builder.coinbaseEventsModule));
+        this.providesIdologyAnswerSelectedConnectorProvider = DoubleCheck.provider(CoinbaseEventsModule_ProvidesIdologyAnswerSelectedConnectorFactory.create(builder.coinbaseEventsModule));
+    }
+
+    public void inject(CoinbaseApplication application) {
+        injectCoinbaseApplication(application);
+    }
+
+    public PINManager pinManager() {
+        return (PINManager) this.providesPINManagerProvider.get();
+    }
+
+    public CurrenciesUpdatedConnector currenciesUpdatedConnector() {
+        return (CurrenciesUpdatedConnector) this.providesCurrenciesUpdatedConnectorProvider.get();
+    }
+
+    public SplitTesting splitTesting() {
+        return (SplitTesting) this.splitTestingProvider.get();
+    }
+
+    public FeatureFlags features() {
+        return (FeatureFlags) this.featureFlagsProvider.get();
+    }
+
+    public AnimationUtilsWrapper animationUtilsWrapper() {
+        return (AnimationUtilsWrapper) this.providesAnimationUtilsWrapperProvider.get();
+    }
+
+    public CoinbaseActivitySubcomponent coinbaseActivitySubcomponent(BaseActivityModule module) {
+        return new CoinbaseActivitySubcomponentImpl(module);
+    }
+
+    public CoinbaseActivityMystiqueSubcomponent coinbaseActivityMystiqueSubcomponent(BaseActivityModule baseModule, BaseViewModule viewModule, ActionBarModule actionBarModule, NonBottomNavActivityModule module) {
+        return new CoinbaseActivityMystiqueSubcomponentImpl(baseModule, viewModule, actionBarModule, module);
+    }
+
+    public MainActivitySubcomponent mainActivitySubcomponent(BaseActivityModule baseModule, BaseViewModule viewModule, BottomNavActivityModule module) {
+        return new MainActivitySubcomponentImpl(baseModule, viewModule, module);
+    }
+
+    public MainActivityPresenterSubcomponent mainActivityPresenterSubcomponent(MainPresenterModule module, BaseActivityModule baseModule) {
+        return new MainActivityPresenterSubcomponentImpl(module, baseModule);
+    }
+
+    public GenericActivitySubcomponent genericActivitySubcomponent() {
+        return new GenericActivitySubcomponentImpl();
+    }
+
+    public FragmentSubcomponent fragmentSubcomponent() {
+        return new FragmentSubcomponentImpl();
+    }
+
+    public TasksSubcomponent tasksSubcomponent() {
+        return new TasksSubcomponentImpl();
+    }
+
+    public AdapterSubcomponent adapterSubcomponent() {
+        return new AdapterSubcomponentImpl();
+    }
+
+    public CoinbaseServiceSubcomponent coinbaseServiceSubcomponent() {
+        return new CoinbaseServiceSubcomponentImpl();
+    }
+
+    private CoinbaseApplication injectCoinbaseApplication(CoinbaseApplication instance) {
+        CoinbaseApplication_MembersInjector.injectMPINManager(instance, (PINManager) this.providesPINManagerProvider.get());
+        CoinbaseApplication_MembersInjector.injectMRefWatcherWrapper(instance, (RefWatcherWrapper) this.providesRefWatcherWrapperProvider.get());
+        CoinbaseApplication_MembersInjector.injectMApplicationOnCreateListeners(instance, (Set) this.providesApplicationOnCreateListenersProvider.get());
+        return instance;
+    }
+}

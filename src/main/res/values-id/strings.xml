@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="addresses_copied">Disalin ke papan jepit.</string>
+    <string name="app_name">Perpustakaan ZXing Coinbase</string>
+    <string name="barcode_scan_message">Tempatkan kode palang Bitcoin di dalam \nviewfinder untuk memindainya.</string>
+    <string name="copy_address">Salin Alamat</string>
+    <string name="my_address">Alamat saya</string>
+    <string name="scan_tabs_left_button">Pindai kode</string>
+    <string name="scan_tabs_right_button">Alamat saya</string>
+</resources>

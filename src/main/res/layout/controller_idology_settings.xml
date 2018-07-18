@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res-auto" custom:orientation="vertical" custom:tag="layout/controller_idology_settings_0" custom:background="@color/app_background_light_grey" custom:layout_width="match_parent" custom:layout_height="match_parent">
+    <android.support.design.widget.AppBarLayout custom:layout_width="match_parent" custom:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar custom:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" custom:id="@+id/cvCoinbaseToolbar" custom:layout_width="match_parent" custom:layout_height="UNKNOWN_DATA_0x7f010088" />
+    </android.support.design.widget.AppBarLayout>
+    <com.coinbase.android.idology.IdologyFormLayout custom:id="@+id/idologyFormLayout" custom:layout_width="match_parent" custom:layout_height="wrap_content" custom:layout_marginBottom="@dimen/margin_default" custom:idologyTrackingContext="@string/idology_tracking_context_settings" custom:headerVisibility="true" />
+</LinearLayout>

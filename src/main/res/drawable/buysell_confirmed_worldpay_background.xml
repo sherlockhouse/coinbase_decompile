@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <layer-list>
+            <item android:bottom="2dp">
+                <shape>
+                    <corners android:radius="@dimen/margin_extra_small" />
+                    <solid android:color="@color/buysell_confirm_worldpay_processing_background" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

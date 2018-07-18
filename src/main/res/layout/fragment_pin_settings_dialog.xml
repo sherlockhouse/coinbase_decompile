@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:tag="layout/fragment_pin_settings_dialog_0" android:padding="@dimen/margin_default" android:layout_width="match_parent" android:layout_height="match_parent">
+    <TextView android:textSize="@dimen/text_size_large" android:textColor="@color/extra_dark_grey_text" android:id="@+id/tvPinSettingsTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/margin_default" />
+    <ListView android:id="@+id/lvPinSettingsOptions" android:layout_width="match_parent" android:layout_height="wrap_content" android:choiceMode="multipleChoice" />
+</LinearLayout>

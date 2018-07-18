@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <menu name="controller_transfer">res/menu/controller_transfer.xml</menu>
+    <menu name="menu_account_transactions">res/menu/menu_account_transactions.xml</menu>
+    <menu name="menu_add_linked_account">res/menu/menu_add_linked_account.xml</menu>
+    <menu name="menu_fragment_plaid_account">res/menu/menu_fragment_plaid_account.xml</menu>
+    <menu name="menu_idology_settings">res/menu/menu_idology_settings.xml</menu>
+    <menu name="menu_jumio">res/menu/menu_jumio.xml</menu>
+    <menu name="menu_phone_number">res/menu/menu_phone_number.xml</menu>
+    <menu name="menu_price_alerts">res/menu/menu_price_alerts.xml</menu>
+</resources>

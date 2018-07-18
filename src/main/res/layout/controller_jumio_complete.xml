@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:tag="layout/controller_jumio_complete_0" android:background="@color/app_background_light_grey" android:layout_width="match_parent" android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" android:id="@+id/cvCoinbaseToolbar" android:background="?attr/colorPrimary" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x7f010088" />
+    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent">
+        <RelativeLayout android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <ImageView android:id="@+id/checkmark" android:layout_width="UNKNOWN_DATA_0x7f0b00e8" android:layout_height="UNKNOWN_DATA_0x7f0b00e8" android:layout_marginBottom="20dp" android:src="@drawable/pending_01" android:layout_centerHorizontal="true" />
+            <TextView android:textSize="@dimen/text_size_large_mystique" android:textStyle="bold" android:textColor="@color/primary_mystique_text_color" android:gravity="left|right|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/all_done" android:paddingLeft="24dp" android:paddingTop="16dp" android:paddingRight="24dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/jumio_processing_title" android:layout_below="@+id/checkmark" />
+            <TextView android:textSize="@dimen/text_size_normal_mystique" android:textColor="@color/primary_mystique_text_color" android:gravity="left|right|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/jumio_success_message" android:padding="24dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/jumio_processing_message" android:layout_below="@+id/all_done" />
+            <Button android:id="@+id/btnJumioContinue" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/margin_default" android:layout_marginRight="@dimen/margin_default" android:text="@string/btn_continue" android:layout_below="@+id/jumio_success_message" android:filterTouchesWhenObscured="true" style="@style/PrimaryMystiqueButton" />
+        </RelativeLayout>
+    </FrameLayout>
+</LinearLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:orientation="vertical" app:tag="layout/controller_sell_0" app:background="@color/white" app:layout_width="match_parent" app:layout_height="match_parent">
+    <com.coinbase.android.wbl.AvailableBalanceAppBarLayout app:orientation="vertical" app:id="@+id/apbLayout" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_alignParentTop="true" app:elevation="0dp" app:elevation="0dp" />
+    <RelativeLayout app:id="@+id/rlSellContent" app:visibility="gone" app:layout_width="match_parent" app:layout_height="match_parent">
+        <LinearLayout app:orientation="vertical" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_above="@+id/sellLinkedAccountItemLayout" app:layout_alignParentTop="true">
+            <RelativeLayout app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0x1" app:layout_marginLeft="@dimen/margin_normal" app:layout_marginRight="@dimen/margin_normal" app:layout_weight="3.0" app:layout_alignParentTop="true" app:layout_marginStart="@dimen/margin_normal" app:layout_marginEnd="@dimen/margin_normal">
+                <com.coinbase.android.ui.AutoResizeTextView app:textSize="@dimen/currency_amount" app:textColor="@color/coinbase_blue" app:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" app:id="@+id/tvAmount" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_marginLeft="@dimen/amount_text_left_margin" app:layout_marginRight="@dimen/margin_normal" app:text="0" app:maxLines="1" app:layout_centerInParent="true" />
+                <LinearLayout app:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" app:orientation="vertical" app:id="@+id/llSwap" app:layout_width="UNKNOWN_DATA_0x7f0b007f" app:layout_height="wrap_content" app:layout_alignTop="@+id/tvAmount" app:layout_alignBottom="@+id/tvAmount" app:layout_alignParentRight="true" app:layout_alignParentEnd="true">
+                    <ImageView app:id="@+id/ivSwap" app:paddingTop="@dimen/margin_tiny" app:layout_width="UNKNOWN_DATA_0x7f0b0080" app:layout_height="UNKNOWN_DATA_0x7f0b0080" app:src="@drawable/buysell_swap" />
+                    <TextView app:textSize="@dimen/text_size_semi_small_mystique" app:textColor="@color/numeric_keyboard" app:id="@+id/tvSecondaryCurrencyCode" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_marginTop="@dimen/margin_extra_small" app:textAllCaps="true" />
+                </LinearLayout>
+            </RelativeLayout>
+            <LinearLayout app:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" app:orientation="horizontal" app:id="@+id/llSellButtons" app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0x1" app:layout_weight="2.0">
+                <TextView app:textColor="@color/numeric_keyboard" app:id="@+id/tvSellMax" app:background="@drawable/sell_button_border" app:layout_width="wrap_content" app:layout_height="wrap_content" app:text="@string/sell_max" />
+                <TextView app:textColor="@color/numeric_keyboard" app:id="@+id/tvSellHalf" app:background="@drawable/sell_button_border" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_marginLeft="@dimen/custom_buy_sell_button_right_margin" app:layout_marginRight="@dimen/custom_buy_sell_button_right_margin" app:text="@string/sell_half" />
+                <TextView app:textColor="@color/numeric_keyboard" app:id="@+id/tvSellFourth" app:background="@drawable/sell_button_border" app:layout_width="wrap_content" app:layout_height="wrap_content" app:text="@string/sell_fourth" />
+            </LinearLayout>
+        </LinearLayout>
+        <com.coinbase.android.paymentmethods.linkedaccounts.LinkedAccountItemLayout app:id="@+id/sellLinkedAccountItemLayout" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_above="@+id/numericKeyboardLayout" />
+        <com.coinbase.android.ui.NumericKeyboardLayout app:id="@+id/numericKeyboardLayout" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_above="@+id/btPreview" />
+        <Button app:textSize="@dimen/text_size_medium_mystique" app:id="@+id/btPreview" app:padding="@dimen/margin_normal" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_margin="@dimen/margin_default" app:text="@string/preview" app:layout_alignParentBottom="true" app:hapticFeedbackEnabled="true" style="@style/PrimaryMystiqueButton" />
+        <RelativeLayout app:id="@+id/rlProgressBarOverlay" app:background="@color/buysell_overlay" app:visibility="gone" app:clickable="false" app:layout_width="match_parent" app:layout_height="match_parent">
+            <ProgressBar app:id="@id/progressBar" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_centerInParent="true" app:indeterminateTint="@color/coinbase_blue" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <include app:id="@+id/quickstartOverlay" app:visibility="gone" app:layout_width="match_parent" app:layout_height="match_parent" layout="@layout/overlay_buysell_deposit" />
+</LinearLayout>

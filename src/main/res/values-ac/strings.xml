@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="addresses_copied">Copied to clipboard.</string>
+    <string name="app_name">Coinbase ZXing Library</string>
+    <string name="barcode_scan_message">Place a Bitcoin barcode inside the\nviewfinder to scan it.</string>
+    <string name="copy_address">Copy Address</string>
+    <string name="my_address">My Address</string>
+    <string name="scan_tabs_left_button">Scan code</string>
+    <string name="scan_tabs_right_button">My address</string>
+</resources>

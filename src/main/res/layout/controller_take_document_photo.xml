@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:tag="layout/controller_take_document_photo_0" android:background="@color/app_background_light_grey" android:layout_width="match_parent" android:layout_height="match_parent">
+    <include android:id="@+id/takeDocumentPhotoContent" layout="@layout/controller_take_document_photo_content" />
+</FrameLayout>

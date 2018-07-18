@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:tag="layout/mystique_bottom_navigation_controller_0" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+        <FrameLayout android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x1" android:layout_weight="1.0">
+            <android.support.design.widget.CoordinatorLayout android:id="@+id/clControllerContainer" android:layout_width="match_parent" android:layout_height="match_parent">
+                <com.coinbase.android.ui.NoSwipeViewPager android:id="@+id/vpControllerPager" android:layout_width="match_parent" android:layout_height="match_parent" />
+            </android.support.design.widget.CoordinatorLayout>
+        </FrameLayout>
+        <com.coinbase.android.ui.MystiqueBottomNavigationLayout android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:layout_gravity="top|bottom|center_vertical|fill_vertical|center|fill" android:id="@+id/cvBottom" android:background="0x106000d" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/bottom_nav_top_modal_padding" />
+    </LinearLayout>
+    <FrameLayout android:id="@+id/flModalContainer" android:visibility="visible" android:layout_width="match_parent" android:layout_height="match_parent" /> />

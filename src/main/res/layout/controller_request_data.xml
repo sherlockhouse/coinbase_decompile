@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:id="@+id/clContainer" app:tag="layout/controller_request_data_0" app:background="@color/app_background_light_grey" app:layout_width="match_parent" app:layout_height="wrap_content">
+    <android.support.design.widget.AppBarLayout app:id="@+id/abLayout" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_alignParentTop="true">
+        <android.support.v7.widget.Toolbar app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" app:id="@+id/cvCoinbaseToolbar" app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0x7f010088" />
+    </android.support.design.widget.AppBarLayout>
+    <ScrollView app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_above="@+id/btSendRequest" app:layout_below="@+id/abLayout">
+        <LinearLayout app:orientation="vertical" app:layout_width="match_parent" app:layout_height="wrap_content">
+            <TextView app:textSize="@dimen/text_size_normal_mystique" app:textColor="@color/primary_mystique_text_color" app:id="@+id/tvLegalHeader" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_margin="@dimen/margin_default" />
+            <android.support.v7.widget.RecyclerView app:id="@+id/rvRequestDataOptions" app:layout_width="match_parent" app:layout_height="wrap_content" />
+            <TextView app:textSize="@dimen/text_size_normal_mystique" app:textColor="@color/primary_mystique_text_color" app:id="@+id/tvAddlMessage" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_margin="@dimen/margin_default" app:text="@string/gdpr_additional_message" />
+            <EditText app:textSize="@dimen/text_size_normal_mystique" app:textColor="@color/primary_mystique_text_color" app:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" app:id="@+id/etAddlMessage" app:background="@color/white" app:padding="@dimen/margin_default" app:layout_width="match_parent" app:layout_height="wrap_content" app:hint="@string/gdpr_write_message_hint" app:maxLines="5" app:lines="5" />
+        </LinearLayout>
+    </ScrollView>
+    <ProgressBar app:id="@id/progressBar" app:visibility="gone" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_centerInParent="true" />
+    <Button app:id="@+id/btSendRequest" app:layout_width="match_parent" app:layout_height="wrap_content" app:text="@string/gdpr_send_request" app:layout_alignParentBottom="true" style="@style/PrimaryMystiqueButton_Rectangle" />
+</RelativeLayout>

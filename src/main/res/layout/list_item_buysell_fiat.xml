@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:orientation="horizontal" app:id="@+id/rlPaymentMethod" app:tag="layout/list_item_buysell_fiat_0" app:background="@color/white" app:layout_width="match_parent" app:layout_height="wrap_content">
+    <View app:id="@+id/selectedView" app:background="@color/coinbase_blue" app:visibility="gone" app:layout_width="UNKNOWN_DATA_0x401" app:layout_height="match_parent" />
+    <RelativeLayout app:padding="@dimen/margin_normal" app:layout_width="match_parent" app:layout_height="wrap_content"
+        <RelativeLayout app:id="@+id/rlFiatIcon" app:layout_width="UNKNOWN_DATA_0x7f0b010f" app:layout_height="UNKNOWN_DATA_0x7f0b010f">
+            <ImageView app:id="@+id/ivFiatBackground" app:background="@drawable/default_circle" app:layout_width="match_parent" app:layout_height="match_parent" app:layout_alignParentLeft="true" app:layout_centerVertical="true" app:layout_alignParentStart="true" />
+            <TextView app:textSize="@dimen/text_size_medium_mystique" app:textColor="@color/white" app:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" app:id="@+id/tvFiatSymbol" app:layout_width="match_parent" app:layout_height="match_parent" app:layout_margin="2dp" app:layout_centerInParent="true" app:autoSizeTextType="1" />
+        </RelativeLayout>
+        <TextView app:textSize="@dimen/text_size_medium_mystique" app:textColor="@color/primary_mystique_text_color" app:id="@+id/tvAccountName" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_marginLeft="@dimen/margin_normal" app:layout_marginRight="@dimen/margin_normal" app:layout_toLeftOf="@+id/tvAccountBalance" app:layout_toRightOf="@+id/rlFiatIcon" app:layout_centerVertical="true" app:layout_marginStart="@dimen/margin_normal" app:layout_marginEnd="@dimen/margin_normal" app:layout_toStartOf="@+id/tvAccountBalance" app:layout_toEndOf="@+id/rlFiatIcon" />
+        <TextView app:textSize="@dimen/text_size_medium_mystique" app:textColor="@color/primary_mystique_light_text_color" app:id="@+id/tvAccountBalance" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_alignParentRight="true" app:layout_alignParentEnd="true" />
+    </RelativeLayout>
+</LinearLayout>

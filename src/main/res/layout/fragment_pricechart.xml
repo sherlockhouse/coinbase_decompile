@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:tag="layout/fragment_pricechart_0" android:layout_width="match_parent" android:layout_height="match_parent"
+    <RelativeLayout android:id="@+id/multi_currency" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x2801">
+        <LinearLayout android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:orientation="horizontal" android:id="@+id/currency_picker" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
+            <TextView android:id="@+id/tvCurrencyBitcoin" android:text="@string/btc" style="@style/PriceChart_Text_Range" />
+            <TextView android:id="@+id/tvCurrencyEther" android:layout_width="wrap_content" android:text="@string/eth" style="@style/PriceChart_Text_Range" />
+            <TextView android:id="@+id/tvCurrencyLitecoin" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/ltc" android:layout_weight="1.0" style="@style/PriceChart_Text_Range" />
+        </LinearLayout>
+        <View android:background="@color/price_chart_divider" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x101" android:layout_toLeftOf="@+id/currency_picker" android:layout_centerVertical="true" />
+        <View android:background="@color/price_chart_divider" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x101" android:layout_toRightOf="@+id/currency_picker" android:layout_centerVertical="true" />
+    </RelativeLayout>
+    <RelativeLayout android:id="@+id/price_container_layout" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x4601" android:layout_below="@+id/multi_currency">
+        <LinearLayout android:orientation="horizontal" android:id="@+id/rlPriceSection" android:layout_width="match_parent" android:layout_height="match_parent">
+            <RelativeLayout android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="wrap_content" android:layout_weight="1.0">
+                <LinearLayout android:orientation="horizontal" android:id="@+id/price_container" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_centerHorizontal="true">
+                    <TextView android:textSize="12sp" android:textStyle="bold" android:textColor="@color/white" android:layout_gravity="top|bottom|center_vertical|fill_vertical|center|fill" android:id="@+id/tvPriceCurrencySymbol" android:layout_marginRight="-8dp" style="@style/PriceChart_Text_Dollar" />
+                    <TextView android:textSize="24sp" android:textStyle="bold" android:textColor="@color/white" android:id="@+id/tvCurrentPrice" android:paddingLeft="10dp" android:paddingRight="10dp" android:text="@string/zero" style="@style/PriceChart_Text_Price" />
+                </LinearLayout>
+                <TextView android:textSize="12sp" android:textColor="@color/intro_light_blue" android:id="@+id/tvCryptoPrice" android:text="@string/bitcoin_price" android:layout_below="@+id/price_container" android:layout_centerHorizontal="true" style="@style/PriceChart_Text_Info" />
+            </RelativeLayout>
+            <View android:layout_gravity="top|bottom|center_vertical|fill_vertical|center|fill" android:id="@+id/price_separator" android:background="@color/price_chart_divider" android:layout_width="UNKNOWN_DATA_0x101" android:layout_height="UNKNOWN_DATA_0x7f0b0123" />
+            <RelativeLayout android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="wrap_content" android:layout_weight="1.0">
+                <LinearLayout android:orientation="horizontal" android:id="@+id/price_change_container" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_centerHorizontal="true">
+                    <TextView android:textSize="12sp" android:textStyle="bold" android:textColor="@color/white" android:layout_gravity="top|bottom|center_vertical|fill_vertical|center|fill" android:id="@+id/tvPriceChangeCurrencySymbol" android:paddingLeft="10dp" android:layout_marginRight="-8dp" android:paddingStart="10dp" style="@style/PriceChart_Text_Dollar" />
+                    <TextView android:textSize="24sp" android:textStyle="bold" android:textColor="@color/white" android:id="@+id/tvPriceChange" android:paddingLeft="10dp" android:paddingRight="10dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/zero" android:drawablePadding="@dimen/margin_one_forth" style="@style/PriceChart_Text_Price" />
+                </LinearLayout>
+                <TextView android:textSize="12sp" android:textColor="@color/intro_light_blue" android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvChangeScope" android:text="@string/since_today" android:layout_below="@+id/price_change_container" android:layout_centerHorizontal="true" style="@style/PriceChart_Text_Info" />
+            </RelativeLayout>
+        </LinearLayout>
+        <RelativeLayout android:id="@+id/rlPriceHighlightSection" android:visibility="visible" android:layout_width="match_parent" android:layout_height="match_parent"
+            <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
+                <LinearLayout android:orientation="horizontal" android:id="@+id/price_highlight_container" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_centerHorizontal="true">
+                    <TextView android:textSize="12sp" android:textStyle="bold" android:textColor="@color/white" android:layout_gravity="top|bottom|center_vertical|fill_vertical|center|fill" android:id="@+id/tvHighlightedPriceCurrencySymbol" android:layout_marginRight="-8dp" style="@style/PriceChart_Text_Dollar" />
+                    <TextView android:textSize="24sp" android:textStyle="bold" android:textColor="@color/white" android:id="@+id/tvHighlightedPrice" android:paddingLeft="10dp" android:paddingRight="10dp" android:text="@string/zero" style="@style/PriceChart_Text_Price" />
+                </LinearLayout>
+                <TextView android:textSize="12sp" android:textColor="#ccffffff" android:id="@+id/tvHighlightedDate" android:text="@string/bitcoin_price" android:layout_below="@+id/price_highlight_container" android:layout_centerHorizontal="true" style="@style/PriceChart_Text_Info" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout android:id="@+id/range_section" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x2801" android:layout_below="@+id/price_container_layout">
+        <LinearLayout android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:orientation="horizontal" android:id="@+id/range_picker" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
+            <TextView android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvRangeHour" android:text="@string/one_hour" style="@style/PriceChart_Text_Range" />
+            <TextView android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvRangeDay" android:text="@string/one_day" style="@style/PriceChart_Text_Range" />
+            <TextView android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvRangeWeek" android:text="@string/one_week" style="@style/PriceChart_Text_Range" />
+            <TextView android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvRangeMonth" android:text="@string/one_month" style="@style/PriceChart_Text_Range" />
+            <TextView android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvRangeYear" android:text="@string/one_year" style="@style/PriceChart_Text_Range" />
+            <TextView android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvRangeAll" android:text="@string/all" style="@style/PriceChart_Text_Range" />
+        </LinearLayout>
+        <View android:background="@color/price_chart_divider" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x101" android:layout_toLeftOf="@+id/range_picker" android:layout_centerVertical="true" />
+        <View android:background="@color/price_chart_divider" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x101" android:layout_toRightOf="@+id/range_picker" android:layout_centerVertical="true" />
+    </RelativeLayout>
+    <com.coinbase.android.pricechart.PriceChartLayout android:orientation="vertical" android:id="@+id/vPriceChart" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x15e01" android:layout_below="@+id/range_section" />
+</RelativeLayout>

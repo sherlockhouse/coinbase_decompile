@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <raw name="beep">res/raw/beep.ogg</raw>
+    <raw name="countries">res/raw/countries.json</raw>
+    <raw name="currencies">res/raw/currencies.json</raw>
+    <raw name="states">res/raw/states.json</raw>
+</resources>

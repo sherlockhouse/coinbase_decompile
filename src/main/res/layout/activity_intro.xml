@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:tag="layout/activity_intro_0" android:background="@drawable/signin_background" android:layout_width="match_parent" android:layout_height="match_parent">
+    <com.coinbase.android.ui.MaterialProgressBar android:id="@+id/progress" android:layout_width="UNKNOWN_DATA_0x3201" android:layout_height="UNKNOWN_DATA_0x3201" android:layout_centerInParent="true" />
+    <TextView android:textSize="14sp" android:textColor="@color/white" android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvPleaseWait" android:padding="15dp" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/please_wait" android:layout_below="@+id/progress" android:layout_centerHorizontal="true" />
+    <RelativeLayout android:id="@+id/rlContainer" android:layout_width="match_parent" android:layout_height="match_parent">
+        <ScrollView android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x1" android:fillViewport="true" android:layout_above="@+id/signup_section" android:layout_alignParentTop="true">
+            <RelativeLayout android:id="@+id/rlChartContainer" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <ImageView android:id="@+id/logo" android:layout_width="UNKNOWN_DATA_0x7f0b00ed" android:layout_height="wrap_content" android:layout_marginTop="@dimen/margin_default" android:layout_marginBottom="@dimen/margin_small" android:src="@drawable/coinbase_logo" android:layout_centerHorizontal="true" />
+                <fragment android:id="@+id/price_chart" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x12c01" android:layout_below="@+id/logo" android:layout_alignParentBottom="true" class="com.coinbase.android.signin.IntroPriceChartFragment" />
+            </RelativeLayout>
+        </ScrollView>
+        <LinearLayout android:orientation="vertical" android:id="@+id/signup_section" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true">
+            <Button android:id="@+id/btnLoginIntroSignupText" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/margin_default" android:text="@string/login_signup" android:filterTouchesWhenObscured="true" style="@style/PrimaryButton" />
+            <TextView android:textSize="14sp" android:textColor="@color/white" android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvLoginIntroSignin" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x2801" android:layout_marginBottom="@dimen/margin_default" android:text="@string/log_in" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:id="@+id/llContainer" android:background="@drawable/price_chart_marker" android:padding="4dp" android:layout_width="wrap_content" android:layout_height="wrap_content">
+    <TextView android:textSize="@dimen/text_size_small_mystique" android:textColor="@color/white" android:ellipsize="end" android:id="@+id/tvText" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="1" android:layout_centerHorizontal="true" />
+</LinearLayout>

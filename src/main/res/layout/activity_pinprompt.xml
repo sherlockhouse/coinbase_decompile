@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:gravity="left|right|center_horizontal|fill_horizontal|center|fill|start|end" android:orientation="vertical" android:tag="layout/activity_pinprompt_0" android:layout_width="match_parent" android:layout_height="match_parent"
+    <LinearLayout android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x1" android:layout_weight="1.0">
+        <ImageView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/margin_default" android:src="@drawable/coinbase_logo_blue" android:scaleType="center" />
+        <TextView android:textSize="@dimen/text_size_large" android:textColor="@color/coinbase_blue" android:id="@+id/tvPinText" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="15dp" android:text="@string/setup_pin_text" />
+        <TextView android:textSize="@dimen/text_size_normal" android:textColor="@color/coinbase_blue" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <ImageView android:id="@+id/ivPinNumber1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/margin_default" android:src="@drawable/pin_circle_unentered" android:layout_marginEnd="@dimen/margin_default" />
+            <ImageView android:id="@+id/ivPinNumber2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/margin_default" android:src="@drawable/pin_circle_unentered" android:layout_marginEnd="@dimen/margin_default" />
+            <ImageView android:id="@+id/ivPinNumber3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/margin_default" android:src="@drawable/pin_circle_unentered" android:layout_marginEnd="@dimen/margin_default" />
+            <ImageView android:id="@+id/ivPinNumber4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/pin_circle_unentered" />
+        </LinearLayout>
+    </LinearLayout>
+    <include android:id="@+id/keypad" layout="@layout/keypad" />
+</LinearLayout>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:orientation="vertical" app:tag="layout/controller_available_balance_0" app:background="@color/app_background_light_grey" app:layout_width="match_parent" app:layout_height="match_parent">
+    <com.coinbase.android.ui.CenteredAppBarLayout app:orientation="vertical" app:id="@+id/apbLayout" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_alignParentTop="true" app:elevation="0dp" app:elevation="0dp" />
+    <com.coinbase.android.wbl.AvailableBalanceLayout app:id="@+id/vAvailableBalanceLayout" app:layout_width="match_parent" app:layout_height="match_parent" />
+</LinearLayout>

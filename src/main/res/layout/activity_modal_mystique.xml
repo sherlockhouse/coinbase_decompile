@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:tag="layout/activity_modal_mystique_0" app:layout_width="match_parent" app:layout_height="match_parent">
+    <LinearLayout app:orientation="vertical" app:layout_width="match_parent" app:layout_height="match_parent">
+        <android.support.v7.widget.Toolbar app:id="@+id/cvCoinbaseToolbar" app:background="?attr/colorPrimary" app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0x7f010088" app:minHeight="?attr/actionBarSize" app:popupTheme="@style/ThemeOverlay.AppCompat.Light" app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        <FrameLayout app:id="@+id/flDropShadow" app:background="0x106000b" app:layout_width="match_parent" app:layout_height="wrap_content" app:foreground="@drawable/bottom_shadow" />
+        <FrameLayout app:id="@+id/flContainer" app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0x1" app:layout_weight="1.0">
+            <ProgressBar app:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" app:id="@+id/progress" app:visibility="gone" app:layout_width="wrap_content" app:layout_height="wrap_content" />
+        </FrameLayout>
+    </LinearLayout>
+    <RelativeLayout app:id="@+id/flOverlay" app:background="@color/dark_translucent" app:visibility="invisible" app:clickable="true" app:layout_width="match_parent" app:layout_height="match_parent" />
+</FrameLayout>

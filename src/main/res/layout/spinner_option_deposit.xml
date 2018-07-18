@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:tag="layout/spinner_option_deposit_0" android:layout_width="match_parent" android:layout_height="match_parent">
+    <TextView android:textSize="@dimen/text_size_normal" android:id="@+id/tvText" android:paddingTop="@dimen/margin_small" android:paddingBottom="@dimen/margin_small" android:layout_width="match_parent" android:layout_height="wrap_content" />
+    <View android:background="@color/divider_light" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x101" />
+</LinearLayout>

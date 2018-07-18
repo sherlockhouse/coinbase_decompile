@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <xml name="balance_appwidget_provider">res/xml/balance_appwidget_provider.xml</xml>
+    <xml name="network_security_config">res/xml/network_security_config.xml</xml>
+    <xml name="price_appwidget_provider">res/xml/price_appwidget_provider.xml</xml>
+</resources>

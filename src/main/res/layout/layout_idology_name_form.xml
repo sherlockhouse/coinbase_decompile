@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:orientation="vertical" app:tag="layout/layout_idology_name_form_0" app:layout_width="match_parent" app:layout_height="wrap_content">
+    <ScrollView app:layout_width="match_parent" app:layout_height="wrap_content">
+        <LinearLayout app:orientation="vertical" app:layout_width="match_parent" app:layout_height="wrap_content">
+            <RelativeLayout app:id="@+id/rlContainer" app:background="@color/white" app:paddingLeft="@dimen/margin_default" app:paddingRight="@dimen/margin_default" app:focusableInTouchMode="true" app:descendantFocusability="beforeDescendants" app:layout_width="match_parent" app:layout_height="wrap_content">
+                <android.support.design.widget.TextInputLayout app:id="@+id/tlFirstName" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_marginTop="@dimen/margin_small" app:layout_alignParentTop="true" app:errorEnabled="false">
+                    <EditText app:textSize="@dimen/idology_text_size" app:id="@+id/etFirstName" app:layout_width="match_parent" app:layout_height="wrap_content" app:hint="@string/first_name" app:maxLines="1" app:inputType="text|textCapCharacters|textCapWords|textCapSentences|textAutoCorrect|textAutoComplete|textMultiLine|textImeMultiLine|textNoSuggestions|textUri|textEmailAddress|textEmailSubject|textShortMessage|textLongMessage|textPersonName|textPostalAddress|textPassword|textVisiblePassword|textWebEditText|textFilter|textPhonetic|textWebEmailAddress|textWebPassword|numberDecimal|phone" app:imeOptions="actionNone|actionSearch|actionSend|actionNext|actionDone|actionPrevious" />
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout app:id="@+id/tlLastName" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_marginTop="@dimen/margin_small" app:layout_below="@+id/tlFirstName" app:errorEnabled="false">
+                    <EditText app:textSize="@dimen/idology_text_size" app:id="@+id/etLastName" app:layout_width="match_parent" app:layout_height="wrap_content" app:hint="@string/last_name" app:maxLines="1" app:inputType="text|textCapCharacters|textCapWords|textCapSentences|textAutoCorrect|textAutoComplete|textMultiLine|textImeMultiLine|textNoSuggestions|textUri|textEmailAddress|textEmailSubject|textShortMessage|textLongMessage|textPersonName|textPostalAddress|textPassword|textVisiblePassword|textWebEditText|textFilter|textPhonetic|textWebEmailAddress|textWebPassword|numberDecimal|phone" app:imeOptions="actionNone|actionSearch|actionSend|actionNext|actionDone|actionPrevious" />
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout app:id="@+id/tlDob" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_marginTop="@dimen/margin_small" app:layout_below="@+id/tlLastName" app:errorEnabled="false">
+                    <EditText app:textSize="@dimen/idology_text_size" app:id="@+id/etDob" app:focusable="false" app:layout_width="match_parent" app:layout_height="wrap_content" app:hint="@string/date_of_birth" app:maxLines="1" app:imeOptions="actionNone|actionSearch|actionSend|actionNext|actionDone|actionPrevious" />
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout app:id="@+id/tlSSN" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_marginTop="@dimen/margin_small" app:layout_below="@+id/tlDob" app:errorEnabled="false">
+                    <EditText app:textSize="@dimen/idology_text_size" app:id="@+id/etSSN" app:layout_width="match_parent" app:layout_height="wrap_content" app:hint="@string/last_4_ssn" app:maxLines="1" app:maxLength="4" app:inputType="textCapWords|number|numberSigned|numberDecimal|numberPassword|phone" app:imeOptions="actionGo|actionSearch|actionSend|actionNext|actionDone|actionPrevious" />
+                </android.support.design.widget.TextInputLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+    <com.coinbase.android.ui.DatePickerSpinnerLayout app:id="@+id/dobDatePicker" app:visibility="gone" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_centerInParent="true" />
+</LinearLayout>

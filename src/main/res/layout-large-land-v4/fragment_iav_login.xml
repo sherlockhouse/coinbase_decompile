@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:tag="layout-large-land/fragment_iav_login_0" android:background="@color/grey_bg" android:layout_width="match_parent" android:layout_height="match_parent"
+    <FrameLayout android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:tag="binding_1" android:background="@color/white" android:layout_width="UNKNOWN_DATA_0x25801" android:layout_height="match_parent" android:layout_marginTop="16dp" android:layout_marginBottom="16dp">
+        <include android:id="@+id/iavLoginContent" layout="@layout/fragment_iav_login_content" />
+    </FrameLayout>
+</FrameLayout>

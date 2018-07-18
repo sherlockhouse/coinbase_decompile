@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="in_days">
+        <item quantity="other">W ciągu %d dni</item>
+        <item quantity="one">W ciągu 1 dnia</item>
+        <item quantity="few">W ciągu %d dni</item>
+        <item quantity="many">W ciągu %d dni</item>
+    </plurals>
+</resources>

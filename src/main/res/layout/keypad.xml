@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:tag="layout/keypad_0" android:layout_width="match_parent" android:layout_height="wrap_content"
+    <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content"
+        <LinearLayout android:orientation="vertical" android:id="@+id/llAmountKeyboard1" android:padding="@dimen/keypad_padding" android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="1" style="@style/KeypadKey" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="" style="@style/AmountKeyboardSubtext" />
+        </LinearLayout>
+        <LinearLayout android:orientation="vertical" android:id="@+id/llAmountKeyboard2" android:padding="@dimen/keypad_padding" android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="2" style="@style/KeypadKey" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="ABC" style="@style/AmountKeyboardSubtext" />
+        </LinearLayout>
+        <LinearLayout android:orientation="vertical" android:id="@+id/llAmountKeyboard3" android:padding="@dimen/keypad_padding" android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="3" style="@style/KeypadKey" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="DEF" style="@style/AmountKeyboardSubtext" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content"
+        <LinearLayout android:orientation="vertical" android:id="@+id/llAmountKeyboard4" android:padding="@dimen/keypad_padding" android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="4" style="@style/KeypadKey" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="GHI" style="@style/AmountKeyboardSubtext" />
+        </LinearLayout>
+        <LinearLayout android:orientation="vertical" android:id="@+id/llAmountKeyboard5" android:padding="@dimen/keypad_padding" android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="5" style="@style/KeypadKey" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="JKL" style="@style/AmountKeyboardSubtext" />
+        </LinearLayout>
+        <LinearLayout android:orientation="vertical" android:id="@+id/llAmountKeyboard6" android:padding="@dimen/keypad_padding" android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="6" style="@style/KeypadKey" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="MNO" style="@style/AmountKeyboardSubtext" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content"
+        <LinearLayout android:orientation="vertical" android:id="@+id/llAmountKeyboard7" android:padding="@dimen/keypad_padding" android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="7" style="@style/KeypadKey" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="PQRS" style="@style/AmountKeyboardSubtext" />
+        </LinearLayout>
+        <LinearLayout android:orientation="vertical" android:id="@+id/llAmountKeyboard8" android:padding="@dimen/keypad_padding" android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="8" style="@style/KeypadKey" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="TUV" style="@style/AmountKeyboardSubtext" />
+        </LinearLayout>
+        <LinearLayout android:orientation="vertical" android:id="@+id/llAmountKeyboard9" android:padding="@dimen/keypad_padding" android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="9" style="@style/KeypadKey" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="WXYZ" style="@style/AmountKeyboardSubtext" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content"
+        <LinearLayout android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:orientation="vertical" android:id="@+id/llAmountKeyboardCancel" android:padding="@dimen/keypad_padding" android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="match_parent" android:layout_weight="1.0">
+            <TextView android:textSize="@dimen/text_size_normal" android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="CANCEL" style="@style/KeypadKey" />
+        </LinearLayout>
+        <LinearLayout android:orientation="vertical" android:id="@+id/llAmountKeyboard0" android:padding="@dimen/keypad_padding" android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="0" style="@style/KeypadKey" />
+        </LinearLayout>
+        <LinearLayout android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:orientation="vertical" android:id="@+id/llAmountKeyboardBack" android:padding="@dimen/keypad_padding" android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="match_parent" android:layout_weight="1.0">
+            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/blue_back" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

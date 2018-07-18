@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/rlSepaInfo" android:tag="layout/fragment_sepa_deposit_withdraw_0" android:layout_width="match_parent" android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView android:id="@+id/rvSepaDepositInfo" android:layout_width="match_parent" android:layout_height="wrap_content" />
+    <ProgressBar android:id="@+id/progress" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="200dp" android:layout_centerInParent="true" />
+</RelativeLayout>

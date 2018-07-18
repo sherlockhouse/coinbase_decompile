@@ -1,0 +1,19 @@
+package com.google.zxing.oned.rss.expanded.decoders;
+
+import com.google.zxing.NotFoundException;
+import com.google.zxing.common.BitArray;
+
+final class AI01AndOtherAIs extends AI01decoder {
+    AI01AndOtherAIs(BitArray information) {
+        super(information);
+    }
+
+    public String parseInformation() throws NotFoundException {
+        StringBuilder buff = new StringBuilder();
+        buff.append("(01)");
+        int initialGtinPosition = buff.length();
+        buff.append(getGeneralDecoder().extractNumericValueFromBitArray(4, 4));
+        encodeCompressedGtinWithoutAI(buff, 8, initialGtinPosition);
+        return getGeneralDecoder().decodeAllCodes(buff, 48);
+    }
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:tag="layout/upfront_kyc_acceptable_doc_item_0" android:paddingBottom="@dimen/margin_default" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <RelativeLayout android:orientation="horizontal" android:background="@drawable/upfront_kyc_document_background" android:padding="@dimen/margin_default" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <ImageView android:id="@+id/ivIcon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/margin_default" android:layout_marginBottom="@dimen/margin_default" android:src="@drawable/upfront_kyc_passport" />
+        <TextView android:textSize="@dimen/text_size_medium_mystique" android:textStyle="bold" android:textColor="@color/coinbase_blue" android:gravity="top|bottom|center_vertical|fill_vertical|center|fill" android:layout_gravity="top|bottom|center_vertical|fill_vertical|center|fill" android:id="@+id/tvText" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/margin_default" android:text="@string/drivers_license" android:layout_toRightOf="@+id/ivIcon" android:layout_alignTop="@+id/ivIcon" android:layout_alignBottom="@+id/ivIcon" android:layout_toEndOf="@+id/ivIcon" />
+    </RelativeLayout>
+</FrameLayout>

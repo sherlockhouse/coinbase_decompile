@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:tag="layout/fragment_account_main_0" android:layout_width="match_parent" android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" android:id="@+id/cvCoinbaseToolbar" android:background="?attr/colorPrimary" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x7f010088" android:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    <com.coinbase.android.accounts.AccountRefreshListLayout android:id="@+id/layoutAccountList" android:layout_width="match_parent" android:layout_height="wrap_content" />
+</LinearLayout>

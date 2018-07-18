@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:tag="layout/layout_price_chart_0" android:layout_width="match_parent" android:layout_height="match_parent">
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+        <com.coinbase.android.ui.MaterialProgressBar android:id="@+id/progressPriceChart" android:layout_width="UNKNOWN_DATA_0x3201" android:layout_height="UNKNOWN_DATA_0x3201" android:layout_centerHorizontal="true" />
+        <com.coinbase.android.pricechart.ZeroMarginLineChart android:id="@+id/cvPriceChart" android:visibility="invisible" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_alignParentBottom="true" />
+        <ImageView android:id="@+id/ivPriceChart" android:visibility="invisible" android:layout_width="match_parent" android:layout_height="match_parent" />
+        <TextView android:textColor="@color/light_grey" android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvPriceChartFailure" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/pricechart_could_not_load" android:layout_alignLeft="@+id/cvPriceChart" android:layout_alignTop="@+id/cvPriceChart" android:layout_alignRight="@+id/cvPriceChart" android:layout_alignBottom="@+id/cvPriceChart" />
+    </RelativeLayout>
+</LinearLayout>

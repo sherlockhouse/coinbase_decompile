@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:tag="layout/activity_main_content_0" app:layout_width="match_parent" app:layout_height="match_parent">
+    <LinearLayout app:orientation="vertical" app:layout_width="match_parent" app:layout_height="match_parent">
+        <android.support.design.widget.CoordinatorLayout app:layout_width="match_parent" app:layout_height="match_parent">
+            <android.support.design.widget.AppBarLayout app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0x1" />
+            <com.bluelinelabs.conductor.ChangeHandlerFrameLayout app:id="@+id/cvControllerContainer" app:layout_width="match_parent" app:layout_height="match_parent" app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </android.support.design.widget.CoordinatorLayout>
+    </LinearLayout>
+    <RelativeLayout app:id="@+id/flOverlay" app:background="@color/dark_translucent" app:visibility="invisible" app:clickable="true" app:layout_width="match_parent" app:layout_height="match_parent" />
+    <FrameLayout app:id="@+id/flModalContainer" app:visibility="visible" app:layout_width="match_parent" app:layout_height="match_parent" /> />

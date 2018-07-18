@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:tag="layout/layout_transactions_list_0" android:background="@drawable/mystique_pale_gray_border" android:layout_width="match_parent" android:layout_height="match_parent">
+    <RelativeLayout android:id="@+id/rlEmpty" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="@dimen/margin_default">
+        <TextView android:textSize="@dimen/text_size_large_mystique" android:textColor="@color/primary_mystique_text_color" android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvEmptyTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/empty_transactions_title" android:layout_above="@+id/tvEmptyMessage" />
+        <TextView android:textSize="@dimen/text_size_medium_mystique" android:textColor="@color/primary_mystique_light_text_color" android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvEmptyMessage" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/margin_default" android:lines="2" android:layout_centerInParent="true" />
+    </RelativeLayout>
+    <android.support.v4.widget.SwipeRefreshLayout android:id="@+id/vTransactionRefreshLayout" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <com.coinbase.android.ui.EmptySupportRecyclerView android:id="@+id/rvTransactions" android:background="@color/white" android:layout_width="match_parent" android:layout_height="wrap_content" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <com.coinbase.android.transactions.TransactionDetailLayout android:id="@+id/transactionDetailLayout" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content" />
+</LinearLayout>

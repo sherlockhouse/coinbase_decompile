@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/widget_outer" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <RelativeLayout android:background="@drawable/appwidget_balance_bg" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <ImageView android:id="@+id/widget_icon" android:background="@drawable/appwidget_button_center" android:paddingLeft="10dp" android:paddingRight="10dp" android:layout_width="UNKNOWN_DATA_0x3201" android:layout_height="wrap_content" android:src="@drawable/ic_notification" android:layout_alignParentLeft="true" android:layout_centerVertical="true" android:layout_alignParentStart="true" />
+        <TextView android:textAppearance="?unknown_attr_ref: 1010040" android:textColor="@color/gray66" android:id="@+id/widget_price" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="" android:layout_toRightOf="@+id/widget_icon" android:layout_centerVertical="true" />
+        <TextView android:textAppearance="?unknown_attr_ref: 1010042" android:textColor="@color/gray66" android:id="@+id/widget_currency" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5dp" android:text="USD" android:layout_toRightOf="@+id/widget_price" android:layout_centerVertical="true" />
+        <ImageButton android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/widget_refresh" android:background="@drawable/appwidget_button_center" android:paddingLeft="10dp" android:paddingRight="10dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_action_refresh_light" android:layout_alignParentRight="true" android:layout_centerVertical="true" />
+    </RelativeLayout>
+</FrameLayout>

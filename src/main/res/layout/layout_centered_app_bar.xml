@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:orientation="vertical" app:id="@+id/apbLayout" app:tag="layout/layout_centered_app_bar_0" app:background="@color/white" app:layout_width="match_parent" app:layout_height="wrap_content" app:elevation="0dp">
+    <android.support.v7.widget.Toolbar app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" app:id="@+id/cvCoinbaseToolbar" app:background="?attr/colorPrimary" app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0x7f010088" />
+    <View app:id="@+id/shadow_view" app:background="@drawable/dropshadow" app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0x501" />
+</android.support.design.widget.AppBarLayout>

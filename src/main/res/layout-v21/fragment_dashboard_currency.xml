@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:orientation="vertical" app:tag="layout/fragment_dashboard_currency_0" app:background="@color/app_background_light_grey" app:layout_width="match_parent" app:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" app:id="@+id/cvCoinbaseToolbar" app:background="?attr/colorPrimary" app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0x7f010088" app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    <com.coinbase.android.pricechart.LockableNestedScrollView app:id="@+id/nestedScrollView" app:layout_width="match_parent" app:layout_height="wrap_content">
+        <LinearLayout app:orientation="vertical" app:descendantFocusability="blocksDescendants" app:layout_width="match_parent" app:layout_height="wrap_content">
+            <com.coinbase.android.dashboard.DashboardTabPeriodLayout app:id="@+id/layoutTabPeriod" app:layout_width="match_parent" app:layout_height="wrap_content" />
+            <RelativeLayout app:id="@+id/price_container_layout" app:background="@color/white" app:layout_width="match_parent" app:layout_height="wrap_content"
+                <RelativeLayout app:id="@+id/rlPriceSection" app:visibility="visible" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_centerInParent="true">
+                    <LinearLayout app:orientation="horizontal" app:id="@+id/price_container" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_alignParentTop="true" app:layout_centerHorizontal="true">
+                        <TextView app:layout_gravity="top|bottom|center_vertical|fill_vertical|center|fill" app:id="@+id/tvPriceCurrencySymbol" app:layout_marginRight="-8dp" style="@style/PriceChart_Text_Dollar" />
+                        <TextView app:id="@+id/tvCurrentPrice" app:paddingLeft="10dp" app:paddingRight="10dp" app:text="@string/zero" style="@style/PriceChart_Text_Price" />
+                    </LinearLayout>
+                    <TextView app:id="@+id/tvPriceChange" app:layout_below="@+id/price_container" app:layout_centerHorizontal="true" app:layout_centerVertical="true" style="@style/PriceChart_Text_Info" />
+                </RelativeLayout>
+                <RelativeLayout app:id="@+id/rlPriceHighlightSection" app:visibility="visible" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_centerInParent="true">
+                    <LinearLayout app:orientation="horizontal" app:id="@+id/price_highlight_container" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_alignParentTop="true" app:layout_centerHorizontal="true">
+                        <TextView app:layout_gravity="top|bottom|center_vertical|fill_vertical|center|fill" app:id="@+id/tvHighlightedPriceCurrencySymbol" app:layout_marginRight="-8dp" style="@style/PriceChart_Text_Dollar" />
+                        <TextView app:id="@+id/tvHighlightedPrice" app:paddingLeft="10dp" app:paddingRight="10dp" app:text="@string/zero" style="@style/PriceChart_Text_Price" />
+                    </LinearLayout>
+                    <TextView app:id="@+id/tvHighlightedDate" app:layout_below="@+id/price_highlight_container" app:layout_centerHorizontal="true" style="@style/PriceChart_Text_Info" />
+                </RelativeLayout>
+            </RelativeLayout>
+            <com.coinbase.android.pricechart.PriceChartLayout app:orientation="vertical" app:id="@+id/vPriceChart" app:background="@color/white" app:paddingBottom="@dimen/margin_medium" app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0xfa01" />
+            <LinearLayout app:orientation="horizontal" app:background="@drawable/mystique_pale_gray_border" app:padding="@dimen/margin_default" app:layout_width="match_parent" app:layout_height="wrap_content">
+                <Button app:id="@+id/btBuy" app:layout_width="UNKNOWN_DATA_0x1" app:layout_height="wrap_content" app:layout_marginRight="8dp" app:text="@string/buy" app:layout_weight="1.0" style="@style/PrimaryMystiqueButton" />
+                <Button app:id="@+id/btSell" app:layout_width="UNKNOWN_DATA_0x1" app:layout_height="wrap_content" app:layout_marginLeft="8dp" app:text="@string/sell" app:layout_weight="1.0" style="@style/PrimaryMystiqueButton" />
+            </LinearLayout>
+            <com.coinbase.android.accounts.AccountFilteredListLayout app:id="@+id/layoutAccountList" app:layout_width="match_parent" app:layout_height="wrap_content" />
+        </LinearLayout>
+    </com.coinbase.android.pricechart.LockableNestedScrollView>
+</LinearLayout>

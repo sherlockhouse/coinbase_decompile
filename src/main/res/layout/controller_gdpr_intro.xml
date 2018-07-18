@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/flContainer" android:tag="layout/controller_gdpr_intro_0" android:background="@drawable/signin_background" android:layout_width="match_parent" android:layout_height="match_parent"
+    <FrameLayout android:id="@+id/llWhiteBoxContainer" android:background="@drawable/white_box" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/signup_form_horizontal_margin" android:layout_marginTop="@dimen/margin_4x" android:layout_marginRight="@dimen/signup_form_horizontal_margin" android:layout_marginBottom="@dimen/margin_4x">
+        <ScrollView android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <ImageView android:layout_gravity="left|right|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/ivGdprIcon" android:layout_width="UNKNOWN_DATA_0x7f0b0130" android:layout_height="UNKNOWN_DATA_0x7f0b0130" android:layout_marginTop="@dimen/margin_4x" android:src="@drawable/gdpr_stars" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/gdpr_coinbase_supports" style="@style/OnboardingTitle" />
+                <TextView android:gravity="left|right|center_horizontal|fill_horizontal|center|fill|start|end" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/gdpr_coinbase_supports_paragraph" style="@style/OnboardingParagraph" />
+                <View android:background="@color/cloud_grey" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x101" android:layout_marginTop="@dimen/margin_3x" />
+                <TextView android:id="@+id/btnNext" android:background="@drawable/white_box" android:padding="@dimen/margin_2x" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/next" style="@style/SignInButtonPrimary" />
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+</FrameLayout>

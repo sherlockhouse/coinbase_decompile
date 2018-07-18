@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:orientation="vertical" app:tag="layout/fragment_account_transactions_0" app:background="@color/app_background_light_grey" app:layout_width="match_parent" app:layout_height="match_parent">
+    <android.support.design.widget.AppBarLayout app:layout_width="match_parent" app:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" app:id="@+id/cvCoinbaseToolbar" app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0x7f010088" app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        <LinearLayout app:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" app:orientation="vertical" app:id="@+id/llAmount" app:background="@drawable/header_layout_background" app:layout_width="match_parent" app:layout_height="wrap_content">
+            <TextView app:textSize="@dimen/amount_large_text_size" app:textColor="@color/white" app:id="@+id/tvAccountBalance" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_marginTop="@dimen/margin_default" />
+            <TextView app:textSize="@dimen/account__native_balance_text_size" app:textColor="@color/account_native_balance_text_color" app:id="@+id/tvAccountNativeBalance" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_marginTop="@dimen/margin_small" app:layout_marginBottom="@dimen/margin_double" />
+        </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+    <LinearLayout app:orientation="horizontal" app:id="@+id/llButton" app:background="@color/white" app:padding="@dimen/margin_default" app:layout_width="match_parent" app:layout_height="wrap_content">
+        <Button app:id="@+id/btLeft" app:layout_width="UNKNOWN_DATA_0x1" app:layout_height="wrap_content" app:layout_marginRight="8dp" app:layout_weight="1.0" style="@style/PrimaryMystiqueButton" />
+        <Button app:id="@+id/btRight" app:layout_width="UNKNOWN_DATA_0x1" app:layout_height="wrap_content" app:layout_marginLeft="8dp" app:layout_weight="1.0" style="@style/PrimaryMystiqueButton" />
+    </LinearLayout>
+    <com.coinbase.android.transactions.TransactionListLayout app:id="@+id/transactionsListLayout" app:layout_width="match_parent" app:layout_height="wrap_content" />
+    <com.coinbase.android.accounts.AccountCryptoAddressLayout app:id="@+id/accountCryptoAddressLayout" app:visibility="gone" app:layout_width="match_parent" app:layout_height="wrap_content" />
+    <com.coinbase.android.accounts.EnableSendReceiveLayout app:id="@+id/enableSendReceiveLayout" app:visibility="gone" app:layout_width="match_parent" app:layout_height="wrap_content" />
+</LinearLayout>

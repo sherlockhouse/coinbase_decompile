@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:tag="layout/dialog_confirmation_0" android:paddingLeft="@dimen/margin_large" android:paddingTop="8dp" android:paddingRight="@dimen/margin_large" android:paddingBottom="8dp" android:layout_width="wrap_content" android:layout_height="wrap_content">
+    <LinearLayout android:gravity="left|right|center_horizontal|fill_horizontal|center|fill|start|end" android:orientation="vertical" android:background="@drawable/dialog_confirmation_background" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <TextView android:textSize="@dimen/text_size_medium_large_mystique" android:textStyle="bold" android:textColor="@color/black" android:gravity="left|right|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvTitle" android:paddingLeft="@dimen/margin_default" android:paddingTop="@dimen/margin_default" android:paddingRight="@dimen/margin_default" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <TextView android:textSize="@dimen/text_size_medium_large_mystique" android:textColor="@color/black" android:id="@+id/tvText" android:padding="@dimen/margin_default" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <LinearLayout android:layout_gravity="left|right|center_horizontal|fill_horizontal|center|fill|start|end" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <TextView android:textSize="@dimen/text_size_normal_mystique" android:textColor="@color/grey_button_text" android:id="@+id/tvCancel" android:padding="@dimen/margin_default" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <TextView android:textSize="@dimen/text_size_normal_mystique" android:textColor="@color/primary" android:id="@+id/tvOk" android:padding="@dimen/margin_default" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

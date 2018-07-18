@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:tag="layout/layout_idology_questions_0" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <android.support.v7.widget.RecyclerView android:id="@+id/rvQuestions" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_above="@+id/rlTimer" android:layout_alignParentTop="true" />
+    <RelativeLayout android:orientation="horizontal" android:id="@+id/rlTimer" android:background="@drawable/mystique_pale_gray_border" android:padding="@dimen/margin_default" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/margin_extra_small" android:layout_alignParentBottom="true">
+        <TextView android:textSize="@dimen/text_size_normal_mystique" android:textColor="@color/primary_mystique_extra_light_text_color" android:id="@+id/tvTimerText" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/idology_answer_timer_hint" android:layout_centerVertical="true" />
+        <TextView android:textSize="@dimen/text_size_normal_mystique" android:textColor="@color/coinbase_blue" android:id="@+id/tvTimerValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentRight="true" android:layout_centerVertical="true" android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+</RelativeLayout>

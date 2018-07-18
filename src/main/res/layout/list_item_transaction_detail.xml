@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:tag="layout/list_item_transaction_detail_0" android:paddingLeft="@dimen/margin_default" android:paddingRight="@dimen/margin_default" android:layout_width="match_parent" android:layout_height="wrap_content"
+    <LinearLayout android:orientation="horizontal" android:paddingTop="@dimen/margin_default" android:paddingBottom="@dimen/margin_default" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:textSize="@dimen/text_size_normal_mystique" android:textColor="@color/primary_mystique_light_text_color" android:id="@+id/tvHeader" android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="wrap_content" android:layout_weight="2.0" />
+        <LinearLayout android:gravity="left|right|center_horizontal|fill_horizontal|center|fill|start|end" android:orientation="horizontal" android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="wrap_content" android:layout_weight="3.0">
+            <View android:id="@+id/statusView" android:background="@drawable/default_circle" android:layout_width="UNKNOWN_DATA_0xa01" android:layout_height="UNKNOWN_DATA_0xa01" android:layout_margin="5dp" />
+            <TextView android:textSize="@dimen/text_size_normal_mystique" android:textColor="@color/primary_mystique_text_color" android:ellipsize="end" android:gravity="left|right|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvValue" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="2" />
+        </LinearLayout>
+    </LinearLayout>
+    <View android:id="@+id/vDottedLine" android:background="@drawable/light_grey_dotted_line" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x201" android:layerType="software" />
+</LinearLayout>

@@ -1,0 +1,57 @@
+package org.joda.time.chrono;
+
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.DurationField;
+import org.joda.time.ReadablePartial;
+import org.joda.time.field.PreciseDurationDateTimeField;
+
+final class BasicDayOfYearDateTimeField extends PreciseDurationDateTimeField {
+    private final BasicChronology iChronology;
+
+    BasicDayOfYearDateTimeField(BasicChronology basicChronology, DurationField durationField) {
+        super(DateTimeFieldType.dayOfYear(), durationField);
+        this.iChronology = basicChronology;
+    }
+
+    public int get(long j) {
+        return this.iChronology.getDayOfYear(j);
+    }
+
+    public DurationField getRangeDurationField() {
+        return this.iChronology.years();
+    }
+
+    public int getMinimumValue() {
+        return 1;
+    }
+
+    public int getMaximumValue() {
+        return this.iChronology.getDaysInYearMax();
+    }
+
+    public int getMaximumValue(long j) {
+        return this.iChronology.getDaysInYear(this.iChronology.getYear(j));
+    }
+
+    public int getMaximumValue(ReadablePartial readablePartial) {
+        if (!readablePartial.isSupported(DateTimeFieldType.year())) {
+            return this.iChronology.getDaysInYearMax();
+        }
+        return this.iChronology.getDaysInYear(readablePartial.get(DateTimeFieldType.year()));
+    }
+
+    public int getMaximumValue(ReadablePartial readablePartial, int[] iArr) {
+        int size = readablePartial.size();
+        for (int i = 0; i < size; i++) {
+            if (readablePartial.getFieldType(i) == DateTimeFieldType.year()) {
+                return this.iChronology.getDaysInYear(iArr[i]);
+            }
+        }
+        return this.iChronology.getDaysInYearMax();
+    }
+
+    protected int getMaximumValueForSet(long j, int i) {
+        int daysInYearMax = this.iChronology.getDaysInYearMax() - 1;
+        return (i > daysInYearMax || i < 1) ? getMaximumValue(j) : daysInYearMax;
+    }
+}

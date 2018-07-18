@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:orientation="vertical" app:tag="layout/controller_withdraw_fiat_0" app:background="@color/white" app:layout_width="match_parent" app:layout_height="match_parent">
+    <com.coinbase.android.wbl.AvailableBalanceAppBarLayout app:orientation="vertical" app:id="@+id/apbLayout" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_alignParentTop="true" app:elevation="0dp" app:elevation="0dp" />
+    <RelativeLayout app:id="@+id/rlWithdrawContent" app:visibility="gone" app:layout_width="match_parent" app:layout_height="match_parent">
+        <LinearLayout app:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_marginLeft="@dimen/margin_normal" app:layout_marginRight="@dimen/margin_normal" app:layout_above="@+id/linkedAccountItemLayout" app:layout_alignParentTop="true" app:layout_marginStart="@dimen/margin_normal" app:layout_marginEnd="@dimen/margin_normal">
+            <com.coinbase.android.ui.AutoResizeTextView app:textSize="@dimen/currency_amount" app:textColor="@color/coinbase_blue" app:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" app:id="@+id/tvAmount" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_marginLeft="@dimen/margin_normal" app:layout_marginRight="@dimen/margin_normal" app:maxLines="1" />
+        </LinearLayout>
+        <com.coinbase.android.paymentmethods.linkedaccounts.LinkedAccountItemLayout app:id="@+id/linkedAccountItemLayout" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_above="@+id/numericKeyboardLayout" />
+        <com.coinbase.android.ui.NumericKeyboardLayout app:id="@+id/numericKeyboardLayout" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_above="@+id/btPreview" />
+        <Button app:textSize="@dimen/text_size_medium_mystique" app:id="@+id/btPreview" app:padding="@dimen/margin_normal" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_margin="@dimen/margin_default" app:text="@string/preview" app:layout_alignParentBottom="true" app:hapticFeedbackEnabled="true" style="@style/PrimaryMystiqueButton" />
+        <ProgressBar app:id="@id/progressBar" app:visibility="gone" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_marginBottom="@dimen/margin_large" app:layout_above="@+id/linkedAccountItemLayout" app:layout_centerHorizontal="true" />
+    </RelativeLayout>
+    <include app:id="@+id/quickstartContent" app:visibility="gone" app:layout_width="match_parent" app:layout_height="match_parent" layout="@layout/overlay_buysell_deposit" />
+</LinearLayout>

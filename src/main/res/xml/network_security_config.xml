@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <base-config cleartextTrafficPermitted="false" />
+    <domain-config>
+        <domain includeSubdomains="true"
+            plaid.com />
+        <pin-set>
+            <pin digest="SHA-256"
+                JbQbUG5JMJUoI6brnx0x3vZF6jilxsapbXGVfjhN8Fg= />
+            <pin digest="SHA-256"
+                WoiWRyIOVNa9ihaBciRSC7XHjliYS9VwUGOIud4PB18= />
+            <pin digest="SHA-256"
+                r/mIkG3eEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E= />
+        </pin-set>
+    </domain-config>
+</network-security-config>

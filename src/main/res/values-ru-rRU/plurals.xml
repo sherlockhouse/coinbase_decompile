@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="in_days">
+        <item quantity="other">Через %d дней</item>
+        <item quantity="one">Через 1 день</item>
+        <item quantity="few">Через %d дней</item>
+        <item quantity="many">Через %d дней</item>
+    </plurals>
+</resources>

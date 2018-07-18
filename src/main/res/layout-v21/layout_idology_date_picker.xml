@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:orientation="vertical" android:tag="layout/layout_idology_date_picker_0" android:background="@drawable/mystique_white_box" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/margin_normal">
+    <DatePicker android:id="@+id/datePicker" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/tlEmployer" android:calendarViewShown="false" android:datePickerMode="spinner" />
+    <LinearLayout android:gravity="left|right|center_horizontal|fill_horizontal|center|fill|start|end" android:layout_gravity="top|bottom|center_vertical|fill_vertical|center|fill" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/margin_default">
+        <Button android:textSize="@dimen/billing_address_list_button_text_size" android:textColor="@color/mystique_button_close" android:id="@+id/btnClose" android:background="0x106000d" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/cancel" style="?unknown_attr_ref: 101032b" />
+        <Button android:textSize="@dimen/billing_address_list_button_text_size" android:textColor="@color/coinbase_blue" android:id="@+id/btnAction" android:background="0x106000d" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/ok" style="?unknown_attr_ref: 101032b" />
+    </LinearLayout>
+</LinearLayout>

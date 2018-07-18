@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:tag="layout/list_item_jumio_profile_0" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <ImageView android:id="@+id/ivJumioFlag" android:layout_width="UNKNOWN_DATA_0x2d01" android:layout_height="UNKNOWN_DATA_0x2d01" android:layout_marginLeft="16dp" android:src="@drawable/id_flag_default" android:layout_centerVertical="true" />
+    <LinearLayout android:orientation="vertical" android:padding="@dimen/margin_default" android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="match_parent" android:layout_toRightOf="@+id/ivJumioFlag" android:layout_alignParentRight="true">
+        <TextView android:textSize="@dimen/text_size_medium_mystique" android:textColor="@color/primary_mystique_text_color" android:id="@+id/tvJumioProfileName" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x1" android:layout_weight="1.0" />
+        <TextView android:textSize="@dimen/text_size_normal_mystique" android:textColor="@color/primary_mystique_text_color" android:id="@+id/tvJumioProfileStatus" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x1" android:layout_weight="1.0" />
+    </LinearLayout>
+    <View android:background="@color/divider_light" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x101" android:layout_marginLeft="@dimen/margin_default" android:layout_alignParentLeft="true" android:layout_alignParentBottom="true" />
+</RelativeLayout>

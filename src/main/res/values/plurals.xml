@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="in_days">
+        <item quantity="other">In %d days</item>
+        <item quantity="one">In 1 day</item>
+    </plurals>
+</resources>

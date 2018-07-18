@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="addresses_copied">復制到剪貼板。</string>
+    <string name="app_name">Coinbase ZXing 庫</string>
+    <string name="barcode_scan_message">將一個比特幣條碼放在景器中，以便掃描。</string>
+    <string name="copy_address">復制地址</string>
+    <string name="my_address">我的地址</string>
+    <string name="scan_tabs_left_button">掃描碼</string>
+    <string name="scan_tabs_right_button">我的地址</string>
+    <string name="rate_dialog_cancel">稍候提醒我</string>
+    <string name="rate_dialog_message">如果你喜歡這個 App，希望你能給予五顆星的評價，讓更多人下載使用它！</string>
+    <string name="rate_dialog_no">不，謝謝</string>
+    <string name="rate_dialog_ok">給五顆星</string>
+    <string name="rate_dialog_title">給五顆星評價的鼓勵？</string>
+</resources>

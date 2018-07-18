@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:orientation="vertical" app:tag="layout/layout_idology_source_of_funds_form_0" app:layout_width="match_parent" app:layout_height="wrap_content">
+    <ScrollView app:layout_width="match_parent" app:layout_height="wrap_content">
+        <LinearLayout app:orientation="vertical" app:layout_width="match_parent" app:layout_height="wrap_content">
+            <RelativeLayout app:id="@+id/rlContainer" app:paddingLeft="@dimen/margin_default" app:paddingRight="@dimen/margin_default" app:layout_width="match_parent" app:layout_height="wrap_content">
+                <android.support.design.widget.TextInputLayout app:id="@+id/tlCoinbaseUses" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_marginTop="@dimen/margin_small" app:layout_alignParentTop="true" app:errorEnabled="false">
+                    <EditText app:textSize="@dimen/idology_text_size" app:id="@+id/etCoinbaseUses" app:focusable="false" app:layout_width="match_parent" app:layout_height="wrap_content" app:hint="@string/coinbase_uses" app:maxLines="1" app:imeOptions="actionNone|actionSearch|actionSend|actionNext|actionDone|actionPrevious" />
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout app:id="@+id/tlSourceOfFunds" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_below="@+id/tlCoinbaseUses" app:errorEnabled="false">
+                    <EditText app:textSize="@dimen/idology_text_size" app:id="@+id/etSourceOfFunds" app:focusable="false" app:layout_width="match_parent" app:layout_height="wrap_content" app:hint="@string/source_of_funds" app:maxLines="1" app:imeOptions="actionNone|actionSearch|actionSend|actionNext|actionDone|actionPrevious" />
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout app:id="@+id/tlJobTitle" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_below="@+id/tlSourceOfFunds" app:errorEnabled="false">
+                    <EditText app:textSize="@dimen/idology_text_size" app:id="@+id/etJobTitle" app:focusable="false" app:layout_width="match_parent" app:layout_height="wrap_content" app:hint="@string/job_title" app:maxLines="1" app:imeOptions="actionNone|actionSearch|actionSend|actionNext|actionDone|actionPrevious" />
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout app:id="@+id/tlEmployer" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_below="@+id/tlJobTitle" app:errorEnabled="false">
+                    <EditText app:textSize="@dimen/idology_text_size" app:id="@+id/etEmployer" app:layout_width="match_parent" app:layout_height="wrap_content" app:hint="@string/employer" app:maxLines="1" app:inputType="text|textCapCharacters|textCapWords|textCapSentences|textAutoCorrect|textAutoComplete|textMultiLine|textImeMultiLine|textNoSuggestions|textUri|textEmailAddress|textEmailSubject|textShortMessage|textLongMessage|textPersonName|textPostalAddress|textPassword|textVisiblePassword|textWebEditText|textFilter|textPhonetic|textWebEmailAddress|textWebPassword|phone" app:imeOptions="actionGo|actionSearch|actionSend|actionNext|actionDone|actionPrevious" />
+                </android.support.design.widget.TextInputLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

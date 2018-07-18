@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:tag="layout/controller_jumio_document_scan_content_0" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent" android:weightSum="92.0">
+        <View android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x1" android:layout_weight="10.0" />
+        <TextView android:textSize="@dimen/text_size_medium_mystique" android:textStyle="bold" android:textColor="@color/primary_mystique_text_color" android:gravity="left|right|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvScanTheFrontBack" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x1" android:text="@string/jumio_scan_the_front" android:layout_weight="5.0" />
+        <View android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x1" android:layout_weight="3.0" />
+        <TextView android:textSize="@dimen/text_size_medium_mystique" android:textColor="@color/primary_mystique_text_color" android:gravity="left|right|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/tvJumioScanPrompt" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x1" android:text="@string/jumio_scan_drivers_license" android:layout_weight="8.0" />
+        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x1" android:weightSum="20.0" android:layout_weight="45.0">
+            <View android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="UNKNOWN_DATA_0x101" android:layout_weight="1.0" />
+            <FrameLayout android:padding="40dp" android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="match_parent" android:layout_weight="18.0">
+                <ImageView android:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/ivJumioImagePreview" android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/id_licence_front" android:scaleType="fitCenter" />
+            </FrameLayout>
+            <View android:layout_width="UNKNOWN_DATA_0x1" android:layout_height="UNKNOWN_DATA_0x101" android:layout_weight="1.0" />
+        </LinearLayout>
+        <View android:layout_width="match_parent" android:layout_height="UNKNOWN_DATA_0x1" android:layout_weight="5.0" />
+        <Button android:layout_gravity="left|right|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/btnContinue" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/margin_default" android:layout_marginRight="@dimen/margin_default" android:text="@string/jumio_confrim_title" android:filterTouchesWhenObscured="true" style="@style/PrimaryMystiqueButton" />
+        <TextView android:textSize="@dimen/text_size_medium_mystique" android:textStyle="bold" android:textColor="@color/primary_mystique_text_color" android:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" android:layout_gravity="left|right|center_horizontal|fill_horizontal|center|fill|start|end" android:id="@+id/btnRetake" android:background="0x0" android:layout_width="UNKNOWN_DATA_0xc801" android:layout_height="UNKNOWN_DATA_0x2301" android:layout_marginTop="16dp" android:text="@string/jumio_flashlight_retake" android:textAllCaps="true" />
+    </LinearLayout>
+</FrameLayout>
